@@ -1,0 +1,536 @@
+/* CSS Document */
+
+/*
+	Theme Name: Margo
+	Description: Margo - Responsive Template
+	Version: 1.0
+	Author: iThemesLab
+	Website: http://ithemeslab.com
+*/
+
+/* ------------------------------------------ */
+/*             TABLE OF CONTENTS
+/* ------------------------------------------ */
+/*   01 - General & Basic Styles   */
+/*   02 - Header & Navigation      */
+/*   03 - Slider                   */
+/*   04 - Main Page Elements       */
+/*   05 - Revolution Slider        */
+/*   06 - Shortcodes Elements      */
+/*   07 - Portfolio Styles         */
+/*   08 - Single Project Styles    */
+/*   09 - Blog Styles              */
+/*   10 - Single post Styles       */
+/*   11 - Sidebar Styles           */
+/*   12 - Footer Styles 		   */
+/*   13 - Plugins Styles 	  	   */
+
+
+
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import url(http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,300,700);
+
+
+
+
+
+/*------------------------------------------*/
+/*	     01 - General & Basic Styles
+/*------------------------------------------*/
+
+
+/******* Style Switcher *******/
+.switcher-box {
+	width: 400px;
+	position: fixed;
+	left: -212px;
+	top: 160px;
+	text-align: center;
+	z-index: 99999999;
+	background-color: #fff;
+	border-radius: 0 0 2px 0;
+	border-radius: 0 5px 5px 0;
+	-webkit-box-shadow: 0 0 6px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 0 5px rgba(0,0,0,0.2);
+	box-shadow: 0 0 5px rgba(0,0,0,0.2);
+	transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+}
+.switcher-box a{
+	cursor: pointer;
+}
+.switcher-box h4 {
+	display: block;
+	height: 400px;
+	line-height: 402px;
+	font-size: 14px;
+	font-weight: 700;
+	color: #fff;
+	background-color: #333;
+	margin-bottom: 10px;
+}
+.switcher-box span {
+	display: block;
+	padding: 5px 20px;
+	text-align: left;
+}
+.switcher-box .colors-list {
+	padding: 0 18px 0 18px;
+	margin-bottom: 8px;
+	line-height: 20px;
+}
+.switcher-box .colors-list li {
+	display: inline-block;
+	margin-right: 2px;
+}
+.switcher-box .colors-list li a {
+	display: block;
+	width: 24px;
+	height: 18px;
+	cursor: pointer;
+}
+.switcher-box .colors-list li a.blue {
+	background-color: #0a9fd8;
+}
+.switcher-box .colors-list li a.cyan {
+	background-color: #27bebe;
+}
+.switcher-box .colors-list li a.jade {
+	background-color: #0bb586;
+}
+.switcher-box .colors-list li a.red {
+	background-color: #ee3733;
+}
+.switcher-box .colors-list li a.peach {
+	background-color: #f49237;
+}
+.switcher-box .colors-list li a.sky-blue {
+	background-color: #38cbcb;
+}
+.switcher-box .colors-list li a.yellow {
+	background-color: #f8ba01;
+}
+.switcher-box .colors-list li a.green {
+	background-color: #94c523;
+}
+.switcher-box .colors-list li a.orange {
+	background-color: #f36510;
+}
+.switcher-box .colors-list li a.pink {
+	background-color: #f1505b;
+}
+.switcher-box .colors-list li a.purple {
+	background-color: #6a3da3;
+}
+.switcher-box .colors-list li a.beige {
+	background-color: #fdb655;
+}
+.switcher-box .layout-style, .switcher-box .topbar-style {
+	width: 172px;
+	padding: 6px 9px;
+	outline: none;
+	display: block;
+	background: #fff;
+	border-radius: 3px;
+	padding: 4px 6px;
+	color: #666;
+	cursor: pointer;
+	border-radius: 2px;
+	font-size: 12px;
+	margin: 0 0 12px 20px;
+	border: 1px solid #ddd;
+	-webkit-box-shadow: inset 1px 1px 3px 0px rgba(0, 0, 0, 0.06);
+	box-shadow: inset 1px 1px 3px 0px rgba(0, 0, 0, 0.06);
+}
+.switcher-box .bg-list {
+	padding: 0 18px 0 18px;
+	margin-bottom: 18px;
+}
+.switcher-box .bg-list li {
+	display: inline-block;
+	margin-right: 2px;
+}
+.switcher-box .bg-list li a {
+	display: block;
+	width: 20px;
+	height: 20px;
+}
+.switcher-box .bg-list li a.bg1 {
+	background: url(../images/patterns/1.png) repeat;
+}
+.switcher-box .bg-list li a.bg2 {
+	background: url(../images/patterns/2.png) repeat;
+}
+.switcher-box .bg-list li a.bg3 {
+	background: url(../images/patterns/3.png) repeat;
+}
+.switcher-box .bg-list li a.bg4 {
+	background: url(../images/patterns/4.png) repeat;
+}
+.switcher-box .bg-list li a.bg5 {
+	background: url(../images/patterns/5.png) repeat;
+}
+.switcher-box .bg-list li a.bg6 {
+	background: url(../images/patterns/6.png) repeat;
+}
+.switcher-box .bg-list li a.bg7 {
+	background: url(../images/patterns/7.png) repeat;
+}
+.switcher-box .bg-list li a.bg8 {
+	background: url(../images/patterns/8.png) repeat;
+}
+.switcher-box .bg-list li a.bg9 {
+	background: url(../images/patterns/9.png) repeat;
+}
+.switcher-box .bg-list li a.bg10 {
+	background: url(../images/patterns/10.png) repeat;
+}
+.switcher-box .bg-list li a.bg11 {
+	background: url(../images/patterns/11.png) repeat;
+}
+.switcher-box .bg-list li a.bg12 {
+	background: url(../images/patterns/12.png) repeat;
+}
+.switcher-box .bg-list li a.bg13 {
+	background: url(../images/patterns/13.png) repeat;
+}
+.switcher-box .bg-list li a.bg14 {
+	background: url(../images/patterns/14.png) repeat;
+}
+
+.switcher-box .open-switcher {
+	width: 400px;
+	height: 400px;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	border-radius: 0 2px 2px 0;
+	background: #444 center no-repeat;
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.2);
+	box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.switcher-box .open-switcher:hover {
+	background: url(../images/icons/switcher.png) #444 center no-repeat;
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.2);
+	box-shadow: 0 0 4px rgba(0,0,0,0.2);
+	color: #fff;
+}
+
+.switcher-box .open-switcher i {
+	text-align: center;
+	padding-top: 7px;
+}
+
+.iframe {
+	border: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.services-2 {
+  position:relative;
+  text-align:center;
+  margin:0px 0px 30px 0px;  
+}
+
+
+.services-2-icon {
+  display: inline-block;
+  width:100%;
+  display: table;  
+}
+
+.services-2-icon i {
+  width:60px;
+  height:60px;
+  line-height:60px;  
+  margin:0px auto;
+  position: relative;
+  display: inline-block;  
+  margin-right:15px;
+  border-radius:50%;
+  float:left;
+  text-align: center;
+  font-size: 26px;
+    background:#E93735;
+  color:#fff;
+    -webkit-transition: all .5s ease-in-out;
+       -moz-transition: all .5s ease-in-out;
+        -ms-transition: all .5s ease-in-out;
+         -o-transition: all .5s ease-in-out;
+            transition: all .5s ease-in-out;  
+}
+
+
+
+.services-2:hover .services-2-icon i {
+  display: block;
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);  
+}
+
+.services-2-text {
+  margin-left:75px;
+  overflow:hidden;
+}
+
+.services-2-icon h4 {
+  font-family: 'Open Sans', sans-serif;
+  color: #404449;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 15px 0px 0px 0px;
+  text-align:left; 
+  display: table-cell;
+  padding: 0px;
+  vertical-align: middle;
+  width:100%;
+}
+
+.services-2 p {
+  color: #ACB2B8;
+  margin: 0px 0px 0px 0px;
+  text-align:left; 
+}
+
+
+
+/* progress bar */
+
+.skill p {
+  margin-bottom:7px;
+
+}
+
+.progress {
+  overflow: visible;
+  height: 18px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.progress-bar {
+  float: left;
+  height: 100%;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+  position:relative;
+}
+
+ .progress-bar-span { 
+ opacity:1;
+ position:absolute;
+ top:-5px;
+ background:#ACB2B8;
+ padding:3px 10px;
+ color:#FFF;
+ border-radius: 0px;
+ right:0px;
+    -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  -ms-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out; 
+ }
+
+.skill:hover .progress-bar-span {
+  opacity:1;
+    -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  -ms-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+/* Counter */
+
+.counter-item {
+  position:relative;
+  text-align:center;
+}
+
+.counter-item h5 {
+  text-align: center;
+  margin-bottom: 0px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.counter-item i {
+  font-size:40px;
+}
+
+
+.timer {
+  font-size: 48px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align:center;
+  line-height:80px;
+}
+
+
+
+
+
+
+
+.parallax{
+  width:100%; 
+  padding: 0;
+  margin: 0;
+  background-position: 50% 30%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;  
+}
+
+.parallax-text-container-1 .parallax-text-item {
+  padding:120px 0px;
+  text-align:center;
+}
+
+
+.parallax-mobile {
+	background-position: 50% 0px !important; 
+	background-attachment: scroll !important;
+}
+
+
+
+
+
+
+
+
+
+
+.services-3 {
+  position:relative;
+  text-align:center;
+  margin:0px 0px 30px 0px;  
+}
+
+.services-3-icon {
+  display: inline-block;
+  width:100%;
+  display: table;  
+}
+
+.services-3-icon i {
+  width:60px;
+  height:60px;
+  line-height:60px;  
+  margin:0px auto;
+  position: relative;
+  display: inline-block;  
+  margin-left:15px;
+  border-radius:50%;
+  float:left;
+  text-align: center;
+  font-size: 26px;    
+  color:#fff;
+    -webkit-transition: all .5s ease-in-out;
+       -moz-transition: all .5s ease-in-out;
+        -ms-transition: all .5s ease-in-out;
+         -o-transition: all .5s ease-in-out;
+            transition: all .5s ease-in-out;  
+}
+
+.services-3:hover .services-3-icon i {
+  display: block;
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);  
+}
+
+.services-3-text {
+  margin-right:75px;
+  overflow:hidden;
+}
+
+.services-3-icon h4 {
+  font-family: 'Raleway', sans-serif;
+  color: #404449;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0px 0px 15px 0px;
+  text-align:right; 
+  display: table-cell;
+  padding: 0px;
+  vertical-align: middle;
+  width:100%;
+}
+
+.services-3 p {
+  color: #ACB2B8;
+  margin: 0px 0px 0px 0px;
+  text-align:right; 
+}
+
+
+
+.purchase {
+    background: url(../images/parallax/bg-01.jpg) no-repeat;
+    background-attachment: fixed;
+    padding: 100px 0;
+}
+
+.navbar-collapse {
+	max-height: 340px;
+}

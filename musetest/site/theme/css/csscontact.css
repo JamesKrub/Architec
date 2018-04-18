@@ -1,0 +1,40 @@
+
+<style type="text/css">
+    .img-top {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+}
+</style>
+
+<style type="text/css">
+div.img-resize img {
+	width: 150px;
+	height: 150px;
+}
+
+div.img-resize {
+	width: 64px;
+	height: 64px;
+	overflow: hidden;
+	text-align: center;
+}
+</style>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        height: 400px;
+        width: 1000px;
+      }
+    </style>
