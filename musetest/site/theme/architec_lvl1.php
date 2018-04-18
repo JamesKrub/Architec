@@ -251,13 +251,13 @@ echo $_GET['obj_title'];
                 $objpics = $result4['archThumb_Name'];
                 $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
                 if ($result4['archThumb_Name']  == ''  ) {
-                    $objpic = "../../pic/thumbmuse/blank.jpg";
+                    $objpic = "../../pic/thumb_architec/blank.jpg";
                 }
                 // if ($result4['pic_open']  == 0  ) {
                 //     $objpic = "../../pic/thumbmuse/blank.jpg";
                 // }
             } else {
-                $objpic = "../../pic/thumbmuse/blank.jpg";
+                $objpic = "../../pic/thumb_architec/blank.jpg";
             }
 
             $sql2 = "select * from muse_vr where obj_refcode = '$refcode'  limit 0,1 ";

@@ -354,12 +354,13 @@ include('connect.php');
         <div class="col-12">
           <?php
             include('connect.php');
-            $sql = "select count(*) FROM architec_pic where archObj_Refcode = '$refcode' ";
+            $sql = "select count(*) as count FROM architec_pic where archObj_Refcode = '$refcode' ";
             $query=mysqli_query($link,$sql) or die("Can't Query");
 		        $num_rows=mysqli_num_rows($query);
             // echo "numrows = $num_rows xxxx";
-            $total_rec=mysqli_fetch_array($query,0,0); // เก็บจำนวน Record ทั้งหมดไว้ใน $total_page
-            $p_size=30; //กำหนดจำนวน Record ที่จะแสดงผลต่อ 1 เพจ
+            $total_rec = mysqli_fetch_array($query); // เก็บจำนวน Record ทั้งหมดไว้ใน $total_page
+            $total_rec = $total_rec['count'] ;
+            $p_size = 30; //กำหนดจำนวน Record ที่จะแสดงผลต่อ 1 เพจ
             $total_page=(int)($total_rec/$p_size);
             
             if(($total_rec % $p_size)!=0){ //ถ้าข้อมูลมีเศษให้ทำการบวกเพิ่มจำนวนหน้าอีก 1
@@ -376,7 +377,7 @@ include('connect.php');
             }
 
             echo "<div class='col-sm-12'>";
-            $sql = "SELECT * FROM muse_pic where obj_refcode = '$refcode' and pic_open = '1' LIMIT $start , $p_size ";
+            $sql = "SELECT * FROM architec_pic where archObj_Refcode = '$refcode' and archPic_Open = '1' LIMIT $start , $p_size ";
             //$sql = "SELECT * FROM muse_pic where obj_refcode = '$refcode' and obj_id ='0' ORDER BY listorder ASC LIMIT $start , $p_size";
             $query=mysqli_query($link,$sql) or die("Can't Query");
             $num_rows=mysqli_num_rows($query);
@@ -384,19 +385,19 @@ include('connect.php');
 
             for ($i=0; $i<$num_rows; $i++) {
               $result=mysqli_fetch_array($query);
-              $refcode = $result['obj_refcode'];
+              $refcode = $result['archObj_Refcode'];
                   
-              $folder_refcode = $result['folder_refcode'];     
-              $objpic = $result['thumb_name'];
-              $picid = $result['pic_id'];
-              $pictype = explode(".", $result['pic_name']);
+              $folder_refcode = $result['archFolder_Refcode'];     
+              $objpic = $result['archThumb_Name'];
+              $picid = $result['archPic_Id'];
+              $pictype = explode(".", $result['archPic_Name']);
               $filetype = $pictype[1];
-              $cover =$result[obj_cover];
-              $open =$result[pic_open];
+              $cover = $result['obj_cover'];
+              $open = $result['pic_open'];
               // echo "line = $line  file = $filetype  <br>";
 
               if($num_rows == 0) {
-                $objpic = "../../pic/thumbmuse/$nrefcode/blank.jpg";
+                $objpic = "../../pic/thumb_architec/$nrefcode/blank.jpg";
               } else {
                 $objpics = $result['thumb_name'];
                 if  ($objpics == ""){
@@ -430,7 +431,7 @@ include('connect.php');
                     echo "</div>";
                   }
                 }
-                else if ($filetype =='mp4') {
+                else if ($filetype == 'mp4') {
                   //echo "pic/bigmuse/$refcode/$result3[pic_name]";
                   echo "<div class='col-xs-3 col-md-4'>";
                   echo "<video width='200'  controls>
@@ -547,7 +548,7 @@ include('connect.php');
             $query3 = mysqli_query($link,$sql3) or die("Can't Query3");
             $num_rows3=mysqli_num_rows($query3);
             for ($i=0; $i<$num_rows3; $i++) {
-		          result3=mysqli_fetch_array($query3);
+		          $result3 = mysqli_fetch_array($query3);
               // $result4= mysqli_fetch_array($query4);
               $mydir = $result3['vr_dir'];
               $direction = $result3['vr_direction'];
@@ -640,153 +641,118 @@ include('connect.php');
 
 				        }
 
-			echo "</td>";
-			echo "</tr>";
-				$line = 0;
-			 }
-		 }
-echo "</table>";
-echo "</div>";
+                echo "</td>";
+                echo "</tr>";
+                $line = 0;
+              }
+		      }
+          echo "</table>";
+          echo "</div>";
 
-echo "<div class='col-sm-12'>";
-echo "<div class='row'>";
+          echo "<div class='col-sm-12'>";
+          echo "<div class='row'>";
 
-$ul_query = mysqli_query($link,"SELECT * FROM `archive_upload` where obj_id = '$obj_id'");
-  while($row = mysqli_fetch_assoc($ul_query)) {
-$ext = pathinfo($row['bpu_file']);
-$bpu_id = $row['bpu_id'];
-      $filetype = explode(".", $row[bpu_file]);
-$filetypedata = $filetype[1];
-//      echo "<div class='col-sm-4' align='center'>";
-$type = "archive";
+          $ul_query = mysqli_query($link,"SELECT * FROM `archive_upload` where obj_id = '$obj_id'");
+          while($row = mysqli_fetch_assoc($ul_query)) {
+            $ext = pathinfo($row['bpu_file']);
+            $bpu_id = $row['bpu_id'];
+            $filetype = explode(".", $row[bpu_file]);
+            $filetypedata = $filetype[1];
+            //      echo "<div class='col-sm-4' align='center'>";
+            $type = "archive";
 
-    if($filetypedata =='pdf')
-   {
-   //              echo "bpu = $row[bpu_id] <br>";
-     echo "<div class='col-sm-4' align='center'>";
-     echo "<a target='_blank' href='../../pic/archive_upload/".$refcode."/".$row['bpu_file']."'>
-     <br>    <img src='images/pdf.png' width='100'> <br>".$row['bpu_file']." </a>
-     ";
-}
+            if($filetypedata =='pdf') {
+              // echo "bpu = $row[bpu_id] <br>";
+              echo "<div class='col-sm-4' align='center'>";
+              echo "<a target='_blank' href='../../pic/archive_upload/".$refcode."/".$row['bpu_file']."'>
+                      <br>
+                      <img src='images/pdf.png' width='100'> <br>".$row['bpu_file']."
+                    </a>
+              ";
+            }
+  			    echo "</div><!-- /.row -->";
+            echo "</div>";
+          }       
+          echo "</div>";
+          echo "</div>";
+          echo "<div class='col-sm-12'>";
+          $sql5 = "SELECT * FROM `muse_object` WHERE obj_refcode = '$refcode' ";
+          $query5 = mysqli_query($link,$sql5) or die("Can't Query5");
+          $num_rows5=mysqli_num_rows($query5);
+          for ($i=0; $i<$num_rows5; $i++) {
+			      $result5=mysqli_fetch_array($query5);
+		      	$title = $result5['obj_title'];
+            $physicals = $result5['obj_physicals'];
+            $extent = $result5['obj_extent']; // ขนาด
 
-  			echo "</div><!-- /.row -->";
-echo "</div>";
+            $location_display = $result5['obj_location']; //สถานที่จัดเก็บต้นฉบับ
+            $obj_ex = $result5['obj_existence']; //สถานที่จัดเก็บสำเนา
+            $obj_cr = $result5['obj_creator']; //ชื่อเจ้าของ
+            $obj_bi = $result5['obj_bio']; //ประวัติเจ้าของ
+            $obj_his = $result5['obj_history']; //ประวัติวัตถุจัดแสดง
+            $obj_ac = $result5['obj_acquis']; //แหล่งที่ได้มา/โอนย้าย
+            $obj_da = $result5['obj_dateacc']; //ช่วงเวลาการสะสม
 
-}
-echo "</div>";
-echo "</div>";
-echo "<div class='col-sm-12'>";
+            //include data checked
+            $cr_obj_location_display = $result5['obj_location_display']; //สถานที่จัดเก็บต้นฉบับ
+            $ch_obj_existence = $result5['obj_existence_display']; //สถานที่จัดเก็บสำเนา
+            $ch_obj_creator_display = $result5['obj_creator_display']; //่ขื่อเจ้าของ
+            $ch_obj_bio = $result5['obj_bio_display']; //ประวัติเจ้าของ
+            $ch_obj_history_display= $result5['obj_history_display']; //ประวัติวัตถุจัดแสดง
+            $ch_obj_acquis_display = $result5['obj_acquis_display']; //แหล่งที่ได้มา/โอนย้าย
+            $ch_obj_dateacc_display = $result5['obj_dateacc_display']; //ชวงเวลาสะสม
+          }
+          echo "<div class='col-sm-8'>";
+          echo "<p><h3 class='text-info'>$title</h3></p>";
+          echo "<p>$physicals</p>";
+          echo "<p><h3 class='text-info'>ขนาด</h3></p>" ;
+          echo "<p>$extent</p>";
 
+          if ($cr_obj_location_display == 1 && $location_display != "") {
+            echo "<p><h3 class='text-info'>สถานที่จัดเก็บต้นฉบับ</h3></p>" ;
+            echo "<p>$location_display</p>";
+          }
+          else if ($ch_obj_existence == 1 && $obj_ex != "") {
+            echo "<p><h3 class='text-info'>สถานที่จัดเก็บสำเนา</h3></p>" ;
+            echo "<p>$obj_ex</p>";
+          }
+          else if ($ch_obj_creator_display == 1 && $obj_cr != "") {
+            echo "<p><h3 class='text-info'>ชื่อเจ้าของ</h3></p>" ;
+            echo "<p>$obj_cr</p>";
+          }
+          else if ($ch_obj_bio == 1 && $obj_bi != "") {
+            echo "<p><h3 class='text-info'>ประวัติเจ้าของ</h3></p>" ;
+            echo "<p>$obj_bi</p>";
+          }
+          else if ($ch_obj_history_display == 1 && $obj_his != "") {
+            echo "<p><h3 class='text-info'>ประวัติวัตถุจัดแสดง</h3></p>" ;
+            echo "<p>$obj_his</p>";
+          }
+          else if ($ch_obj_acquis_display == 1 &&  $obj_ac != "") {
+            echo "<p><h3 class='text-info'>แหล่งที่ได้มา/โอนย้าย</h3></p>" ;
+            echo "<p>$obj_ac</p>";
+          }
+          else if ($ch_obj_dateacc_display == 1 && $obj_da != "") {
+            echo "<p><h3 class='text-info'>ช่วงเวลาการสะสม</h3></p>" ;
+            echo "<p>$obj_da</p>";
+          }else {
 
-         $sql5 = "SELECT * FROM `muse_object` WHERE obj_refcode = '$refcode' ";
-         $query5 = mysqli_query($link,$sql5) or die("Can't Query5");
-         $num_rows5=mysqli_num_rows($query5);
-         for ($i=0; $i<$num_rows5; $i++) {
-			$result5=mysqli_fetch_array($query5);
-            // $result4= mysqli_fetch_array($query4);
-			$title = $result5['obj_title'];
-
-         				//$keyword = $result['obj_keyword'];
-
-                //include data
-             $physicals = $result5['obj_physicals'];
-             $extent = $result5['obj_extent']; // ขนาด
-
-             $location_display = $result5['obj_location']; //สถานที่จัดเก็บต้นฉบับ
-             $obj_ex = $result5['obj_existence']; //สถานที่จัดเก็บสำเนา
-             $obj_cr = $result5['obj_creator']; //ชื่อเจ้าของ
-             $obj_bi = $result5['obj_bio']; //ประวัติเจ้าของ
-             $obj_his = $result5['obj_history']; //ประวัติวัตถุจัดแสดง
-             $obj_ac = $result5['obj_acquis']; //แหล่งที่ได้มา/โอนย้าย
-             $obj_da = $result5['obj_dateacc']; //ช่วงเวลาการสะสม
-
-             //include data checked
-             $cr_obj_location_display = $result5['obj_location_display']; //สถานที่จัดเก็บต้นฉบับ
-             $ch_obj_existence = $result5['obj_existence_display']; //สถานที่จัดเก็บสำเนา
-             $ch_obj_creator_display = $result5['obj_creator_display']; //่ขื่อเจ้าของ
-             $ch_obj_bio = $result5['obj_bio_display']; //ประวัติเจ้าของ
-             $ch_obj_history_display= $result5['obj_history_display']; //ประวัติวัตถุจัดแสดง
-             $ch_obj_acquis_display = $result5['obj_acquis_display']; //แหล่งที่ได้มา/โอนย้าย
-             $ch_obj_dateacc_display = $result5['obj_dateacc_display']; //ชวงเวลาสะสม
-
-
-
-        }
-
-
-
-       echo "<div class='col-sm-8'>";
-       echo "<p><h3 class='text-info'>$title</h3></p>";
-       echo "<p>$physicals</p>";
-       echo "<p><h3 class='text-info'>ขนาด</h3></p>" ;
-       echo "<p>$extent</p>";
-
-       if ($cr_obj_location_display == 1 && $location_display != "") {
-         echo "<p><h3 class='text-info'>สถานที่จัดเก็บต้นฉบับ</h3></p>" ;
-         echo "<p>$location_display</p>";
-       }
-
-       else if ($ch_obj_existence == 1 && $obj_ex != "") {
-         echo "<p><h3 class='text-info'>สถานที่จัดเก็บสำเนา</h3></p>" ;
-         echo "<p>$obj_ex</p>";
-       }
-
-       else if ($ch_obj_creator_display == 1 && $obj_cr != "") {
-         echo "<p><h3 class='text-info'>ชื่อเจ้าของ</h3></p>" ;
-         echo "<p>$obj_cr</p>";
-       }
-       else if ($ch_obj_bio == 1 && $obj_bi != "") {
-         echo "<p><h3 class='text-info'>ประวัติเจ้าของ</h3></p>" ;
-         echo "<p>$obj_bi</p>";
-       }
-       else if ($ch_obj_history_display == 1 && $obj_his != "") {
-         echo "<p><h3 class='text-info'>ประวัติวัตถุจัดแสดง</h3></p>" ;
-         echo "<p>$obj_his</p>";
-       }
-       else if ($ch_obj_acquis_display == 1 &&  $obj_ac != "") {
-         echo "<p><h3 class='text-info'>แหล่งที่ได้มา/โอนย้าย</h3></p>" ;
-         echo "<p>$obj_ac</p>";
-       }
-       else if ($ch_obj_dateacc_display == 1 && $obj_da != "") {
-         echo "<p><h3 class='text-info'>ช่วงเวลาการสะสม</h3></p>" ;
-         echo "<p>$obj_da</p>";
-      }else {
-
-      }
+          }
+          echo " </div>";
+          echo " </div>";
 
 
-      echo " </div>";
-      echo " </div>";
-
-
-?>
-<!--</div>-->
-
-<!--        </div>-->
-
-
-            </div>
-
-          <!-- Divider -->
-
-
-
-
-
-
-
-<!--        </div>-->
-
+          ?>
+        </div>
       </div>
     </div>
     <!-- End content -->
 
-
     <!-- Start Footer -->
   <?php //include "footer.php" ; ?>
     <!-- End Footer -->
-</div>
- <?php include "footer.php" ; ?>
+  </div>
+  <?php include "footer.php" ; ?>
   <!-- End Container -->
 
   <!-- Go To Top Link -->
