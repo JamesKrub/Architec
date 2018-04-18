@@ -303,7 +303,7 @@ echo $_GET['obj_title'];
                         }
                     ?>
 
-                    <?php echo "<a href='architecDetail_lvl1.php?refcode=$refcode&catid=$cat1_id'><img src='$objpic' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>" ?>
+                    <?php echo "<a href='architecInside_lvl1.php?refcode=$refcode&catid=$cat1_id'><img src='$objpic' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>" ?>
                     <?php    
                         if(($picvr == 1) and ($bpu == 0)) {
                     ?>
@@ -337,7 +337,7 @@ echo $_GET['obj_title'];
               ?>
                 <div class='col-sm-3'>
                     <h5 class='text-info'><?php echo $result["archObj_Title"];?></h5>
-                    <a href='architecDetail_lvl1.php?refcode=<?php echo $result["archObj_Refcode"];?>'><img src='<?php echo $objpic;?>' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>
+                    <a href='architecInside_lvl1.php?refcode=<?php echo $result["archObj_Refcode"];?>'><img src='<?php echo $objpic;?>' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>
                     <?php    
                         if(($picvr == 1) and ($bpu == 0)) {
                     ?>

@@ -1,10 +1,6 @@
-
 <?php
-
-   $objectid = $_REQUEST['objectid'];
    $refcode = $_REQUEST['refcode'];
 
-//$menu2_1=$menu2_2=$menu1_1=$menu1_2=$menu1_3=$menu1_4="";
 $menu=$menu1=$menu2=$menu3=$menu4=$menu5=$menu6=$menu7="";
 
 if(isset($_GET['menu'])){
@@ -110,7 +106,6 @@ div.img-resize {
 include('connect.php');
 //echo "ref = $refcode";
 ?>
-
 
   <div id="container">
 
@@ -233,9 +228,9 @@ include('connect.php');
               <!-- <li><a href="museshowcatall.php">วัตถุจัดแสดง</a></li> -->
               <?php
                 $catid  = $_REQUEST['catid'];
-                $ac2_id = $_REQUEST['ac2_id'];
-                $ac3_id = $_REQUEST['ac3_id'];
-                $ac1_id = $_REQUEST['ac1_id'];
+                // $ac2_id = $_REQUEST['ac2_id'];
+                // $ac3_id = $_REQUEST['ac3_id'];
+                // $ac1_id = $_REQUEST['ac1_id'];
 
                 $sql5 = "SELECT distinct `muse_object`.`obj_category` , `muse_category`.`cat1_id` , `muse_category`.`cat1_name` , `muse_object`.`obj_title` FROM `muse_object` , `muse_category` WHERE `muse_object`.`obj_category` = `muse_category`.`cat1_id` and `muse_object`.`obj_refcode` = '$refcode'  ";
                 $query5=mysqli_query($link,$sql5) or die("Can't Query");
@@ -404,6 +399,7 @@ include('connect.php');
                   $objpic = "../../pic/thumb_architec/blank.jpg";
                 } else {
                 }
+                $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
                 if ($open == '0'){
                   $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
                 }
