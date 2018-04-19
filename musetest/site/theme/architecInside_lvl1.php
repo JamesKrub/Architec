@@ -223,121 +223,7 @@ include('connect.php');
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <ul class="breadcrumbs">
-              <!-- <li><a href="index.php">หน้าแรก</a></li>-->
-              <!-- <li><a href="museshowcatall.php">วัตถุจัดแสดง</a></li> -->
-              <?php
-                $catid  = $_REQUEST['catid'];
-                // $ac2_id = $_REQUEST['ac2_id'];
-                // $ac3_id = $_REQUEST['ac3_id'];
-                // $ac1_id = $_REQUEST['ac1_id'];
-
-                $sql5 = "SELECT distinct `muse_object`.`obj_category` , `muse_category`.`cat1_id` , `muse_category`.`cat1_name` , `muse_object`.`obj_title` FROM `muse_object` , `muse_category` WHERE `muse_object`.`obj_category` = `muse_category`.`cat1_id` and `muse_object`.`obj_refcode` = '$refcode'  ";
-                $query5=mysqli_query($link,$sql5) or die("Can't Query");
-                $num_rows5=mysqli_num_rows($query5);
-                for ($i=0; $i<$num_rows5; $i++) {
-                  $result5=mysqli_fetch_array($query5);
-                  $objc = $result5['obj_category'];
-                  $objn = $result5['cat1_name'];
-                  $objcat2 = $result5['obj_cate2'];
-                  $objcat3 = $result5['obj_cate3'];
-                  $objtitle = $result5['obj_title'];
-                  $objid = $result5['obj_id'];
-         				  //$downloadfile = $result5['obj_downloadfile'];
-                 }
-                 
-                if($objc != "") {
-                  $sql_check = "SELECT distinct `muse_category_lv2`.`ac1_id`,`muse_category_lv2`.`ac2_name`
-                  FROM muse_category_lv2
-                  where `muse_category_lv2`.`ac1_id` = '$objc'";
-                  $query6=mysqli_query($link,$sql_check) or die("Can't Query");
-                  $num_rows6=mysqli_num_rows($query6);
-
-                  for ($eet=0; $eet < $num_rows6 ; $eet++) {
-                    $result6=mysqli_fetch_array($query6);
-                    $id = $result6['ac1_id'];
-                    $name = $result6['ac2_name'];
-                  }
-                  $sql_check2 = "SELECT distinct  `muse_category_lv2`.`ac2_id` , `muse_category_lv2`.`ac2_name` FROM  `muse_category_lv2` WHERE `muse_category_lv2`.`ac2_id` = '$ac2_id '  ";
-                  $query77=mysqli_query($link,$sql_check2) or die("Can't Query");
-                  $num_rows55=mysqli_num_rows($query77);
-                  for ($qi=0; $qi<$num_rows55; $qi++) {
-                      $result525=mysqli_fetch_array($query77);
-                      $objid = $result525['ac2_id'];
-                      $objname = $result525['ac2_name'];
-                  }
-                  $sqlcat4 = "SELECT distinct  `muse_object`.`obj_cate2`
-                  FROM  `muse_object` ";
-                  $querycat3=mysqli_query($link,$sqlcat4) or die("Can't Query");
-                  $num_rows_cat3=mysqli_num_rows($querycat3);
-
-                  for ($cat3=0; $cat3<$num_rows_cat3; $cat3++) {
-                    $cat3re = mysqli_fetch_array($querycat3);
-                    $idobj2 = $cat3re['obj_cate2'];
-                    $sqltest = "SELECT distinct  *
-                    FROM  `muse_category_lv2`
-                    WHERE ac2_id = '$idobj2' ";
-                    $queryday=mysqli_query($link,$sqltest) or die("Can't Query");
-                    $num_rowstest=mysqli_num_rows($queryday);
-                    for ($catdata=0; $catdata<$num_rowstest; $catdata++) {
-                      $cat2id = mysqli_fetch_array($queryday);
-                      $ac2_id = $cat2id['ac2_id'];
-                      $name2 = $cat2id['ac2_name'];}    
-                    }
-                    if ($idobj2 != 0  ) {
-                      // echo "<li><a href='museshowcat.php?catid=$objc'>$objn</a></li>";
-                        // echo "<li><a href='museshowcatsub2.php?ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>$name</a></li>";
-                      // echo "<li>$objtitle</li>";
-                    } else {
-                      $sql_check_catid = "SELECT distinct  `muse_category`.`cat1_id`,`muse_category`.`cat1_name`
-                      FROM muse_category
-
-                      where `muse_category`.`cat1_id` = '$catid'";
-
-                      $query99=mysqli_query($link,$sql_check_catid) or die("Can't Query");
-                      $num_rows99=mysqli_num_rows($query99);
-
-                      for ($eetddd=0; $eetddd < $num_rows99 ; $eetddd++) {
-                        $result99=mysqli_fetch_array($query99);
-                        $idcet = $result99['cat1_id'];
-                        $objname = $result99['cat1_name'];
-                      }
-                      $sql5 = "SELECT distinct  `muse_category_lv3`.`ac3_id` , `muse_category_lv3`.`ac3_name`
-                      FROM  `muse_category_lv3`
-                      WHERE `muse_category_lv3`.`ac3_id` = '$ac3_id '  ";
-                      $query5=mysqli_query($link,$sql5) or die("Can't Query");
-                      $num_rows5=mysqli_num_rows($query5);
-                      for ($i=0; $i<$num_rows5; $i++) {
-                        $result5=mysqli_fetch_array($query5);
-                        $objc = $result5['ac3_id'];
-                        $objn = $result5['ac3_name'];
-                      }
-                      $sqlsub4 = "SELECT distinct `muse_category`.`cat1_id` , `muse_category`.`cat1_name`
-                      FROM muse_category
-                      WHERE `muse_category`.`cat1_id` = '$ac1_id ' ";
-                      $querysub3 = mysqli_query($link,$sqlsub4) or die("Can't Query");
-                      $num_rowssub3 = mysqli_num_rows($querysub3);
-                      for ($sub1=0; $sub1 < $num_rowssub3; $sub1++) {
-                        $sub3result = mysqli_fetch_array($querysub3);
-                        $sub3resultid = $sub3result['cat1_id'];
-                        $sub3resultname = $sub3result['cat1_name'];
-                      }
-
-                      $sqlcat4aaa = "SELECT distinct  `muse_object`.`obj_cate2`
-                      FROM  `muse_object`";
-                      $querycat3=mysqli_query($link,$sqlcat4aaa) or die("Can't Query");
-                      $num_rows_cat3=mysqli_num_rows($querycat3);
-
-                      for ($cat3=0; $cat3<$num_rows_cat3; $cat3++) {
-                        $cat3re = mysqli_fetch_array($querycat3);
-                        $idobj2 = $cat3re['obj_cate2'];
-                      }
-                    }
-                } else {
-                  //echo "<p><input type='button' value ='noดาวน์โหลด' class='btn btn-info btn-mini' ></p>";
-                }
-              ?>
-            </ul>
+            
           </div>
         </div>
       </div>
@@ -411,7 +297,7 @@ include('connect.php');
                 if(($filetype =='jpg') or ($filetype =='JPG'))  {
                   if ($open == '0'){
                     echo "<div class='col-xs-3 col-md-4'>";
-                    echo "<a href='museshowdetail.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
+                    echo "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
                       <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px;' alt='' height='400' width='400'>
                       </a>";
                     echo "</div>";
@@ -419,7 +305,7 @@ include('connect.php');
                   else {
                     $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
                     echo "<div class='col-xs-3 col-md-4'>";
-                    echo "<a href='museshowdetail.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
+                    echo "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
                         <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px;' alt='' height='400' width='400'>
                         </a>";
                     echo "</div>";
@@ -670,31 +556,31 @@ include('connect.php');
           echo "</div>";
           echo "</div>";
           echo "<div class='col-sm-12'>";
-          $sql5 = "SELECT * FROM `muse_object` WHERE obj_refcode = '$refcode' ";
+          $sql5 = "SELECT * FROM `architec_object` WHERE archObj_Refcode = '$refcode' ";
           $query5 = mysqli_query($link,$sql5) or die("Can't Query5");
           $num_rows5=mysqli_num_rows($query5);
           for ($i=0; $i<$num_rows5; $i++) {
 			      $result5=mysqli_fetch_array($query5);
-		      	$title = $result5['obj_title'];
-            $physicals = $result5['obj_physicals'];
-            $extent = $result5['obj_extent']; // ขนาด
+		      	$title = $result5['archObj_Title'];
+            $physicals = $result5['archObj_Physicals'];
+            $extent = $result5['archObj_Extent']; // ขนาด
 
-            $location_display = $result5['obj_location']; //สถานที่จัดเก็บต้นฉบับ
-            $obj_ex = $result5['obj_existence']; //สถานที่จัดเก็บสำเนา
-            $obj_cr = $result5['obj_creator']; //ชื่อเจ้าของ
-            $obj_bi = $result5['obj_bio']; //ประวัติเจ้าของ
-            $obj_his = $result5['obj_history']; //ประวัติวัตถุจัดแสดง
-            $obj_ac = $result5['obj_acquis']; //แหล่งที่ได้มา/โอนย้าย
-            $obj_da = $result5['obj_dateacc']; //ช่วงเวลาการสะสม
+            $location_display = $result5['archObj_Location']; //สถานที่จัดเก็บต้นฉบับ
+            $obj_ex = $result5['archObj_Existence']; //สถานที่จัดเก็บสำเนา
+            $obj_cr = $result5['archObj_Creator']; //ชื่อเจ้าของ
+            $obj_bi = $result5['archObj_Bio']; //ประวัติเจ้าของ
+            $obj_his = $result5['archObj_History']; //ประวัติวัตถุจัดแสดง
+            $obj_ac = $result5['archObj_Acquis']; //แหล่งที่ได้มา/โอนย้าย
+            $obj_da = $result5['archObj_Dateacc']; //ช่วงเวลาการสะสม
 
             //include data checked
-            $cr_obj_location_display = $result5['obj_location_display']; //สถานที่จัดเก็บต้นฉบับ
-            $ch_obj_existence = $result5['obj_existence_display']; //สถานที่จัดเก็บสำเนา
-            $ch_obj_creator_display = $result5['obj_creator_display']; //่ขื่อเจ้าของ
-            $ch_obj_bio = $result5['obj_bio_display']; //ประวัติเจ้าของ
-            $ch_obj_history_display= $result5['obj_history_display']; //ประวัติวัตถุจัดแสดง
-            $ch_obj_acquis_display = $result5['obj_acquis_display']; //แหล่งที่ได้มา/โอนย้าย
-            $ch_obj_dateacc_display = $result5['obj_dateacc_display']; //ชวงเวลาสะสม
+            $cr_obj_location_display = $result5['archObj_Location_Display']; //สถานที่จัดเก็บต้นฉบับ
+            $ch_obj_existence = $result5['archObj_Existence_Display']; //สถานที่จัดเก็บสำเนา
+            $ch_obj_creator_display = $result5['archObj_Creator_Display']; //่ขื่อเจ้าของ
+            $ch_obj_bio = $result5['archObj_Bio_Display']; //ประวัติเจ้าของ
+            $ch_obj_history_display= $result5['archObj_History_Display']; //ประวัติวัตถุจัดแสดง
+            $ch_obj_acquis_display = $result5['archObj_Acquis_Display']; //แหล่งที่ได้มา/โอนย้าย
+            $ch_obj_dateacc_display = $result5['archObj_Dateacc_Display']; //ชวงเวลาสะสม
           }
           echo "<div class='col-sm-8'>";
           echo "<p><h3 class='text-info'>$title</h3></p>";
