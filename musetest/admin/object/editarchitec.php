@@ -576,24 +576,24 @@ echo "
 
 echo "<select class='form-control' id='cate_1' name='category' required>";
 echo "<option value='0'>-- เลือกประเภท --</option>";
-	$sql = "select * from muse_category  where cat1_parent ='0' ";
+	$sql = "select * from architec_category  where archCate_Parent ='0' ";
 	$query=mysqli_query($link,$sql) or die("Can't Query2");
 	$num_rows=mysqli_num_rows($query);
 
 	for ($i=0; $i<$num_rows; $i++) {
 		$result=mysqli_fetch_array($query);
-			if($category ==  $result[cat1_id])
+			if($category ==  $result['archCate_Id'])
 			{
-				echo "<option value='$result[cat1_id]' selected>$result[cat1_name]</option>";
+				echo "<option value='$result[archCate_Id]' selected>$result[archCate_Name]</option>";
 			}
 			else
 			{
-				echo "<option value='$result[cat1_id]'> $result[cat1_name]</option>";
+				echo "<option value='$result[archCate_Id]'> $result[archCate_Name]</option>";
 			}
 
 		// Sub Category //
-    	$parent = $result[cat1_id];
-		$sql5 = "select * from muse_category  ";
+    	$parent = $result[archCate_Id];
+		$sql5 = "select * from architec_category  ";
     	$query5=mysqli_query($link,$sql5) or die("Can't Query");
     	$num_rows5=mysqli_num_rows($query5);
 
@@ -610,12 +610,12 @@ if($category != 0 && $category2 != 0) {
 			<div class='col-sm-9'>
 				<select name='cate_2' class='form-control' id='cate_2'>";
 					echo "<option value='0'>ไม่ระบุ</option>";
-					$query = mysqli_query($link,"SELECT * FROM muse_category_lv2 WHERE ac1_id = '".$category."'");
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv2 WHERE archCate2_Parent = '".$category."'");
 					while($cate = mysqli_fetch_array($query)) {
-						if($cate['ac2_id'] === $category2) {
-							echo "<option value='".$cate['ac2_id']."' selected>".$cate['ac2_name']."</option>";
+						if($cate['archCate2_Id'] === $category2) {
+							echo "<option value='".$cate['archCate2_Id']."' selected>".$cate['archCate2_Name']."</option>";
 						} else {
-							echo "<option value='".$cate['ac2_id']."'>".$cate['ac2_name']."</option>";
+							echo "<option value='".$cate['archCate2_Id']."'>".$cate['archCate2_Name']."</option>";
 						}
 					}
 				echo "</select>
@@ -2021,12 +2021,12 @@ if($_SESSION['id']) {
 	$exploded_uri = explode('/', $uri); //$exploded_uri ==     array('example.com','index')
 	$domain_name = $exploded_uri[1]; 
 
-	$sql6 = "SELECT muse_bg.bg_id, items.obj_refcode FROM items , muse_bg WHERE muse_bg.bg_id = items.ownermuseum_code and items.obj_refcode = '$refcode' and muse_bg.bg_path = '$domain_name'  ";
+	// $sql6 = "SELECT muse_bg.bg_id, items.obj_refcode FROM items , muse_bg WHERE muse_bg.bg_id = items.ownermuseum_code and items.obj_refcode = '$refcode' and muse_bg.bg_path = '$domain_name'  ";
 		
-	$query6 = mysqli_query($link2,$sql6) or die("Can't Query6");
-	$result6 = mysqli_fetch_array($query6);
-	$bg_id6 = $result6['bg_id'];
-	$bg_name6 = $result6['bg_name']; 
+	// $query6 = mysqli_query($link2,$sql6) or die("Can't Query6");
+	// $result6 = mysqli_fetch_array($query6);
+	// $bg_id6 = $result6['bg_id'];
+	// $bg_name6 = $result6['bg_name']; 
 ?>    
       <label for="item_code"><?php //echo $domain_name ;?><?php //echo $bg_id6 ;?> <?php //echo $refcode ;?></label>
         <input type="hidden" name="action" value="Item"/>
@@ -2061,22 +2061,6 @@ if($_SESSION['id']) {
         </div> 
 </div>  
                 
-<!--    <div>-->
-  
-<!--                        </div>   -->
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
@@ -2113,14 +2097,14 @@ if($_SESSION['id']) {
 		</script>
 
 		<script>
-			var type = "mus";
+			var type = "archi";
 
 			$("#cate_1").on('change', function() {
 				var list_2 = "";
 				var list_3 = "";
 				$("#form_cate_2").html(list_2);
 				$("#form_cate_3").html(list_3);
-				$.ajax({url: "model/getCategory.php?table="+type+"&level=2&id="+ $(this).val(), success: function(result){
+				$.ajax({url: "model/getCategory.php?table="+type+"&level=2&archi=true&id="+ $(this).val(), success: function(result){
 					var fetch = $.parseJSON(result);
 
 					if(fetch.length > 0) {
@@ -2129,6 +2113,7 @@ if($_SESSION['id']) {
 						list_2 += "<select name='cate_2' class='form-control' id='cate_2'>";
 						list_2 += "<option value='0'>ไม่ระบุ</option>";
 						$.each(fetch, function(key, value) {
+							console.log(value);
 							list_2 += "<option value='"+value.id+"'>" + value.name + "</option>";
 						});
 						list_2 += "</select>";
@@ -2139,7 +2124,7 @@ if($_SESSION['id']) {
 						$("#cate_2").on('change', function() {
 							var list_3 = "";
 							$("#form_cate_3").html(list_3);
-							$.ajax({url: "model/getCategory.php?table="+type+"&level=3&id="+ $(this).val(), success: function(xx){
+							$.ajax({url: "model/getCategory.php?table="+type+"&level=3&archi=true&id="+ $(this).val(), success: function(xx){
 								var ff = $.parseJSON(xx);
 
 								if(ff.length > 0) {
@@ -2162,31 +2147,9 @@ if($_SESSION['id']) {
 				}});
 			}); /////////////////////////////22222222222222222222222222222
 
-			$("#cate_2").on('change', function() {
-				var list_3 = "";
-				$("#form_cate_3").html(list_3);
-				$.ajax({url: "model/getCategory.php?table="+type+"&level=3&id="+ $(this).val(), success: function(xx){
-					var ff = $.parseJSON(xx);
-
-					if(ff.length > 0) {
-						list_3 += "<label for='cate_3' class='col-sm-4 control-label'>ประเภทระดับ 3</label>";
-						list_3 += "<div class='col-sm-8'>";
-						list_3 += "<select name='cate_3' class='form-control' id='cate_3'>";
-						list_3 += "<option value='0'>ไม่ระบุ</option>";
-						$.each(ff, function(key, value) {
-							list_3 += "<option value='"+value.id+"'>" + value.name + "</option>";
-						});
-						list_3 += "</select>";
-						list_3 += "</div>";
-						$("#form_cate_3").html(list_3);
-					}
-
-				}});
-			}); //////////////////////////////// 33333333333333333333333
-
 		</script>
 
-		<!----------------------------- 3 Level Category ----------------------------------->
+		<!-- 3 Level Category -->
 
 
     </body>
