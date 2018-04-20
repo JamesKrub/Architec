@@ -125,13 +125,13 @@ switch ($menu) {
               <?php
                 $catid = $_REQUEST['catid'];
                 $refcode = $_REQUEST['refcode'];
-                $sql5 = "select distinct  `muse_category`.`cat1_id` , `muse_category`.`cat1_name` FROM  `muse_category` WHERE `muse_category`.`cat1_id` = '$catid '  ";
+                $sql5 = "select distinct  `architec_category`.`archCate_Id` , `architec_category`.`archCate_Name` FROM  `architec_category` WHERE `architec_category`.`archCate_Id` = '$catid '  ";
          			$query5=mysqli_query($link,$sql5) or die("Can't Query");
          			$num_rows5=mysqli_num_rows($query5);
 	     			for ($i=0; $i<$num_rows5; $i++) {
          				$result5=mysqli_fetch_array($query5);
-         				$objc = $result5['cat1_id'];
-                        $objn = $result5['cat1_name'];
+         				$objc = $result5['archCate_Id'];
+                        $objn = $result5['archCate_Name'];
                         // $objtitle = $result5['obj_title'];
                         // $objid = $result5['obj_id'];
          				//$downloadfile = $result5['obj_downloadfile'];
@@ -303,7 +303,7 @@ echo $_GET['obj_title'];
                         }
                     ?>
 
-                    <?php echo "<a href='architecInside_lvl1.php?refcode=$refcode&catid=$cat1_id'><img src='$objpic' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>" ?>
+                    <?php echo "<a href='architecInside.php?refcode=$refcode&catid=$cat1_id'><img src='$objpic' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>" ?>
                     <?php    
                         if(($picvr == 1) and ($bpu == 0)) {
                     ?>
@@ -337,7 +337,7 @@ echo $_GET['obj_title'];
               ?>
                 <div class='col-sm-3'>
                     <h5 class='text-info'><?php echo $result["archObj_Title"];?></h5>
-                    <a href='architecInside_lvl1.php?refcode=<?php echo $result["archObj_Refcode"];?>'><img src='<?php echo $objpic;?>' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>
+                    <a href='architecInside.php?refcode=<?php echo $result["archObj_Refcode"];?>'><img src='<?php echo $objpic;?>' class='img-thumbnail' style='margin:15px 0px 15px;' alt=''> </a> <br/>
                     <?php    
                         if(($picvr == 1) and ($bpu == 0)) {
                     ?>
@@ -415,8 +415,6 @@ $conn = null;
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
   <!-- Style Switcher -->
-
-
   <script type="text/javascript" src="js/script.js"></script>
 <!--
     <script type="text/javascript">

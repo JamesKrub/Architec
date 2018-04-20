@@ -259,7 +259,6 @@ include('connect.php');
 
             echo "<div class='col-sm-12'>";
             $sql = "SELECT * FROM architec_pic where archObj_Refcode = '$refcode' and archPic_Open = '1' LIMIT $start , $p_size ";
-            //$sql = "SELECT * FROM muse_pic where obj_refcode = '$refcode' and obj_id ='0' ORDER BY listorder ASC LIMIT $start , $p_size";
             $query=mysqli_query($link,$sql) or die("Can't Query");
             $num_rows=mysqli_num_rows($query);
             $line =0;
@@ -286,30 +285,18 @@ include('connect.php');
                 } else {
                 }
                 $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
-                if ($open == '0'){
-                  $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
-                }
               }
 
               $line = $line+1;
               if($line <7) {
                 // echo "line = $line  file = $filetype <br>";
                 if(($filetype =='jpg') or ($filetype =='JPG'))  {
-                  if ($open == '0'){
-                    echo "<div class='col-xs-3 col-md-4'>";
-                    echo "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
-                      <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px;' alt='' height='400' width='400'>
-                      </a>";
-                    echo "</div>";
-                  }
-                  else {
                     $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
                     echo "<div class='col-xs-3 col-md-4'>";
                     echo "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
                         <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px;' alt='' height='400' width='400'>
                         </a>";
                     echo "</div>";
-                  }
                 }
                 else if ($filetype == 'mp4') {
                   //echo "pic/bigmuse/$refcode/$result3[pic_name]";
@@ -347,7 +334,7 @@ include('connect.php');
                 $line = 1;
                 if(($filetype =='jpg') or ($filetype =='JPG'))  {
                   echo "<div class='col-xs-3 col-md-4'>";
-                  echo "<a href='museshowdetail.php?picid=$picid&refcode=$refcode'>
+                  echo "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode'>
                       <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px;' alt='' height='400' width='400'>
                       </a>";
                   echo "</div>";

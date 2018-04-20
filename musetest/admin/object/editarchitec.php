@@ -259,12 +259,12 @@ if(isset($_GET['logoff']))
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-						แก้ไขวัตถุจัดแสดง
+						แก้ไขสถาปัตยกรรม
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="showmuse.php"><i class="fa fa-dashboard"></i> วัตถุจัดแสดง</a></li>
-                        <li class="active">แก้ไขวัตถุจัดแสดง</li>
+                        <li><a href="showarch.php"><i class="fa fa-dashboard"></i> ข้อมูลสถาปัตยกรรม</a></li>
+                        <li class="active">แก้ไขสถาปัตยกรรม</li>
                     </ol>
                 </section>
 
@@ -425,85 +425,90 @@ if($update == '1')
     <div id='alert-message' class='alert alert-success alert-dismissable'>
         <i class='fa fa-check'></i>
         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-        แก้ไขข้อมูลวัตถุจัดแสดงเสร็จสิ้น
+        แก้ไขข้อมูลสถาปัตยกรรมเสร็จสิ้น
     </div>";
 } // end if
 
-//fetching data in descending order (lastest entry first)
- $sql = "select * from architec_object  where archObj_Id = '$objectid'";
-         $query = mysqli_query($link,$sql) or die("Can't Query: หน้าต่าแสดงผลข้อมูล (523)");
-         $num_rows = mysqli_num_rows($query);
-	     for ($i=0; $i<$num_rows; $i++) {
-            $result = mysqli_fetch_array($query);
-		    //echo "$result[obj_id] $result[obj_title] <br>";
-			$objid = $result[archObj_Id] ;
-			$refcode = $result[archObj_Refcode];
-            $oldrefcode = $result[archOld_Obj_Refcode];
-			$title = $result[archObj_Title];
-            $titleeng = $result[archObj_Titleeng];
-			$datecreate = $result[archObj_Datecreate] ;
+	//fetching data in descending order (lastest entry first)
+	$sql = "select * from architec_object  where archObj_Id = '$objectid'";
+	$query = mysqli_query($link,$sql) or die("Can't Query: หน้าต่าแสดงผลข้อมูล (523)");
+	$num_rows = mysqli_num_rows($query);
 
-			$newdate = explode("-",$datecreate);
-			$datecreate = $newdate[2]."-".$newdate[1]."-".$newdate[0];
+	for ($i=0; $i<$num_rows; $i++) {
+		$result = mysqli_fetch_array($query);
+		//echo "$result[obj_id] $result[obj_title] <br>";
+		$objid = $result[archObj_Id] ;
+		$refcode = $result[archObj_Refcode];
+		$oldrefcode = $result[archOld_Obj_Refcode];
+		$title = $result[archObj_Title];
+		$titleeng = $result[archObj_Titleeng];
+		$datecreate = $result[archObj_Datecreate] ;
 
-			$level = $result[archObj_Level] ;
-			$extent = $result[archObj_Extent] ;
-			$creator = $result[archObj_Creator] ;
-			$bio = $result[archObj_Bio] ;
-			$dateacc = $result[archObj_Dateacc] ;
-			$history = $result[archObj_History] ;
-			$acquis = $result[archObj_Acquis] ;
-			$scope = $result[archObj_Scope] ;
-			$appraisal = $result[archObj_Appraisal] ;
-			$accruals = $result[archObj_Accruals] ;
-			$arrangement = $result[archObj_Arrangement] ;
-			$legal = $result[archObj_Legal] ;
-			$condition = $result[archObj_Condition] ;
-			$copyright = $result[archObj_Copyright] ;
-			$lang = $result[archObj_Lang] ;
-			$physicals= $result[archObj_Physicals] ;
-            $physicalseng = $result[archObj_Physicalseng];
+		$newdate = explode("-",$datecreate);
+		$datecreate = $newdate[2]."-".$newdate[1]."-".$newdate[0];
 
-			$aids= $result[archObj_Aids] ;
-			$location = $result[archObj_Location] ;
-			$existence = $result[archObj_Existence] ;
-			$related = $result[archObj_Related] ;
-			$associated = $result[archObj_Associated] ;
-			$pubnote = $result[archObj_Pubnote] ;
-			$note= $result[archObj_Note] ;
-			$date = $result[archObj_Date] ;
+		$level = $result[archObj_Level] ;
+		$extent = $result[archObj_Extent] ;
+		$creator = $result[archObj_Creator] ;
+		$bio = $result[archObj_Bio] ;
+		$dateacc = $result[archObj_Dateacc] ;
+		$history = $result[archObj_History] ;
+		$acquis = $result[archObj_Acquis] ;
+		$scope = $result[archObj_Scope] ;
+		$appraisal = $result[archObj_Appraisal] ;
+		$accruals = $result[archObj_Accruals] ;
+		$arrangement = $result[archObj_Arrangement] ;
+		$legal = $result[archObj_Legal] ;
+		$condition = $result[archObj_Condition] ;
+		$copyright = $result[archObj_Copyright] ;
+		$lang = $result[archObj_Lang] ;
+		$physicals= $result[archObj_Physicals] ;
+		$physicalseng = $result[archObj_Physicalseng];
 
+		$aids= $result[archObj_Aids] ;
+		$location = $result[archObj_Location] ;
+		$existence = $result[archObj_Existence] ;
+		$related = $result[archObj_Related] ;
+		$associated = $result[archObj_Associated] ;
+		$pubnote = $result[archObj_Pubnote] ;
+		$note= $result[archObj_Note] ;
+		$date = $result[archObj_Date] ;
 
+		$access= $result[archObj_Access] ;
+		$keyword = $result[archObj_Keyword] ;
+		$display = $result[archObj_Display] ;
+		$locationdisplay = $result[archObj_Location_Display];
+		$existencedisplay = $result[archObj_Existence_Display];
+		$creatordisplay = $result[archObj_Creator_Display];
+		$biodisplay = $result[archObj_Bio_Display];
+		$dateaccdisplay = $result[archObj_Dateacc_Display];
+		$historydisplay = $result[archObj_History_Display];
+		$acquisdisplay = $result[archObj_Acquis_Display];
 
-			$access= $result[archObj_Access] ;
-			$keyword = $result[archObj_Keyword] ;
-			$display = $result[archObj_Display] ;
-			$locationdisplay = $result[archObj_Location_Display];
-			$existencedisplay = $result[archObj_Existence_Display];
-			$creatordisplay = $result[archObj_Creator_Display];
-			$biodisplay = $result[archObj_Bio_Display];
-			$dateaccdisplay = $result[archObj_Dateacc_Display];
-			$historydisplay = $result[archObj_History_Display];
-			$acquisdisplay = $result[archObj_Acquis_Display];
+		$access= $result['archObj_Access'];
+		// $data = $result[obj_date];
+		$date = new DateTime($date);
+		$date = $date->format('Y-m-d');
+		//$newdate1 = explode("-",$date);
+		//$date1 = $newdate1[2]."-".$newdate1[1]."-".$newdate1[0];
+		// echo "date = ".$date;
+		// echo "date1 = ".$date1;
+		// echo "newdate = ".$newdate;
+		$category = $result[archObj_Category] ;
+		$category2 = $result[archObj_Cate2];
+		$category3 = $result[archObj_Cate3] ;
+		$keyword = $result[archObj_Keyword] ;
+	} // end for
 
+	$sql = "select * from architec_category_lv2 where archCate2_Parent = $category";
+	$query = mysqli_query($link,$sql) or die("Can't Query: Level2 checks lvel3");
+	$num_of_lvl2 = mysqli_num_rows($query);
 
-			$access= $result['archObj_Access'];
+	$sql = "select * from architec_category_lv3 where archCate3_Parent = $category2";
+	$query = mysqli_query($link,$sql) or die("Can't Query: Level2 checks lvel3");
+	$num_of_lvl3 = mysqli_num_rows($query);
 
-			// $data = $result[obj_date];
-			$date = new DateTime($date);
-			$date = $date->format('Y-m-d');
-            //$newdate1 = explode("-",$date);
-			//$date1 = $newdate1[2]."-".$newdate1[1]."-".$newdate1[0];
-            // echo "date = ".$date;
-            // echo "date1 = ".$date1;
-            // echo "newdate = ".$newdate;
-
-			$category = $result[archObj_Category] ;
-			$category2 = $result[archObj_Cate2];
-
-			$category3 = $result[archObj_Cate3] ;
-			$keyword = $result[archObj_Keyword] ;
-        } // end for
+	
 
 ###########################
 
@@ -555,7 +560,7 @@ echo "
 	</div>
 </div>
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>ชื่อวัตถุจัดแสดง*</label>
+	<label class='col-sm-2 control-label'>ชื่อสถาปัตยกรรม*</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='title' value='$title' required>
 	</div>
@@ -622,6 +627,24 @@ if($category != 0 && $category2 != 0) {
 			</div>
 
 	";
+} else if ($category2 == 0 && $num_of_lvl2 != 0) {
+	echo "
+			<label for='cate_2' class='col-sm-3 control-label'>ประเภทระดับ 2</label>
+			<div class='col-sm-9'>
+				<select name='cate_2' class='form-control' id='cate_2'>";
+					echo "<option value='0'>ไม่ระบุ</option>";
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv2 WHERE archCate2_Parent = '".$category."'");
+					while($cate = mysqli_fetch_array($query)) {
+						if($cate['archCate2_Id'] === $category2) {
+							echo "<option value='".$cate['archCate2_Id']."' selected>".$cate['archCate2_Name']."</option>";
+						} else {
+							echo "<option value='".$cate['archCate2_Id']."'>".$cate['archCate2_Name']."</option>";
+						}
+					}
+				echo "</select>
+			</div>
+
+	";
 }
 echo "</div>";
 
@@ -632,12 +655,29 @@ if($category != 0 && $category2 != 0 && $category3 != 0) {
 			<div class='col-sm-8'>
 				<select name='cate_3' class='form-control' id='cate_3'>";
 					echo "<option value='0'>ไม่ระบุ</option>";
-					$query = mysqli_query($link,"SELECT * FROM muse_category_lv3 WHERE ac2_id = '".$category2."'");
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv3 WHERE archCate3_Parent = '".$category2."'");
 					while($cate = mysqli_fetch_array($query)) {
-						if($cate['ac3_id'] === $category3) {
-							echo "<option value='".$cate['ac3_id']."' selected>".$cate['ac3_name']."</option>";
+						if($cate['archCate3_Id'] === $category3) {
+							echo "<option value='".$cate['archCate3_Id']."' selected>".$cate['archCate3_Name']."</option>";
 						} else {
-							echo "<option value='".$cate['ac3_id']."'>".$cate['ac3_name']."</option>";
+							echo "<option value='".$cate['archCate3_Id']."'>".$cate['archCate3_Name']."</option>";
+						}
+					}
+				echo "</select>
+			</div>
+	";
+} else if($category3 == 0 && $num_of_lvl3 != 0) {
+	echo "
+			<label for='cate_3' class='col-sm-4 control-label'>ประเภทระดับ 3</label>
+			<div class='col-sm-8'>
+				<select name='cate_3' class='form-control' id='cate_3'>";
+					echo "<option value='0'>ไม่ระบุ</option>";
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv3 WHERE archCate3_Parent = '".$category2."'");
+					while($cate = mysqli_fetch_array($query)) {
+						if($cate['archCate3_Id'] === $category3) {
+							echo "<option value='".$cate['archCate3_Id']."' selected>".$cate['archCate3_Name']."</option>";
+						} else {
+							echo "<option value='".$cate['archCate3_Id']."'>".$cate['archCate3_Name']."</option>";
 						}
 					}
 				echo "</select>
@@ -864,7 +904,7 @@ echo "
 	echo "
 		<div class='checkbox'>
 			<label>
-				<input type='checkbox' name='historydisplay' value='1' checked> ประวัติวัตถุจัดแสดง
+				<input type='checkbox' name='historydisplay' value='1' checked> ประวัติสถาปัตยกรรม
 			</label>
 		</div> ";
     }
@@ -873,7 +913,7 @@ echo "
 	echo "
 		<div class='checkbox'>
 			<label>
-				<input type='checkbox' name='historydisplay' value='1'> ประวัติวัตถุจัดแสดง
+				<input type='checkbox' name='historydisplay' value='1'> ประวัติสถาปัตยกรรม
 			</label>
 		</div> ";
     }
@@ -1017,7 +1057,7 @@ echo "
 </div>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>ประวัติวัตถุจัดแสดง</label>
+	<label class='col-sm-2 control-label'>ประวัติสถาปัตยกรรม</label>
 	<div class='col-sm-10'>
 		<textarea class='form-control' rows='4' name ='history'>$history</textarea>
 	</div>
@@ -1138,7 +1178,7 @@ echo "
 </div>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>วัตถุจัดแสดงที่เกี่ยวข้อง</label>
+	<label class='col-sm-2 control-label'>สถาปัตยกรรมที่เกี่ยวข้อง</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='related' value='$related'>
 	</div>
@@ -1224,7 +1264,7 @@ echo "
 
 
 <!-- ------   End Of Process---------- -->
-<!-- ------ วัตถุจัดแสดงดาวน์โหลด ----------- -->
+<!-- ------ สถาปัตยกรรมดาวน์โหลด ----------- -->
 
 <?php
 if($updatevr == 1) {
@@ -1771,7 +1811,7 @@ if($_SESSION['id']) {
   
 	echo "<div class='box box-primary'>"; // Start box-primary
 	echo "<div class='box-header'>";
-	echo "<h3 class='box-title'>วัตถุจัดแสดง</h3>";
+	echo "<h3 class='box-title'>รูปสถาปัตยกรรม</h3>";
 
     $ref = ConvertTH_EN($data);
      
@@ -1779,10 +1819,10 @@ if($_SESSION['id']) {
 	echo "<div class='box-body'>"; // Start box-body
 	echo "<div>
 			<a class='btn btn-primary' href=\"JavaScript:newPopup('uploadarchitec/index.php?dir=$ref&objectid=$objectid&refcode=$refcode');\">
-				<i class='fa fa-upload fa-lg'></i> อัพโหลดวัตถุจัดแสดง
+				<i class='fa fa-upload fa-lg'></i> อัพโหลดรูปสถาปัตยกรรม
 			</a>
 			<a class='btn btn-primary pull-right' href=\"JavaScript:newPopup('model/sortable/sortArchitec.php?ref=$refcode&type=architec&id=$objectid');\">
-				<i class='fa fa-sort-amount-desc fa-lg'></i> จัดเรียงวัตถุจัดแสดง
+				<i class='fa fa-sort-amount-desc fa-lg'></i> จัดเรียงรูปสถาปัตยกรรม
 			</a><br><br>
 		  </div>";
 
@@ -1926,9 +1966,9 @@ if($_SESSION['id']) {
 			}
 			
 			if($result3[archPic_Open] == '0') { 
-				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=0&objectid=$objid&refcode=$refcode'><img src='images/eye-open.png'></a>";
+				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=0&objectid=$objid&refcode=$refcode'><img src='images/eye-close.png'></a>";
 			} else {
-				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=1&objectid=$objid&refcode=$refcode'><img src='images/eye-close.png'></a>";
+				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=1&objectid=$objid&refcode=$refcode'><img src='images/eye-open.png'></a>";
 			}
 			echo "</td>";
 			echo "</tr>";
