@@ -2061,46 +2061,37 @@ if($_SESSION['id']) {
 	$exploded_uri = explode('/', $uri); //$exploded_uri ==     array('example.com','index')
 	$domain_name = $exploded_uri[1]; 
 
-	// $sql6 = "SELECT muse_bg.bg_id, items.obj_refcode FROM items , muse_bg WHERE muse_bg.bg_id = items.ownermuseum_code and items.obj_refcode = '$refcode' and muse_bg.bg_path = '$domain_name'  ";
-		
-	// $query6 = mysqli_query($link2,$sql6) or die("Can't Query6");
-	// $result6 = mysqli_fetch_array($query6);
-	// $bg_id6 = $result6['bg_id'];
-	// $bg_name6 = $result6['bg_name']; 
 ?>    
       <label for="item_code"><?php //echo $domain_name ;?><?php //echo $bg_id6 ;?> <?php //echo $refcode ;?></label>
-        <input type="hidden" name="action" value="Item"/>
-       <input name="museum_code" type="hidden" id="museum_code" value="<?php echo $bg_id6 ;?>">  
-      <input name="item_code" type="hidden" id="item_code" value="<?php echo $refcode ;?>">
+		<input type="hidden" name="action" value="Item"/>
+		<input name="museum_code" type="hidden" id="museum_code" value="<?php echo $bg_id6 ;?>">  
+		<input name="item_code" type="hidden" id="item_code" value="<?php echo $refcode ;?>">
 
 
-    <button type="submit" class="btn btn-primary"><i class='fa fa-upload fa-lg'></i> ส่งข้อมูล นิทรรศการ </button>
-  </form> 
+    	<button type="submit" class="btn btn-primary"><i class='fa fa-upload fa-lg'></i> ส่งข้อมูล นิทรรศการ </button>
+  		</form> 
         </div>  
-     <div class='col-sm-6'>     
-  <form action="http://www.museumspool.com/adt_anurak/index.php/Adapter/get_link_item" target='_blank' method='post' >
-<!--    <div class="form-group">-->
-    <?php $refcode = $_REQUEST['refcode'];//echo $refcode 
-	    // echo "$bg_id6" ;
-    ?>    
-      <label for="item_code"><?php //echo $bg_id6 ?><?php //echo $refcode ?></label>
-        <input type="hidden" name="action" value="Item"/>
-       <input name="museum_code" type="hidden" id="museum_code" value="<?php echo $bg_id6 ;?>">    
-      <input name="item_code" type="hidden" id="item_code" value="<?php echo $refcode ;?>">
+					<div class='col-sm-6'>     
+				<form action="http://www.museumspool.com/adt_anurak/index.php/Adapter/get_link_item" target='_blank' method='post' >
+				<!--    <div class="form-group">-->
+					<?php $refcode = $_REQUEST['refcode'];//echo $refcode 
+						// echo "$bg_id6" ;
+					?>    
+					<label for="item_code"><?php //echo $bg_id6 ?><?php //echo $refcode ?></label>
+						<input type="hidden" name="action" value="Item"/>
+					<input name="museum_code" type="hidden" id="museum_code" value="<?php echo $bg_id6 ;?>">    
+					<input name="item_code" type="hidden" id="item_code" value="<?php echo $refcode ;?>">
 
 
-    <button type="submit" class="btn btn-primary pull-right"><i class='fa fa-upload fa-lg'></i> สร้างนิทรรศการ </button>
-  </form>        
+					<button type="submit" class="btn btn-primary pull-right"><i class='fa fa-upload fa-lg'></i> สร้างนิทรรศการ </button>
+				</form>        
 
-         </div> 
-		  </div>   
-        
-        
-        
-</div>
-        </div> 
+				</div> 
+			</div>           
+		</div>
+	</div> 
 </div>  
-                
+
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->

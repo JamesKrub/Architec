@@ -72,7 +72,7 @@ if(($permission == 'superadmin') or ($permission == 'admin') or ($permission == 
 				<i class='fa fa-angle-left pull-right'></i>
 			</a>
 			<ul class='treeview-menu'>
-				<li><a href='showarch.php'><i class='fa fa-angle-double-right'></i> รูปสถาปัตยกรรม</a></li>
+				<li><a href='showarch.php'><i class='fa fa-angle-double-right'></i> ข้อมูลสถาปัตยกรรม</a></li>
 				<li><a href='showarchcat.php'><i class='fa fa-angle-double-right'></i> ประเภทสถาปัตยกรรม</a></li>
 			</ul>
 		</li>
