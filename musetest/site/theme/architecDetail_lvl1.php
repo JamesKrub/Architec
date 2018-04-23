@@ -1,4 +1,3 @@
-
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
 $objectid = $_REQUEST['objectid'];
@@ -62,8 +61,11 @@ switch ($menu) {
 
 
   <?php include "head.php" ; ?>
+  <script type="text/javascript" src="./asset/architecAsset/jquery-1.4.1.js"></script>
+  <script type="text/javascript" src="./asset/architecAsset/coldfusion.json.js"></script>
+  <script type="text/javascript" src="./asset/architecAsset/phototagger.jquery.js"></script>
   <!-- Margo JS  -->
-  <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+  <!-- <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="js/jquery.migrate.js"></script>
   <script type="text/javascript" src="js/modernizrr.js"></script>
   <script type="text/javascript" src="asset/js/bootstrap.min.js"></script>
@@ -79,12 +81,9 @@ switch ($menu) {
   <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
   <script type="text/javascript" src="js/jquery.parallax.js"></script>
   <script type="text/javascript" src="js/mediaelement-and-player.js"></script>
-  <script type="text/javascript" src="js/jquery.slicknav.js"></script>
-<!--  <script type="text/javascript" src="asset/js/bootstrap.min.js"></script>    -->
-  <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <!-- Zoom
-================================================== -->
+  <script type="text/javascript" src="js/jquery.slicknav.js"></script> -->
+    
+ <!-- Zoom ================================================== -->
 <style>
 	.smooth_zoom_preloader {
 		background-image: url(../../pic/zoom_assets/preloader.gif);
@@ -92,10 +91,8 @@ switch ($menu) {
 	.smooth_zoom_icons {
 		background-image: url(../../pic/zoom_assets/icons.png);
 	}
-</style>
 
-<style>
-.watermark2 {
+  .watermark2 {
     position: absolute;
     left: 50%;
     top: 70%;
@@ -104,41 +101,108 @@ switch ($menu) {
     height:auto;
     display:block;
     opacity: 0.15;
-    z-index: 888;
-}
+      z-index: 888;
+  }
+  div.photo-column {
+      /* float: left ;  */
+      margin-right: 10px ;
+  }
+  
+  div.photo-container {
+      /* border: 1px solid #333333 ; */
+      margin-bottom: 13px ;
+  }
 </style>
-<!--
-<script language="javascript">
-document.onmousedown=disableclick;
-status="Right Click Disabled";
-Function disableclick(event)
-{
-  if(event.button==2)
-   {
-     alert(status);
-     return false;
-   }
-}
-</script>
--->
-<!--<script src="../../pic/zoom_assets/jquery-1.7.1.min.js"></script>-->
-<script src="../../pic/zoom_assets/jquery.smoothZoom.min.js"></script>
-<script>
-	jQuery(function($){
-		$('#yourImageID').smoothZoom({
-			width: 812,
-			height: 584,
 
-			/******************************************
-			Enable Responsive settings below if needed.
-			Max width and height values are optional.
-			******************************************/
-			responsive: true,
-			responsive_maintain_ratio: true,
-			max_WIDTH: '',
-			max_HEIGHT: ''
-		});
-	});
+<!-- <script src="../../pic/zoom_assets/jquery.smoothZoom.min.js"></script> -->
+<script type="text/javascript">
+    // When the DOM is ready, initialize the scripts.
+    jQuery(function( $ ){
+      
+      // Set up the photo tagger.
+      $( "div.photo-container" ).photoTagger({
+        loadURL: "./asset/architecAsset/taggingBackend.php",
+        saveURL: "./asset/architecAsset/taggingBackend.php",
+        deleteURL: "./asset/architecAsset/taggingBackend.php"
+      });
+      
+      
+      // Hook up the enable create links.
+      $( "a.enable-create" ).click(
+        function( event ){
+          // Prevent relocation.
+          event.preventDefault();
+          
+          // Get the container and enable the tag 
+          // creation on it.
+          $( this ).prevAll( "div.photo-container" )
+            .photoTagger( "enableTagCreation" )
+          ;
+        }
+      );
+      
+      // Hook up the disabled create links.
+      $( "a.disable-create" ).click(
+        function( event ){
+          // Prevent relocation.
+          event.preventDefault();
+          
+          // Get the container and enable the tag 
+          // creation on it.
+          $( this ).prevAll( "div.photo-container" )
+            .photoTagger( "disableTagCreation" )
+          ;
+        }
+      );
+      
+      // Hook up the enable delete links.
+      $( "a.enable-delete" ).click(
+        function( event ){
+          // Prevent relocation.
+          event.preventDefault();
+          
+          // Get the container and enable the tag 
+          // deletion on it.
+          $( this ).prevAll( "div.photo-container" )
+            .photoTagger( "enableTagDeletion" )
+          ;
+        }
+      );
+      
+      // Hook up the disabled delete links.
+      $( "a.disable-delete" ).click(
+        function( event ){
+          // Prevent relocation.
+          event.preventDefault();
+          
+          // Get the container and disabled the tag 
+          // deletion on it.
+          $( this ).prevAll( "div.photo-container" )
+            .photoTagger( "disableTagDeletion" )
+          ;
+        }
+      );
+    
+    });
+    
+  </script>
+<script>
+
+	// jQuery(function($){
+	// 	$('#yourImageID').smoothZoom({
+	// 		width: 812,
+	// 		height: 584,
+
+	// 		/******************************************
+	// 		Enable Responsive settings below if needed.
+	// 		Max width and height values are optional.
+	// 		******************************************/
+	// 		responsive: true,
+	// 		responsive_maintain_ratio: true,
+	// 		max_WIDTH: '',
+	// 		max_HEIGHT: ''
+	// 	});
+	// });
 </script>
 </head>
 
@@ -364,6 +428,8 @@ include('connect.php');
         include('connect.php');
         //echo "ref = $refcode";
         echo "<div class='col-sm-12'>";
+          echo "<center><div class='photo-column '>";
+          echo "<div class='photo-container'>";
         $sql = "select * FROM architec_pic where archPic_Id ='$picid' ";
         $query=mysqli_query($link,$sql) or die("Can't Query");
         $num_rows=mysqli_num_rows($query);
@@ -376,9 +442,14 @@ include('connect.php');
 
           $pic = "../../pic/big_architec/$folderName/$result[archPic_Name]";
           $picdetail = $result['archPic_Detail'];
-          echo"<center><img id='yourImageID' src='$pic' class='img-polaroid'/></img><br> $picdetail</center>";
+          echo"<img  
+                        style = 'border: solid black 1px;'
+                        id = '$picid'
+                        src='$pic'/><br> $picdetail";
         }
-       ?>
+        echo "</div>";
+        ?>
+        </div></center>
       </div>
     </div>
   </div>
@@ -392,6 +463,6 @@ include('connect.php');
   <!-- Go To Top Link -->
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
   <!-- Style Switcher -->
-  <script type="text/javascript" src="js/script.js"></script>
+  <!-- <script type="text/javascript" src="js/script.js"></script> -->
 </body>
 </html>

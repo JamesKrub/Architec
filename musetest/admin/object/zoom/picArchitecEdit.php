@@ -276,7 +276,7 @@ if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($file
                         id = '$picid'
                         src ='../../../pic/big_architec/$foldref/$result[archPic_Name]'>";
         echo "</div>";
-?>
+      ?>
         <a href="#" class="enable-create">Enable Create</a> 
 		&nbsp;|&nbsp;
 		<a href="#" class="disable-create">Disable Create</a>
