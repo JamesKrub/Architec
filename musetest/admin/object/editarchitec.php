@@ -494,18 +494,18 @@ if($update == '1')
 		// echo "date = ".$date;
 		// echo "date1 = ".$date1;
 		// echo "newdate = ".$newdate;
-		$category = $result[archObj_Category] ;
-		$category2 = $result[archObj_Cate2];
-		$category3 = $result[archObj_Cate3] ;
-		$keyword = $result[archObj_Keyword] ;
+		$category = $result['archObj_Category'] ;
+		$category2 = $result['archObj_Cate2'];
+		$category3 = $result['archObj_Cate3'] ;
+		$keyword = $result['archObj_Keyword'] ;
 	} // end for
 
 	$sql = "select * from architec_category_lv2 where archCate2_Parent = $category";
-	$query = mysqli_query($link,$sql) or die("Can't Query: Level2 checks lvel3");
+	$query = mysqli_query($link,$sql) or die("Can't Query: Level2 ");
 	$num_of_lvl2 = mysqli_num_rows($query);
 
 	$sql = "select * from architec_category_lv3 where archCate3_Parent = $category2";
-	$query = mysqli_query($link,$sql) or die("Can't Query: Level2 checks lvel3");
+	$query = mysqli_query($link,$sql) or die("Can't Query: lvel3");
 	$num_of_lvl3 = mysqli_num_rows($query);
 
 	
@@ -1448,18 +1448,18 @@ echo "</div>";
 echo "<div class='box-body'>"; // Start box-body
 if($download == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '1' WHERE obj_refcode ='$refcode'";
-	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '1' WHERE archObj_Refcode ='$refcode'";
+	$query0=mysqli_query($link,$sql0) or die("Can't Query-0.1");
 } else {
 	//echo "ไม่อนุญาตให้ดาวน์โหลด";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '0' WHERE obj_refcode ='$refcode'";
-	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
+	$query0=mysqli_query($link,$sql0) or die("Can't Query-0.2");
 }
 
 if($deldownload == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_downloadfile`= '',`obj_download`= '0' WHERE obj_refcode ='$refcode'";
-	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
+	$sql0 = "UPDATE architec_object SET `archObj_downloadfile`= '',`archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
+	$query0=mysqli_query($link,$sql0) or die("Can't Query-0.3");
 }
 
 //upload  ไฟล์download
@@ -1467,21 +1467,19 @@ if($deldownload == '1') {
 echo "<form name ='formupload' method='post' action='model/funcMediaUploadMuse.php' enctype='multipart/form-data'>";
 echo "<div class='form-group'>";
 //echo "check exiting download file";
-$sql3 = "SELECT * FROM `muse_object` WHERE obj_refcode = '$refcode'";
+$sql3 = "SELECT * FROM `architec_object` WHERE archObj_Refcode = '$refcode'";
 $query3=mysqli_query($link,$sql3) or die("Can't Query3");
 $num_rows3=mysqli_num_rows($query3);
 for ($i=0; $i<$num_rows3; $i++) {
 	$result3=mysqli_fetch_array($query3);
-	$downloadfile = $result3['obj_downloadfile'];
-	$download = $result3['obj_download'];
+	$downloadfile = $result3['archObj_downloadfile'];
+	$download = $result3['archObj_Download'];
 	//echo "$result3[obj_downloadfile] <br>";
 }
 
-
-
 echo "
-<input type='file' name='uploadedfile' id='uploadedfile'>
-	<input type='hidden' name='type' value='museum'>
+	<input type='file' name='uploadedfile' id='uploadedfile'>
+	<input type='hidden' name='type' value='architec'>
 ";
 echo "</div>";
 echo "<div class='form-group'>";
@@ -1497,18 +1495,18 @@ $objectid = $_REQUEST['objectid']; //objid
 $req_bpu_id = $_REQUEST['bpu_id_req']; //bpuid
 
 
-$ul_query = mysqli_query($link,"SELECT * FROM `muse_upload` WHERE `obj_id` = '$objid'");
+$ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '$objid'");
 echo "<div class='row'>";
 while($row = mysqli_fetch_assoc($ul_query)) {
 	$ext = pathinfo($row['bpu_file']);
 	$bpu_id = $row['bpu_id'];
-		$filetype = explode(".", $row[bpu_file]);
+	$filetype = explode(".", $row[bpu_file]);
 	$filetype = $filetype[1];
-	$type = "museum";
+	$type = "architec";
 
 	if($filetype =='pdf') {
 		echo "<div class='col-sm-4' align='center'>";   
-		echo "<a target='_blank' href='../../pic/museum_upload/".$refcode."/".$row['bpu_file']."'>
+		echo "<a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row['bpu_file']."'>
 		<br>    <img src='images/pdf.png' width='100'> <br>".$row['bpu_file']." </a>
 		<p>  <a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'>
 		<img src='images/icon_del2.png'></a>  </p>";
@@ -1519,14 +1517,14 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 			$result=mysqli_fetch_array($query);
 			$email = $result['bg_email'];
 		}
-		$secheck = "SELECT * FROM muse_upload WHERE bpu_id = '$bpu_id' ";
+		$secheck = "SELECT * FROM architec_upload WHERE bpu_id = '$bpu_id' ";
 		$query_checking = mysqli_query($link , $secheck) or die("Can't Query");
 		$num_rowssql = mysqli_num_rows($query_checking);
         for ($ssi=0; $ssi < $num_rowssql; $ssi++) {
 	        $row_resuldata = mysqli_fetch_array($query_checking);
             $bup = $row_resuldata['bpu_id'];
         }
-		$secheckdata = "SELECT * FROM muse_upload_check WHERE bpu_id = '$bup'  ";
+		$secheckdata = "SELECT * FROM architec_upload_check WHERE bpu_id = '$bup'  ";
 		$querydata = mysqli_query($link , $secheckdata) or die("Can't Query");
 		$num_r = mysqli_num_rows($querydata);
 
@@ -1545,10 +1543,10 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 			<img src='images/icon_set2.png'> อนุญาตให้ดาวน์โหลด </a>";
 		} else if ($open_check_res == '0' ) {
 			echo "<a href='editarchitec.php?cover=1&objectid=$objectid&refcode=$refcode&bpu_id_req=$bpu_id'>
-			<img src='images/icon_set3.png'>อนุญาตให้ดาวน์โหลด </a>";
+			<img src='images/icon_set3.png'> อนุญาตให้ดาวน์โหลด </a>";
         }
 		if ($cover == '1') {
-			$update_data = "UPDATE `muse_upload_check`
+			$update_data = "UPDATE `architec_upload_check`
 			SET
 
 			`bpu_id` = '$req_bpu_id',`obj_id` = '$objectid',`bpu_count_dowload` = '0',`open_check` = '1' WHERE `bpu_id` = '$req_bpu_id'  ";
@@ -1556,7 +1554,7 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 			mysqli_query($link,$update_data);
 		}
 		if ($cover == '0') {
-			$update_data = "UPDATE `muse_upload_check`
+			$update_data = "UPDATE `architec_upload_check`
 			SET
 
 			`bpu_id` = '$req_bpu_id',`obj_id` = '$objectid',`bpu_count_dowload` = '0',`open_check` = '0' WHERE `bpu_id` = '$req_bpu_id'  ";
@@ -1620,7 +1618,7 @@ if($deldownload == '1') {
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 }
 
-echo "<form name ='formupload' method='post' action='model/funcMediaUpload.php' enctype='multipart/form-data'>";
+echo "<form name ='formupload' method='post' action='model/funcMediaUploadMuse.php' enctype='multipart/form-data'>";
 echo "<div class='form-group'>";
 $sql3 = "SELECT * FROM `architec_object` WHERE archObj_Refcode = '$refcode'";
 $query3=mysqli_query($link,$sql3) or die("Can't Query3");
