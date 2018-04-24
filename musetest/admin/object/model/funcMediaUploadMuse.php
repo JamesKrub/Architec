@@ -36,8 +36,6 @@ switch($_POST['type']) {
 if($_POST['type'] == 'news') {
   $dirSave =  '../../../pic/'.$folder.'/'.$_POST['objectid'];
   $redirect = "location: ../".$redir.".php?newsid=".$_POST['id']."";
-//  $dirSave =  '../../../pic/'.$folder.'/'.$_POST['id'];
-//  $redirect = "location: ../".$redir.".php?newsid=".$_POST['id']."";
 } else {
   $dirSave =  '../../../pic/'.$folder.'/'.$_POST['refcode'];
   $redirect = "location: ../".$redir.".php?objectid=".$_POST['objectid']."&refcode=".$_POST['refcode']."";

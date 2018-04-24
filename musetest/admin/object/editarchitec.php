@@ -1605,16 +1605,16 @@ echo "</div>";
 echo "<div class='box-body'>"; // Start box-body
 if($download == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '1' WHERE obj_refcode ='$refcode'";
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '1' WHERE archObj_Refcode ='$refcode'";
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 } else {
 	//echo "ไม่อนุญาตให้ดาวน์โหลด";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '0' WHERE obj_refcode ='$refcode'";
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 }
 if($deldownload == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_downloadfile`= '',`obj_download`= '0' WHERE obj_refcode ='$refcode'";
+	$sql0 = "UPDATE architec_object SET `archObj_downloadfile`= '',`archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 }
 
@@ -1631,7 +1631,7 @@ for ($i=0; $i<$num_rows3; $i++) {
 
 echo "
 <input type='file' name='uploadedfile' id='uploadedfile'>
-	<input type='hidden' name='type' value='museum'>
+	<input type='hidden' name='type' value='architec'>
 ";
 echo "</div>";
 echo "<div class='form-group'>";
@@ -1642,20 +1642,20 @@ echo "<input type='submit' class='btn btn-primary' value='อัพโหลด�
 echo "</div>";
 echo "</form>";
 			
-$ul_query = mysqli_query($link,"SELECT * FROM `muse_upload` WHERE `obj_id` = '".$objid."'");
+$ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '".$objid."'");
 echo "<div class='row'>";
 while($row = mysqli_fetch_assoc($ul_query)) {
 	$ext = pathinfo($row['bpu_file']);
 
 	$filetype = explode(".", $row[bpu_file]);
 	$filetype = $filetype[1];
-	$type = "museum";
+	$type = "architec";
 
 	if(($filetype =='mp3') or ($filetype =='MP3')) {
 		echo "<div class='col-sm-4' align='center'>";
 		echo "<audio width='250' controls>
-		<source src='../../pic/museum_upload/$refcode/$row[bpu_file]' type='audio/mpeg'>
-		<embed src='../../pic/museum_upload/$refcode/$row[bpu_file]' width='250'>
+		<source src='../../pic/architecupload/$refcode/$row[bpu_file]' type='audio/mpeg'>
+		<embed src='../../pic/architec_upload/$refcode/$row[bpu_file]' width='250'>
 		</audio>";
 		echo "<br>";
 		echo "<p>

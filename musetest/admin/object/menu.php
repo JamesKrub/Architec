@@ -36,32 +36,34 @@ if(($permission == 'superadmin') or ($permission == 'admin') or ($permission == 
 				</a>
 			</li>
 			-->
-			<li class='treeview'>
-                            <a href='#'>
-                                <i class='fa fa-archive'></i>
-                                <span>ข้อมูลทั่วไป</span>
-                                <i class='fa fa-angle-left pull-right'></i>
-                            </a>
-                            <ul class='treeview-menu'>
-                            	<!--<li><a href='addbg.php'><i class='fa fa-angle-double-right'></i> ข้อมูลหอจดหมายเหตุ</a></li>-->
-                            	<li><a href='addbg2.php'><i class='fa fa-angle-double-right'></i> ข้อมูลพิพิธภัณฑ์</a></li>
-                            </ul>
-            </li>
+
 ";
 
-   echo "          <li class='treeview'>
-                            <a href='#'>
-                                <i class='fa fa-th'></i>
-                                <span>พิพิธภัณฑ์</span>
-                                <i class='fa fa-angle-left pull-right'></i>
-                            </a>
-                            <ul class='treeview-menu'>
-                            	<li><a href='showmuse.php'><i class='fa fa-angle-double-right'></i> วัตถุจัดแสดง</a></li>
-                            	<li><a href='showmusecat.php'><i class='fa fa-angle-double-right'></i> ประเภทวัตถุจัดแสดง</a></li>
-                            </ul>
-            </li>
+//    echo "
+// 		<li class='treeview'>
+// 				<a href='#'>
+// 					<i class='fa fa-archive'></i>
+// 					<span>ข้อมูลทั่วไป</span>
+// 					<i class='fa fa-angle-left pull-right'></i>
+// 				</a>
+// 				<ul class='treeview-menu'>
+// 					<!--<li><a href='addbg.php'><i class='fa fa-angle-double-right'></i> ข้อมูลหอจดหมายเหตุ</a></li>-->
+// 					<li><a href='addbg2.php'><i class='fa fa-angle-double-right'></i> ข้อมูลพิพิธภัณฑ์</a></li>
+// 				</ul>
+// 			</li>
+//    			<li class='treeview'>
+// 				<a href='#'>
+// 					<i class='fa fa-th'></i>
+// 					<span>พิพิธภัณฑ์</span>
+// 					<i class='fa fa-angle-left pull-right'></i>
+// 				</a>
+// 				<ul class='treeview-menu'>
+// 					<li><a href='showmuse.php'><i class='fa fa-angle-double-right'></i> วัตถุจัดแสดง</a></li>
+// 					<li><a href='showmusecat.php'><i class='fa fa-angle-double-right'></i> ประเภทวัตถุจัดแสดง</a></li>
+// 				</ul>
+//             </li>
 
-			";
+// 			";
  
 	/* ===== สถาปัตยกรรม ===== (14/2/2018) */		
 	echo "
@@ -79,11 +81,11 @@ if(($permission == 'superadmin') or ($permission == 'admin') or ($permission == 
 	";
 
 	echo"
-			<li>
+			<!-- <li>
                 <a href='shownews.php'>
                     <i class='fa fa-calendar'></i> <span>ข่าวและกิจกรรม</span>
-                </a>
-            </li>
+                </a> 
+            </li> -->
             <li class='treeview'>
                             <a href='#'>
                                 <i class='fa fa-bar-chart-o'></i>

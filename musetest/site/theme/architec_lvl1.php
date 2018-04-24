@@ -268,15 +268,13 @@ echo $_GET['obj_title'];
                 $picvr = 1;
             }
 
-            $sql3 = "select * from muse_upload where obj_id = '$refid'  limit 0,1 ";
+            $sql3 = "select * from architec_upload where obj_id = '$refid'  limit 0,1 ";
             $query3 = mysqli_query($link,$sql3);
-            //$num_rows4=mysqli_num_rows($query4);
             $result3=mysqli_fetch_array($query3);
             $bpu = 0;
             if($result3['bpu_id']!= ''){
                 $bpu = 1;
             }
-
 
             $line = $line + 1;
             // echo "$line <br>";
