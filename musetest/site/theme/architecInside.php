@@ -274,7 +274,6 @@ include('connect.php');
               $filetype = $pictype[1];
               $cover = $result['archObj_Cover'];
               $open = $result['archPic_Open'];
-              // echo "line = $line  file = $filetype  <br>";
 
               if($num_rows == 0) {
                 $objpic = "../../pic/thumb_architec/$nrefcode/blank.jpg";
@@ -282,48 +281,44 @@ include('connect.php');
                 $objpics = $result['archThumb_Name'];
                 if ($objpics == ""){
                   $objpic = "../../pic/thumb_architec/blank.jpg";
-                } else {
                 }
                 $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
               }
-
               if($line == 0){
                 echo "<div class='row-eq-height'>";
               }
-              
               $line++;
-              if(($filetype =='jpg') or ($filetype =='JPG'))  {
-                  $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
-                  echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
-                  echo    "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
-                              <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px; height:auto; width:400px;' alt='' '>
-                              </a>";
-                  echo "</div>";
-              }
+              $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
+              echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
+              echo    "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
+                          <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px; height:auto; width:400px;' alt='' '>
+                        </a>";
+              echo "</div>";
               if($line == 3){
                 echo "</div>";
                 $line = 0;
+              } else if( ($line < 3) && ($i == $num_rows-1)){
+                echo"</div>";
               }
-            } // end for jpg
-
+            } // ภาพทั่วไป
+            
             $sql =  "SELECT * FROM `architec_360` WHERE obj_refcode = '$refcode' ";
             $query=mysqli_query($link,$sql) or die("Can't Query");
             $num_rows=mysqli_num_rows($query);
             $line =0;
+            if($num_rows > 0){
+              echo "  <p><h3 class='text-info'>ภาพ 360</h3></p>";
+            }
             for ($i=0; $i<$num_rows; $i++) {
               $result=mysqli_fetch_array($query);
-
               $folder_refcode = $result['obj_refcode'];
               $picname = $result['arch360_Dir'];
               $pictype = explode(".", $result['arch360_Dir']);
               $filetype = $pictype[1];
-
               if($line == 0){
                 echo "<div class='row-eq-height'>";
               }
-              
               $line++;
-              if(($filetype =='jpg') or ($filetype =='JPG'))  {
                   $objpic = "../../pic/architec_360/$folder_refcode/$picname";
                   echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
                   echo    "<a href='../../site/360/architec_pano.php?refcode=".$folder_refcode."&file=".$picname."'>
@@ -333,187 +328,15 @@ include('connect.php');
                                 <img src='../../pic/architec_360/icon_360.gif' style='POSITION: ABSOLUTE; bottom: 22px; left: 149px;' height:auto; width:100px;' alt=''>
                               </a>";
                   echo "</div>";
-              }
               if($line == 3){
                 echo "</div>";
                 $line = 0;
+              } else if( ($line < 3) && ($i == $num_rows-1)){
+                echo"</div>";
               }
-            } // end for pano
-
-            echo"</div>";
-            //echo "<div class='row'>";
-            echo "<div class='col-sm-12'>";
-			      $ul_query = mysqli_query($link,"SELECT * FROM `muse_upload` INNER JOIN `muse_object` ON `muse_object`.`obj_id` =  `muse_upload`.`obj_id` WHERE `muse_object`.`obj_refcode` = '$refcode'");
-			      //echo "<div class='row'>";
-		        while($row = mysqli_fetch_assoc($ul_query)) {
-			        $ext = pathinfo($row['bpu_file']);
-              $filetype = explode(".", $row[bpu_file]);
-              $filetype = $filetype[1];
-              //echo "<div class='col-md-2 text-center'>";
-              $type = "museum";
-
-              if(($filetype =='mp3') or ($filetype =='MP3')) {
-                echo "<div class='col-xs-3 col-md-4'>";
-                echo "<audio width='250' controls>
-                        <source src='../../pic/museum_upload/$refcode/$row[bpu_file]' type='audio/mpeg'>
-                        <embed src='../../pic/museum_upload/$refcode/$row[bpu_file]' width='250'>
-                      </audio>";
-                echo "<br>";
-                // echo "".$row['bpu_file']."";
-                echo "</div>";
-                // <!-- /.col-xs-3 -->
-                //echo "<br>";
-				      }
-              else if(($filetype =='mp4') or ($filetype =='MP4')) {
-                echo "<div class='col-xs-3 col-md-4'>";
-                echo "<video width='250'  controls>
-                        <source src='../../pic/museum_upload/$refcode/$row[bpu_file]' type='video/mp4'>
-                        <object data='../../museum_upload/$refcode/$row[bpu_file]' width='250' >
-         						    </object>
-							        </video>";
-                echo "<br>";
-                echo "</div>";
-				      }
-              else {
-			          echo "";
-              }
-		        } 
-
-            echo "</div>";
-            echo "<div class='row'>";
-            echo "<div class='col-sm-12'>";
-
-            // muse vr
-            $sql3 = "SELECT * FROM `muse_vr` WHERE `muse_vr`.`obj_refcode` = '$refcode' ";
-            $query3 = mysqli_query($link,$sql3) or die("Can't Query3");
-            $num_rows3=mysqli_num_rows($query3);
-            for ($i=0; $i<$num_rows3; $i++) {
-		          $result3 = mysqli_fetch_array($query3);
-              // $result4= mysqli_fetch_array($query4);
-              $mydir = $result3['vr_dir'];
-              $direction = $result3['vr_direction'];
-              $objScan = scandir("../../pic/vr/$mydir");
-              $numfile = 0;
-      			  foreach ($objScan as $value) {
-				        if($numfile <1) {
-                  $vrshow1 = explode(".", $value);
-                  if($vrshow1[1]=="jpg") {
-                    $vrshow[$i] = $vrshow1[0];
-                    $mergvr[$i] = $vrshow[$i].".jpg";
-                    $file1 = $mergvr[$i];
-                    $numfile=$numfile+1;
-                  }
-			 		        else if($vrshow1[1]=="JPG") {
-                    $vrshow[$i] = $vrshow1[0];
-                    $mergvr[$i] = $vrshow[$i].".JPG";
-                    $file1 = $mergvr[$i];
-                    $numfile=$numfile+1;
-                  }
-		  		      }
-              }
-              $file1 ="../../pic/vr/$mydir/$file1";
-              if($file1 <> ''){
-                echo "<div class='col-xs-3 col-md-4'>";
-                echo "<a href='showvr.php?mydir=$mydir&direction=$direction'>
-                <img src='images/icon_360.gif' class='img-thumbnail' style='padding: 20px 20px; background: url($file1); background-size: 120%; background-color:#ffffff; background-repeat:no-repeat; background-position: center;'></a>";
-                echo "</div>";
-              }
-              else{
-                echo " ";
-              }
-            }
-            echo " </div>";
-            echo " </div>";
+            } // ภาพ 360 องศา
           ?>
-        </div>
-
-        <div class="col-12">
-          <!--  <div class="col-sm-12">        -->
-          <?php
-          echo "<div class='col-sm-12'> ";
-          echo "<table width=90% border=0>";
-          echo "<tr>";
-          $sql9 = "SELECT * FROM `muse_pic` WHERE `muse_pic`.`obj_refcode` = '$refcode' ORDER BY listorder ";
-          $query9=mysqli_query($link,$sql9) or die("Can't Query2");
-          $num_rows9=mysqli_num_rows($query9);
-          for ($i=0; $i<$num_rows9; $i++) {
-              $result9=mysqli_fetch_array($query3);
-              $filetype = explode(".", $result9['pic_name']);
-              $filetype = $filetype[1];
-              if($line < 3) {
-				        echo "<td align='left'>";
-				        if($filetype =='mp4') {
-                  //echo "pic/bigmuse/$refcode/$result3[pic_name]";
-                  echo "<video width='200'  controls>
-                          <source src='../../pic/bigmuse/$refcode/$result9[pic_name]' type='video/mp4'>
-                          <object data='../../pic/bigmuse/$refcode/$result9[pic_name]' width='200' >
-                          </object>
-                        </video>";
-                  echo "<br>";
-				        }
-				        else if($filetype =='mp3') {
-                  echo "<audio width='200' controls>
-                          <source src='../../pic/bigmuse/$refcode/$result9[pic_name]' type='audio/mpeg'>
-                          <embed src='../../pic/bigmuse/$refcode/$result9[pic_name]' width='200'>
-                        </audio>";
-                  echo "<br>";
-				        }
-		          	echo "</td>";
-			          $line = $line+1;
-			        }
-			        else {
-				        echo "<td align='center'>";
-                if($filetype =='mp4') {
-						      echo "<video width='200'  controls>
-                          <source src='../../pic/bigmuse/$refcode/$result9[pic_name]' type='video/mp4'>
-                          <object data='../../pic/bigmuse/$refcode/$result9[pic_name]' width='200' >
-                          </object>
-                        </video>";
-                  echo "<br>";
-				        }
-				        else if($filetype =='mp3') {
-                  echo "<audio width='200' controls>
-                          <source src='../../pic/bigmuse/$refcode/$result9[pic_name]' type='audio/mpeg'>
-                          <embed src='../../pic/bigmuse/$refcode/$result9[pic_name]' width='200'>
-                        </audio>";
-                  echo "<br>";
-
-                echo "</td>";
-                echo "</tr>";
-                $line = 0;
-              }
-            }
-          }
-          
-          echo "</table>";
-          echo "</div>";
-
-          echo "<div class='col-sm-12'>";
-          echo "<div class='row'>";
-
-          $ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` where obj_id = '$obj_id'");
-          while($row = mysqli_fetch_assoc($ul_query)) {
-            $ext = pathinfo($row['bpu_file']);
-            $bpu_id = $row['bpu_id'];
-            $filetype = explode(".", $row[bpu_file]);
-            $filetypedata = $filetype[1];
-            //      echo "<div class='col-sm-4' align='center'>";
-            $type = "archive";
-
-            if($filetypedata =='pdf') {
-              // echo "bpu = $row[bpu_id] <br>";
-              echo "<div class='col-sm-4' align='center'>";
-              echo "<a target='_blank' href='../../pic/archive_upload/".$refcode."/".$row['bpu_file']."'>
-                      <br>
-                      <img src='images/pdf.png' width='100'> <br>".$row['bpu_file']."
-                    </a>
-              ";
-            }
-  			    echo "</div><!-- /.row -->";
-            echo "</div>";
-          }       
-          echo "</div>";
-          echo "</div>";
+        <?php
           echo "<div class='row'>";
           $sql5 = "SELECT * FROM `architec_object` WHERE archObj_Refcode = '$refcode' ";
           $query5 = mysqli_query($link,$sql5) or die("Can't Query5");
@@ -542,40 +365,39 @@ include('connect.php');
             $ch_obj_acquis_display = $result5['archObj_Acquis_Display']; //แหล่งที่ได้มา/โอนย้าย
             $ch_obj_dateacc_display = $result5['archObj_Dateacc_Display']; //ชวงเวลาสะสม
           }
-            echo "<div class='col-sm-12 col-md-12'>";
-            echo "  <p><h3 class='text-info'>$title</h3></p>";
-            echo "  <p>$physicals</p>";
-            echo "</div>";
+          echo "<div class='col-sm-12 col-md-12'>";
+          echo "  <p><h3 class='text-info'>$title</h3></p>";
+          echo "  <p>$physicals</p>";
+          echo "</div>";
             
-
-            $sql = "SELECT * FROM `architec_upload` WHERE obj_id = $obj_Id";
-            $query = mysqli_query($link,$sql) or die("Can't Query5");
-            $PDF=array();
-            $MP3=array();
-            $MP4=array();
-            while($row = mysqli_fetch_array($query)) {
-              $filetype = explode(".", $row['bpu_file']);
-              $filetype = $filetype[1];
-              if($filetype == 'pdf'){
-                array_push($PDF,$row['bpu_file']);
-              }
-              else if($filetype == 'mp3'){
-                array_push($MP3,$row['bpu_file']);
-              }
-              else if($filetype == 'mp4'){
-                array_push($MP4,$row['bpu_file']);
-              }
-            } // end while
+          $sql = "SELECT * FROM `architec_upload` WHERE obj_id = $obj_Id";
+          $query = mysqli_query($link,$sql) or die("Can't Query5");
+          $PDF=array();
+          $MP3=array();
+          $MP4=array();
+          while($row = mysqli_fetch_array($query)) {
+            $filetype = explode(".", $row['bpu_file']);
+            $filetype = $filetype[1];
+            if($filetype == 'pdf'){
+              array_push($PDF,$row['bpu_file']);
+            }
+            else if($filetype == 'mp3'){
+              array_push($MP3,$row['bpu_file']);
+            }
+            else if($filetype == 'mp4'){
+              array_push($MP4,$row['bpu_file']);
+            }
+          } // end while
             
-           ?>
-              <?php
-                if(count($PDF) > 0){
-              ?>
-                  <div class='col-sm-12 col-md-12' style="margin-top: 20px">
-                    <p><h3 class='text-info'>เอกสาร</h3></p>
-                    <?php
-                      foreach($PDF as $row){ ?>
-                        <div class="col-sm-1 col-md-2" >
+        ?>
+        <?php
+          if(count($PDF) > 0){
+        ?>
+            <div class='col-sm-12 col-md-12' style="margin-top: 20px">
+              <p><h3 class='text-info'>เอกสาร</h3></p>
+                <?php
+                  foreach($PDF as $row){ ?>
+                    <div class="col-sm-1 col-md-2" >
                     <?php
                         echo "<center><a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row."'>
                                 <br><img style='width: 45px;' src='../../admin/object/images/pdf.png' width='100'> <br>
@@ -583,77 +405,69 @@ include('connect.php');
                         echo "</div>";
                       }
                     ?>
-                  </div>
-              <?php
-                }
-              ?>
+            </div>
+      <?php
+        }
+      ?>
 
-              <?php
-                if(count($MP3) > 0){
-              ?>
-                  <div class='col-sm-12 col-md-12' style="margin-top: 20px">
-                    <p><h3 class='text-info'>ไฟล์ MP3</h3></p>
-                    <?php
-                      foreach($MP3 as $row){ ?>
-                        <div class="col-sm-4 col-md-4">
-                    <?php
-                        echo "<audio width='250' controls>
-                                  <source src='../../pic/architec_upload/".$refcode."/".$row."' type='audio/mpeg'>
-                                  <embed src='../../pic/architec_upload/".$refcode."/".$row."' width='250'>
-                              </audio>";
-                        echo "</div>";
-                      }
-                    ?>
-                  </div>
-              <?php
-                }
-              ?>
+      <?php
+        if(count($MP3) > 0){
+      ?>
+          <div class='col-sm-12 col-md-12' style="margin-top: 20px">
+            <p><h3 class='text-info'>ไฟล์ MP3</h3></p>
+            <?php
+              foreach($MP3 as $row){ ?>
+                <div class="col-sm-4 col-md-4">
+            <?php
+                echo "<audio width='250' controls>
+                          <source src='../../pic/architec_upload/".$refcode."/".$row."' type='audio/mpeg'>
+                          <embed src='../../pic/architec_upload/".$refcode."/".$row."' width='250'>
+                      </audio>";
+                echo "</div>";
+              }
+            ?>
+          </div>
+      <?php
+        }
+      ?>
 
-              <?php
-                if(count($MP4) > 0){
-              ?>
-                  <div class='col-sm-12 col-md-12' style="margin-top: 20px">
-                    <p><h3 class='text-info'>ไฟล์ MP4</h3></p>
-                    <?php
-                      foreach($MP4 as $row){ ?>
-                        <div class="col-sm-4 col-md-4">
-                    <?php
-                        echo "<video width='250'  controls>
-                                  <source src='../../pic/architec_upload/".$refcode."/".$row."' type='video/mp4'>
-                                  <object data='../../pic/architec_upload/".$refcode."/".$row."' width='250' >
-                                  </object>
-                              </video>";
-                        echo "</div>";
-                      }
-                    ?>
-                  </div>
-              <?php
-                }
-              ?>
-
-        <?php    
-          echo " </div>";
-         ?>
+      <?php
+        if(count($MP4) > 0){
+      ?>
+          <div class='col-sm-12 col-md-12' style="margin-top: 20px">
+            <p><h3 class='text-info'>ไฟล์ MP4</h3></p>
+            <?php
+              foreach($MP4 as $row){ ?>
+                <div class="col-sm-4 col-md-4">
+            <?php
+                echo "<video width='250'  controls>
+                          <source src='../../pic/architec_upload/".$refcode."/".$row."' type='video/mp4'>
+                          <object data='../../pic/architec_upload/".$refcode."/".$row."' width='250' >
+                          </object>
+                      </video>";
+                echo "</div>";
+              }
+            ?>
+          </div>
+      <?php
+        }
+      ?>
+      <?php    
+        echo " </div>";
+      ?>
         </div>
       </div>
     </div>
     <!-- End content -->
-
     <!-- Start Footer -->
   <?php //include "footer.php" ; ?>
     <!-- End Footer -->
   </div>
   <?php include "footer.php" ; ?>
   <!-- End Container -->
-
   <!-- Go To Top Link -->
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
-  <!-- Style Switcher -->
-
-
   <script type="text/javascript" src="js/script.js"></script>
-
 </body>
-
 </html>
