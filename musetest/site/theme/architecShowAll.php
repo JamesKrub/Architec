@@ -332,15 +332,15 @@ $row = mysqli_fetch_assoc($querydata);
                         $objpic = "../../pic/thumb_architec/blank.jpg";
                     }
 
-                    $sql2 = "select * from muse_vr where obj_refcode = '$refcode'  limit 0,1 ";
+                    $sql2 = "select * from architec_360 where obj_refcode = '$refcode'  limit 0,1 ";
                     $query2 = mysqli_query($link,$sql2);
                     $result2=mysqli_fetch_array($query2);
                     $picvr = 0;
-                    if($result2['vr_id']!= '') {
+                    if($result2['arch360_Id']!= '') {
                         $picvr = 1;
                     }
 
-                    $sql3 = "select * from muse_upload where obj_id = '$refid'  limit 0,1 ";
+                    $sql3 = "select * from architec_upload where obj_id = '$refid'  limit 0,1 ";
                     $query3 = mysqli_query($link,$sql3);
                     $result3=mysqli_fetch_array($query3);
                     $bpu = 0;

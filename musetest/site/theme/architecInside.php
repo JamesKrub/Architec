@@ -287,85 +287,58 @@ include('connect.php');
                 $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
               }
 
-              
               if($line == 0){
                 echo "<div class='row-eq-height'>";
               }
               
               $line++;
-
-              if($line <7) {
-                if(($filetype =='jpg') or ($filetype =='JPG'))  {
-                    $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
-                    echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
-                    echo    "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
-                                <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px; height:auto; width:400px;' alt='' '>
-                                </a>";
-                    echo "</div>";
-                }
-                else if ($filetype == 'mp4') {
-                  echo "<div class='col-xs-3 col-sm-4 col-md-4'>";
-                  echo "<video width='200'  controls>
-                          <source src='../../pic/bigmuse/$refcode/$result[pic_name]' type='video/mp4'>
-                          <object data='../../pic/bigmuse/$refcode/$result[pic_name]' width='200' >
-                          </object>
-                        </video>";
-                  echo "<br>";
+              if(($filetype =='jpg') or ($filetype =='JPG'))  {
+                  $objpic = "../../pic/thumb_architec/$folder_refcode/$objpics";
+                  echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
+                  echo    "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode&ac3_id=$ac3_id&ac2_id=$ac2_id&ac1_id=$ac1_id'>
+                              <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px; height:auto; width:400px;' alt='' '>
+                              </a>";
                   echo "</div>";
-                }
-                else if($filetype =='mp3') {
-                  echo "<div class='col-xs-3 col-sm-4 col-md-4'>";
-                  echo "<audio width='200' controls>
-                          <source src='../../pic/bigmuse/$refcode/$result[pic_name]' type='audio/mpeg'>
-                          <embed src='../../pic/bigmuse/$refcode/$result[pic_name]' width='200'>
-                        </audio>";
-                  echo "<br>";
-                  echo "</div>";
-                }else if($filetype =='pdf') {
-                  echo "<div class='col-sm-4' align='center'>";
-                  echo "<a target='_blank' href='../../pic/museum_upload/".$refcode."/".$row['bpu_file']."'>
-                        <br><img src='images/pdf.png' width='100'> <br>".$row['bpu_file']." </a>
-                        </div>
-                  ";
-                }
               }
               if($line == 3){
                 echo "</div>";
                 $line = 0;
               }
-              // else {
-              //   $line = 1;
-              //   if(($filetype =='jpg') or ($filetype =='JPG'))  {
-              //     echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
-              //     echo "<a href='architecDetail_lvl1.php?picid=$picid&refcode=$refcode'>
-              //             <img src='$objpic' class='img-thumbnail' style='margin:5px 0px 15px;' alt='' height='400' width='400'>
-              //           </a>";
-              //     echo "</div>";
-              //   }
-              //   else if ($filetype =='mp4') {
-              //     //echo "pic/bigmuse/$refcode/$result3[pic_name]";
-              //     echo "<div class=col-xs-3 col-sm-4 col-md-4'>";
-              //     echo "<video width='200'  controls>
-              //             <source src='../../pic/bigmuse/$refcode/$result[pic_name]' type='video/mp4'>
-              //             <object data='../../pic/bigmuse/$refcode/$result[pic_name]' width='200' >
-              //             </object>
-              //           </video>";
-              //     echo "<br>";
-              //     echo "</div>";
-              //   }
-              //   else if($filetype =='mp3') {
-              //     //echo "$result3[pic_name] <br>";
-              //     //echo "<a href ='player.php?picname=$result3[pic_name]'>$result3[pic_name]</a>";
-              //     echo "<div class='col-xs-3'>";
-              //     echo "<audio width='200' controls>
-              //             <source src='../../pic/bigmuse/$refcode/$result[pic_name]' type='audio/mpeg'>
-              //             <embed src='../../pic/bigmuse/$refcode/$result[pic_name]' width='200'>
-              //           </audio>";
-              //           echo "<br>";
-              //     echo "</div>";
-              //   }
-              // }
-            } // end for
+            } // end for jpg
+
+            $sql =  "SELECT * FROM `architec_360` WHERE obj_refcode = '$refcode' ";
+            $query=mysqli_query($link,$sql) or die("Can't Query");
+            $num_rows=mysqli_num_rows($query);
+            $line =0;
+            for ($i=0; $i<$num_rows; $i++) {
+              $result=mysqli_fetch_array($query);
+
+              $folder_refcode = $result['obj_refcode'];
+              $picname = $result['arch360_Dir'];
+              $pictype = explode(".", $result['arch360_Dir']);
+              $filetype = $pictype[1];
+
+              if($line == 0){
+                echo "<div class='row-eq-height'>";
+              }
+              
+              $line++;
+              if(($filetype =='jpg') or ($filetype =='JPG'))  {
+                  $objpic = "../../pic/architec_360/$folder_refcode/$picname";
+                  echo "<div class='col-xs-6 col-sm-4 col-md-4'>";
+                  echo    "<a href='../../site/360/architec_pano.php?refcode=".$folder_refcode."&file=".$picname."'>
+                              <img src='$objpic' 
+                                  class='img-thumbnail' 
+                                  style='margin:5px 0px 15px; height:auto; width:400px;' alt=''>
+                                <img src='../../pic/architec_360/icon_360.gif' style='POSITION: ABSOLUTE; bottom: 22px; left: 149px;' height:auto; width:100px;' alt=''>
+                              </a>";
+                  echo "</div>";
+              }
+              if($line == 3){
+                echo "</div>";
+                $line = 0;
+              }
+            } // end for pano
 
             echo"</div>";
             //echo "<div class='row'>";

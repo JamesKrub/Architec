@@ -10,9 +10,9 @@ include("../connect.php");
 //
 //}
 //        if(isset($_POST['person_cid'])){ $person_cid=$_POST['person_cid']; }
+echo $_POST['type'];
 
 switch($_POST['type']) {
-
   case 'museum':
     $table = 'muse_upload';
     $table1 = 'muse_upload_check';
@@ -43,7 +43,7 @@ if($_POST['type'] == 'news') {
 
 $allowed = array('mp3', 'mp4', 'pdf', 'jpg', 'JPG', 'png', 'PNG');
 $ext = pathinfo($_FILES['uploadedfile']['name'], PATHINFO_EXTENSION);
-if(in_array($ext, $allowed) ) {
+if(in_array(strtolower($ext), $allowed) ) {
   $handle = new Upload($_FILES['uploadedfile']);
   if($handle->uploaded) {
       $handle->Process($dirSave);

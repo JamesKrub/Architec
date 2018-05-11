@@ -298,6 +298,10 @@ $updatevr=$_REQUEST['updatevr'];
 $delvr=$_REQUEST['delvr'];
 $vrid=$_REQUEST['vrid'];
 
+$update360=$_REQUEST['update360'];
+$del360=$_REQUEST['del360'];
+$id360=$_REQUEST['id360'];
+
 $dirchange =$_REQUEST['dirchange'];
 
 $deldwload=$_REQUEST['deldwload'];
@@ -1262,7 +1266,6 @@ echo "
 	}
     ?>
 
-
 <!-- ------   End Of Process---------- -->
 <!-- ------ สถาปัตยกรรมดาวน์โหลด ----------- -->
 
@@ -1415,7 +1418,7 @@ echo "<div class='form-group'>";
 echo "<input type='hidden' name='updatevr' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์'>";
+echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์s'>";
 echo "</div>";
 echo "</form>";
 echo "</div>";
@@ -1423,7 +1426,104 @@ echo "</div>";
 ?>
 
 <?php
-//////////////////////////////////////////////////////////////////////////////////// UPLOAD FILE
+
+/* ---------------------//////// 360 degree //////////--------------------- */
+
+if($update360 == 1) {
+
+	$target_path_360 = "../../pic/architec_360/$refcode";
+	if (!file_exists($target_path_360)) {
+		mkdir($target_path_360, 0700);
+	}
+	
+	$my360 = date("YmdHis").'_'.$_FILES['uploadedfile360']['name'];
+	// echo phpinfo();
+
+	if(move_uploaded_file($_FILES['uploadedfile360']['tmp_name'], "../../pic/architec_360/$refcode/$my360")) {
+		echo "The file ". $_FILES['uploadedfile360']['name'].   " has been uploaded";
+	} else{
+		echo "Can't Upload";
+	}
+
+	###########  ZIP File #############
+
+	$ZipName = "../../pic/architec_360/$my360";
+
+	#############################
+
+	$DesName = "../../pic/architec_360/$refcode/";
+	require_once("dUnzip2.inc.php"); // include Class
+	$zip = new dUnzip2($ZipName); // New Class
+	$zip->unzipAll($DesName); // Unzip All
+
+	######  ADD DB############
+
+	$sql = "INSERT INTO `architec_360`(`arch360_Id`, `arch360_Dir`, `obj_id`, `obj_refcode`) VALUES (NULL, '$my360', $objectid, '$refcode') ";
+
+	if (!mysqli_query($link,$sql)) {
+		echo("fail upload 360" . mysqli_error($link) . "<br>");
+	}
+} // end if
+
+////////////////  SHOW VR PIC /////////////////////
+
+if($del360 == 1) {
+	$sql = "DELETE FROM architec_360 WHERE arch360_Id = '$id360' ";
+	$query=mysqli_query($link,$sql) or die("Can't Query");
+	echo "<br>";
+}
+
+// if($dirchange != '') {
+// 	// echo "<br>Change Direction $vrid  $dirchange <br>";
+// 	echo "<br>Change Direction <br>";
+// 	$sql = "UPDATE architec_360 SET `vr_direction` = '$dirchange'  WHERE `muse_vr`.`vr_id` = '$vrid' LIMIT 1 ;";
+// 	$query=mysqli_query($link,$sql) or die("Can't Query");
+// }
+
+echo "<div class='box box-primary'>"; // Start box-primary
+echo "<div class='box-header'>";
+echo "<h3 class='box-title'>ภาพพาโนรามา</h3>";
+echo "</div>";
+echo "<div class='box-body'>"; // Start box-body
+	echo "<form name ='formupload' method='post' action='editarchitec.php?objectid=$objectid&refcode=$refcode' enctype='multipart/form-data'>";
+		echo "<div class='form-group'>";
+
+		echo "<input type='file' name='uploadedfile360' id='uploadedfile360'>";
+		echo "</div>";
+		echo "<div class='form-group'>";
+		echo "<input type='hidden' name='update360' value='1'>";
+		echo "<input type='hidden' name='objectid' value='$objectid'>";
+		echo "<input type='hidden' name='refcode' value='$refcode'>";
+		echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์ Pano'>";
+		echo "</div>";
+	echo "</form>";
+echo "<div>";
+$sql3 = "SELECT * FROM `architec_360` WHERE obj_refcode = '$refcode' ";
+$query3=mysqli_query($link,$sql3) or die("Can't Query2");
+$num_rows3=mysqli_num_rows($query3);
+foreach ($query3 as $result3) {
+
+	echo "<div class='row'>";
+		echo "<div class='col-sm-4' align='center'>";   
+		echo "<a target='_blank' href='../../site/360/architec_pano.php?refcode=".$refcode."&file=".$result3['arch360_Dir']."'>
+		<br>    <img src ='../../pic/architec_360/$refcode/$result3[arch360_Dir]' width='200'> <br>".$result3['arch360_Dir']." </a>
+		<p>  <a 'editarchitec.php?id360=$result3[arch360_Id]&objectid=$objectid&refcode=$refcode&del360=1'>
+		<img src='images/icon_del2.png'></a>  </p>";
+	echo "</div><!-- /.row -->";
+
+///////////  End Check Pic ///////////
+} // end for
+
+echo "</div>";
+echo "</div>";
+
+echo "</div>";
+echo "</div>";
+echo "</div>";
+?>
+
+<?php
+/* ------------------ UPLOAD FILE ---------------------- */
 if($updown == '1') {
 	echo "UPLOAD Download File";
 	######## UPload FILE###########
@@ -1641,7 +1741,7 @@ echo "<input type='hidden' name='refcode' value='$refcode'>";
 echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์(มีเดีย)'>";
 echo "</div>";
 echo "</form>";
-			
+
 $ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '".$objid."'");
 echo "<div class='row'>";
 while($row = mysqli_fetch_assoc($ul_query)) {
@@ -1654,7 +1754,7 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 	if(($filetype =='mp3') or ($filetype =='MP3')) {
 		echo "<div class='col-sm-4' align='center'>";
 		echo "<audio width='250' controls>
-		<source src='../../pic/architecupload/$refcode/$row[bpu_file]' type='audio/mpeg'>
+		<source src='../../pic/architec_upload/$refcode/$row[bpu_file]' type='audio/mpeg'>
 		<embed src='../../pic/architec_upload/$refcode/$row[bpu_file]' width='250'>
 		</audio>";
 		echo "<br>";
@@ -1665,8 +1765,8 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 	} else if(($filetype =='mp4') or ($filetype =='MP4')) {
 		echo "<div class='col-sm-4' align='center'>";
 		echo "<video width='250'  controls>
-				<source src='../../pic/museum_upload/$refcode/$row[bpu_file]' type='video/mp4'>
-				<object data='../../museum_upload/$refcode/$row[bpu_file]' width='250' >
+				<source src='../../pic/architec_upload/$refcode/$row[bpu_file]' type='video/mp4'>
+				<object data='../../architec_upload/$refcode/$row[bpu_file]' width='250' >
 				</object>
 			</video>";
 		echo "<br>";

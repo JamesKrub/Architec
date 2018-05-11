@@ -277,6 +277,12 @@ if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($file
                         src ='../../../pic/big_architec/$foldref/$result[archPic_Name]'>";
         echo "</div>";
       ?>
+        <div style="background-color: #787878;">
+            <img src="images/tag.png">
+        </div>
+        <div style="background-color: #787878;">
+            <img src="images/dustbin.png">
+        </div>
         <a href="#" class="enable-create">Enable Create</a> 
 		&nbsp;|&nbsp;
 		<a href="#" class="disable-create">Disable Create</a>
@@ -288,6 +294,7 @@ if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($file
 		<a href="#" class="enable-delete">Enable Delete</a> 
 		&nbsp;|&nbsp;
         <a href="#" class="disable-delete">Disable Delete</a>
+        
     </div></center>
 <?php
 } else if($filetype =='mp4' or $filetype =='MP4') {

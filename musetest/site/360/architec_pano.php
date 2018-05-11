@@ -28,13 +28,13 @@
   <body>
     <a-scene>
       <a-assets>
-        <img id="kieran" src="img/กาชาด1.jpg">
-        <img id="kieran-thumb" crossorigin="anonymous" src="img/kieran-thumb.png">
+        <!-- <img id="kieran" src="img/กาชาด1.jpg"> -->
+        <!-- <img id="kieran-thumb" crossorigin="anonymous" src="img/kieran-thumb.png">
         <img id="christian-thumb" crossorigin="anonymous" src="img/christian-thumb.png">
-        <img id="eddie-thumb" crossorigin="anonymous" src="img/eddie-thumb.png">
+        <img id="eddie-thumb" crossorigin="anonymous" src="img/eddie-thumb.png"> -->
         <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
-        <img id="christian" crossorigin="anonymous" src="img/กาชาด2.jpg">
-        <img id="eddie" crossorigin="anonymous" src="img/กาชาด4.jpg">
+        <img id="christian" crossorigin="anonymous" src="../../pic/architec_360/<?php echo $_GET['refcode']; ?>/<?php echo $_GET['file']; ?>">
+        <!-- <img id="eddie" crossorigin="anonymous" src="img/กาชาด4.jpg"> -->
         <!-- <img id="kachad4" crossorigin="anonymous" src="img/กาชาด4.jpg"> -->
 
         <!-- Image link template to be reused. -->
@@ -56,9 +56,9 @@
 
       <!-- Image links. -->
       <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
-        <a-entity template="src: #link" data-src="#christian" data-thumb="#christian-thumb"></a-entity>
+        <!-- <a-entity template="src: #link" data-src="#christian" data-thumb="#christian-thumb"></a-entity>
         <a-entity template="src: #link" data-src="#kieran" data-thumb="#kieran-thumb"></a-entity>
-        <a-entity template="src: #link" data-src="#eddie" data-thumb="#eddie-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#eddie" data-thumb="#eddie-thumb"></a-entity> -->
       </a-entity>
 
       <!-- Camera + cursor. -->

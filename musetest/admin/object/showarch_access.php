@@ -10,6 +10,9 @@ $usr=$_SESSION['usr'];
 	header("location: login.php");
 } ?>
 <?php
+if(!isset($_SESSION['usr'])) {
+	header("location: login.php");
+}
 if($_SESSION['id'] && !isset($_COOKIE['tzRemember']) && !$_SESSION['rememberMe'])
 {
 	// If you are logged in, but you don't have the tzRemember cookie (browser restart)
@@ -35,7 +38,7 @@ if(isset($_GET['logoff']))
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Digital muse | จดหมายเหตุดิจิตัล</title>
+        <title>Digital muse | วัตถุจัดแสดงดิจิตัล</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -139,6 +142,7 @@ if(isset($_GET['logoff']))
 								$sql = "select * from tz_members where id = '$id'   ";
 								$query=mysqli_query($link,$sql) or die("Can't Query");
 								$result=mysqli_fetch_array($query);
+                                
 								echo "<img src ='../../pic/profile/profile-$result[mem_pic]' class='img-circle' alt='User Image'>";
 							}
 							?>
@@ -180,12 +184,11 @@ if(isset($_GET['logoff']))
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-						วัตถุจัดแสดง
+                        ข้อมูลสถาปัตยกรรม
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="showarch.php"> วัตถุจัดแสดง</a></li>
-                        <li class="active"> วัตถุจัดแสดงรอการอนุมัติ</li>
+                        <li class="active">ข้อมูลสถาปัตยกรรม</li>
                     </ol>
                 </section>
 
@@ -196,8 +199,8 @@ if(isset($_GET['logoff']))
                     <div class="row">
 						<div class="col-md-12">
 
-<!-- process -->
-
+<!--------------   Process
+-->
     <?php
 	if($_SESSION['id'])
 	{
@@ -229,31 +232,29 @@ $objectid=$_REQUEST['objectid'];
 $del=$_REQUEST['del'];
 $cfdel=$_REQUEST['cfdel'];
 
-if($del == obj)
-{
-echo "
-<div class='callout callout-danger'>
-	<h4>ต้องการที่จะลบวัตถุจัดแสดง</h4>
-	<p>
-	<a class='btn btn-danger' href='showmuse.php?objectid=$objectid&cfdel=1'> ยืนยัน</a>
-	<a class='btn btn-default' href='showmuse.php'> ยกเลิก</a>
-	</p>
-</div>";
+if($del == obj){
+    echo "
+    <div class='callout callout-danger'>
+        <h4>ต้องการที่จะลบวัตถุวัตถุจัดแสดง</h4>
+        <p>
+        <a class='btn btn-danger' href='showarch.php?objectid=$objectid&cfdel=1'> ยืนยัน</a>
+        <a class='btn btn-default' href='showarch.php'> ยกเลิก</a>
+        </p>
+    </div>";
 }
-else if ($cfdel == 1)
-{
-$sql = "DELETE FROM muse_object WHERE obj_id = $objectid ";
-$query=mysqli_query($link,$sql) or die("Can't Query");
-echo "
-<div id='alert-message' class='alert alert-success alert-dismissable'>
-	<i class='fa fa-check'></i>
-	<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-	ลบวัตถุจัดแสดงเสร็จสิ้น
-</div>";
+else if ($cfdel == 1){
+    $sql = "DELETE FROM architec_object WHERE archObj_Id = $objectid ";
+    $query=mysqli_query($link,$sql) or die("ไม่สามรถลบ Row architec ออกได้: 247");
+    echo "
+    <div id='alert-message' class='alert alert-success alert-dismissable'>
+        <i class='fa fa-check'></i>
+        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+        ลบวัตถุวัตถุจัดแสดงเสร็จสิ้น
+    </div>";
 }
 
 echo "<a class='btn btn-primary' href='addarch-1page.php'><i class='fa fa-plus-square fa-lg'></i> เพิ่มข้อมูล</a>";
-echo "<a class='btn btn-default pull-right' href='showmuse.php'>วัตถุจัดแสดง</a><br><br>";
+echo "<a class='btn btn-default pull-right' href='showarch.php'> สถาปัตยกรรมทั้งหมด</a><br><br>";
 
 
 if($s!='')
@@ -291,9 +292,10 @@ echo "<table class='table table-bordered table-hover' id='example1'>";
 
 echo "<thead>";
 echo "<tr>";
-echo "<th class='col-sm-2 text-center'>รหัสวัตถุ</th>";
+echo "<th class='col-sm-1 text-center'>ลำดับ</th>";
+echo "<th class='col-sm-1 text-center'>รหัสวัตถุ</th>";
 echo "<th class='col-sm-3 text-center'>ชื่อ</th>";
-echo "<th class='col-sm-3 text-center'>เจ้าของ</th>";
+echo "<th class='col-sm-2 text-center'>เจ้าของ</th>";
 echo "<th class='col-sm-2 text-center'>รูปภาพ</th>";
 echo "<th class='col-sm-2 text-center'>บริหารจัดการ</th>";
 echo "</tr>";
@@ -308,14 +310,11 @@ $sql = "select * from tz_members where id = '$id'   ";
  $query=mysqli_query($link,$sql) or die("Can't Query");
  $num_rows=mysqli_num_rows($query);
 
-
-
-	     for ($i=0; $i<$num_rows; $i++) {
+	for ($i=0; $i<$num_rows; $i++) {
          $result=mysqli_fetch_array($query);
 		//echo "$result[id] $result[usr]  $result[permission]<br>";
 		$permission =$result[permission];
-
-}
+    }
 
 //echo "Per : $permission <br>";
 
@@ -324,7 +323,7 @@ $sql = "select * from tz_members where id = '$id'   ";
 
 if($s!='')
 {
-	if(($permission == 'admin') or ($permission == 'superadmin'))
+	if(($permission == 'admin') or ($permission == 'superadmin') or ($permission == 'editor'))
 	{
 		$sql = "select * from muse_object where obj_title like '%$s%'";
 	}
@@ -337,52 +336,58 @@ if($s!='')
 }
 else
 {
-	if(($permission == 'admin') or ($permission == 'superadmin'))
+	if(($permission == 'admin') or ($permission == 'superadmin') or ($permission =='editor'))
 	{
-		$sql = "select * from muse_object where obj_access != '1'";
+		$sql = "select * from architec_object";
 	}
 	else if ($permission =='user')
 	{
-		$sql = "select * from muse_object  where user_id = '$id'";
+		$sql = "select * from architec_object  where user_id = '$id'";
 	}
-	$query=mysqli_query($link,$sql) or die("Can't Query");
+	$query=mysqli_query($link,$sql) or die("Can't Select Show PIC detail.:349");
 	$num_rows=mysqli_num_rows($query);
 }
 
 $rs=mysqli_query($link,$sql);
+// echo "<pre>";
+// print_r(mysqli_fetch_array($rs));
+// echo "</pre>";
 while($result=mysqli_fetch_array($rs)){ //วนรอบแสดงข้อมูล
-	$objrefcode=$result['obj_refcode'];
-	$sql2 = "SELECT * FROM muse_pic WHERE obj_refcode = '$objrefcode' ORDER BY obj_cover DESC limit 0,1  ";
-	$query2=mysqli_query($link,$sql2) or die("Can't Query2");
-	$result2=mysqli_fetch_array($query2);
-	$num_rows2=mysqli_num_rows($query2);
-	$filetype = explode(".", $result2[pic_name]);
+	$objrefcode = $result['archObj_Refcode'];
+	$sql2 = "SELECT * FROM architec_pic WHERE archObj_Refcode = '$objrefcode' ORDER BY archObj_Cover DESC limit 0,1  ";
+	$query2 = mysqli_query($link,$sql2) or die("Can't Query2");
+	$result2 = mysqli_fetch_array($query2);
+	$num_rows2 = mysqli_num_rows($query2);
+	$filetype = explode(".", $result2[archPic_Name]);
 	$filetype = $filetype[1];
 		if($num_rows2 >0 )
 		{
-			if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png'))
+			if(($filetype == 'jpg') or ($filetype == 'JPG') or ($filetype =='jpeg') or ($filetype =='png'))
 			{
-				$objref=$result2['obj_refcode'];
-				$picname=$result2['pic_name'];
+                //$objref =$result2['archObj_Refcode'];        
+                $objref =$result2['archFolder_Refcode'];                        
+                $objref = preg_replace('/[^a-z0-9\_\- ]/i', '', $objref);
+                //$picname=$result2['pic_name'];
+                $picname=$result2['archThumb_Name'];
 			}
-			else //ถ้าไฟล์ไม่ใช้รูปภาพ เช่น mp3 mp4 fdf ให้แสดงภาพว่าง
+			else //ถ้าไฟล์ไม่ใช้รูปภาพ เช่น mp3 mp4 pdf ให้แสดงภาพว่าง
 			{
 				$objref = "";
 				$picname = "blank.jpg";
 			}
-		}
-
-		else
-		{
-		$objref = "";
-		$picname = "blank.jpg";
-		}
-
+		} else {
+            $objref = "";
+            $picname = "blank.jpg";
+        }
+        
 	echo "<tr>";
-	echo "<td>".$result['obj_refcode']."</td>";
-	echo "<td>".$result['obj_title']."</td>";
-	echo "<td>".$result['obj_creator']."</td>";
-	echo "<td><img src ='../../pic/bigmuse/$objref/$picname' width='250'></td>";
+	echo "<td >".$i."</td>";
+	echo "<td>".$result['archObj_Refcode']."</td>";
+	echo "<td>".$result['archObj_Title']."</td>";
+	echo "<td>".$result['archObj_Creator']."</td>";
+	echo "<td><img src ='../../pic/thumb_architec/$objref/$picname' width='250'></td>";
+	#echo "<td class='text-center'><a href=\"edit.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]\"><img src='images/edit_icon.png'></a> |
+	#<a href=\"showobj.php?objectid=$result[obj_id]&del=obj\"><img src='images/icon_del.gif'></a>";
 	echo "<td class='text-center'>";
 	echo "<div class='btn-group '>";
 
@@ -406,11 +411,12 @@ while($result=mysqli_fetch_array($rs)){ //วนรอบแสดงข้อ�
     <span class='sr-only'>Toggle Dropdown</span>
     </button>
     <ul class='dropdown-menu' role='menu'>
-    <li><a href='editmuse.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]'>แก้ไข</a></li>
-    <li><a href='showobj.php?objectid=$result[obj_id]&del=obj'>ลบ</a></li>
+    <li><a href='editarchitec.php?objectid=$result[archObj_Id]&refcode=$result[archObj_Refcode]'>แก้ไข</a></li>
+    <li><a href='showarch.php?objectid=$result[archObj_Id]&del=obj'>ลบ</a></li>
     <li class='divider'></li>";
-     echo "<li><a href=\"#\" onclick=\"window.open('qrcode/createqr-archive.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]', 'newwindow', 'width=500, height=450'); return false;\"><img src='images/qrcode.png' width='30'></a></li>";
-    echo "<li><a href=\"#\" onclick=\"window.open('card/createcard-archive.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]', 'newwindow', 'width=600, height=550'); return false;\"><img src='images/card_icon.png' width='30'></a></li>";
+    echo "<li><a href=\"#\" onclick=\"window.open('qrcode/createqr.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]', 'newwindow', 'width=500, height=450'); return false;\"><img src='images/qrcode.png' width='30'></a></li>";
+    echo "<li><a href=\"#\" onclick=\"window.open('card/createcard.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]', 'newwindow', 'width=600, height=550'); return false;\"><img src='images/card_icon.png' width='30'></a></li>";
+		  // echo "<li><a href=\"#\" onclick=\"window.open('card/createcard.php?objectid=$result[obj_id]&refcode=$result[obj_refcode]', 'newwindow', 'width=600, height=550'); return false;\"><img src='images/card_icon.png' width='30'></a></li>";
     //echo "<li><a href='#' class='fa fa-check'>ดาวน์โหลด</a></li>";
     //echo "<li><a href='#' class='fa fa-times'>ดาวน์โหลด</a></li>";
     echo" </ul>

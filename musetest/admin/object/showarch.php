@@ -254,7 +254,7 @@ else if ($cfdel == 1){
 }
 
 echo "<a class='btn btn-primary' href='addarch-1page.php'><i class='fa fa-plus-square fa-lg'></i> เพิ่มข้อมูล</a>";
-echo "<a class='btn btn-default pull-right' href='showarch_access.php'> วัตถุรอการอนุมัติ</a><br><br>";
+echo "<a class='btn btn-default pull-right' href='showarch_access.php'> สถาปัตยกรรมรอการอนุมัติ</a><br><br>";
 
 
 if($s!='')
