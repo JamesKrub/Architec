@@ -1505,11 +1505,12 @@ foreach ($query3 as $index => $result3) {
 echo "</div>"; // container
 echo "</div>"; // box-body
 echo "</div>";// End box-primary
+
 ?>
 
 <?php
 
-////////////////////////////  UPLOAD FILE  ///////////////////////////////////
+////////////////////////////  ไฟลืดาวน์โหลด  ///////////////////////////////////
 
 if($updown == '1') {
 	echo "UPLOAD Download File";
@@ -1580,7 +1581,7 @@ $objectid = $_REQUEST['objectid']; //objid
 $req_bpu_id = $_REQUEST['bpu_id_req']; //bpuid
 
 $ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '$objid'");
-$num_rows = mysqli_num_rows($ul_query);
+$num_rows_fileDwnload = mysqli_num_rows($ul_query);
 echo "<div class='row'>";
 $line=0;
 while($row = mysqli_fetch_assoc($ul_query)) {
@@ -1590,12 +1591,12 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 	$filetype = $filetype[1];
 	$type = "architec";
 
-	if($line == 0){
-		echo "<div class='row-eq-height'>";
-	}
-	$line++;
-
+	
 	if($filetype =='pdf') {
+		if($line == 0){
+			echo "<div class='row-eq-height'>";
+		}
+		$line++;
 		echo "<div class='col-xs-4 col-sm-3 col-md-3'>"; 
 		echo "<center>";  
 		echo "<a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row['bpu_file']."'><img src='images/pdf.png' > <br>".$row['bpu_file']." </a>
@@ -1610,16 +1611,15 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 		if($line == 4){
 			$line = 0;
 			echo "</div>";
-		} else if( ($line < 4) && ($index == $num_rows-1)){
+		} else if( ($line < 4) && ($index == $num_rows_fileDwnload-1)){
 			echo"</div>";
 		}
 	}
 } // while loop
 
 echo "</div><!-- /.row -->";
-echo "</div>";
-echo "</div>";
-echo "</div>";
+echo "</div><!--/.box-body -->";
+echo "</div><!--/.box-primary -->";
 ?>
 
 <?php
@@ -1643,7 +1643,7 @@ if($updown == '1') 	{
 
 echo "<div class='box box-primary'>"; // Start box-primary
 echo "<div class='box-header'>";
-echo "<h3 class='box-title'>ไฟล์มีเดีย (MP3 , MP4)</h3>";
+echo "	<h3 class='box-title'>ไฟล์มีเดีย (MP3 , MP4)</h3>";
 echo "</div>";
 echo "<div class='box-body'>"; // Start box-body
 if($download == '1') {
@@ -1672,10 +1672,8 @@ for ($i=0; $i<$num_rows3; $i++) {
 	$download = $result3['archObj_Download'];
 }
 
-echo "
-<input type='file' name='uploadedfile' id='uploadedfile'>
-	<input type='hidden' name='type' value='architec'>
-";
+echo "<input type='file' name='uploadedfile' id='uploadedfile'>
+	  <input type='hidden' name='type' value='architec'>";
 echo "</div>";
 echo "<div class='form-group'>";
 echo "<input type='hidden' name='updown' value='1'>";
@@ -1686,16 +1684,15 @@ echo "</div>";
 echo "</form>";
 
 $ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '".$objid."'");
-$num_rows = mysqli_num_rows($ul_query);
+$num_rows_mediaFile = mysqli_num_rows($ul_query);
 $line=0;
 echo "<div class='row'>";
-while($row = mysqli_fetch_assoc($ul_query)) {
+// while($row = mysqli_fetch_array($ul_query)) {
+foreach ($ul_query as $index => $row) {
 	$ext = pathinfo($row['bpu_file']);
 	$filetype = explode(".", $row[bpu_file]);
 	$filetype = $filetype[1];
 	$type = "architec";
-
-	
 	if((strtolower($filetype) =='mp3') or (strtolower($filetype) =='mp4')){
 		if($line == 0){
 			echo "<div class='row-eq-height'>";
@@ -1710,9 +1707,8 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 			echo "<br>";
 			echo "<p>
 					<a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'><img src='images/icon_del2.png'></a>
-				</p> ";
+				  </p> ";
 			echo "</div>";
-			
 		} 
 		else if(strtolower($filetype) =='mp4') {
 			echo "<div class='col-xs-4 col-sm-4 col-md-4' align='center'>";
@@ -1728,20 +1724,18 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 			echo "</div>";
 		} 
 		if($line == 3){
-			$line=0;
-			echo "</div>";
-		}
-		else if( ($line < 3) && ($line == $num_rows-1) ){
-			echo "</div>";
+			$line = 0;
+			echo "</div>!-- /.row-eq-height -->";
 		}
 	}
-	
+	if( ($line < 3) && ($index == $num_rows_mediaFile-1) ){
+		echo "</div><!-- /.row-eq-height -->";
+	}
 } // end while
-	echo "</div><!-- /.row -->";
-	echo "</div>";
-	echo "</div>";
-	echo "</div>";
 ?>
+	</div><!-- /.row -->
+	</div><!-- /.box-body -->
+	</div><!-- /.box-primary -->
 
 <?php
 
@@ -1972,9 +1966,7 @@ if($_SESSION['id']) {
 				echo "</div>";
 			}
 		}
-
 	} // end foreach
-	echo "</div>";
 	echo "</div>";
 
 } // end if session
