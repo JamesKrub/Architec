@@ -1408,7 +1408,7 @@ echo "<div class='form-group'>";
 echo "<input type='hidden' name='updatevr' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์s'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์s'>";
 echo "</div>";
 echo "</form>";
 echo "</div>";
@@ -1473,7 +1473,7 @@ echo "<div class='box-body'>"; // Start box-body
 		echo 	"<input type='hidden' name='update360' value='1'>";
 		echo 	"<input type='hidden' name='objectid' value='$objectid'>";
 		echo 	"<input type='hidden' name='refcode' value='$refcode'>";
-		echo 	"<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์ Pano'>";
+		echo 	"<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์ Pano'>";
 		echo "</div>";
 	echo "</form>";
 	echo "<div class='row'>";
@@ -1488,7 +1488,7 @@ foreach ($query3 as $index => $result3) {
 		echo "<div class='row-eq-height'>";
 	}
 	$line++;
-	echo "<div class='col-xs-6 col-sm-3 col-md-3'>"; 
+	echo "<div class='col-xs-3 col-sm-3 col-md-3'>"; 
 		echo "<center>";
 		echo "<a target='_blank' href='../../site/360/architec_pano.php?refcode=".$refcode."&file=".$result3['arch360_Dir']."'><img src ='../../pic/architec_360/$refcode/$result3[arch360_Dir]' class='img-thumbnail' style='margin:5px 0px 15px;'>".$result3['arch360_Dir']." </a>";
 		echo "<p><a href='editarchitec.php?id360=$result3[arch360_Id]&objectid=$objectid&refcode=$refcode&del360=1'><img src='images/icon_del2.png'></a></p>";
@@ -1572,7 +1572,7 @@ echo "<div class='form-group'>";
 echo "<input type='hidden' name='updown' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์'>";
 echo "</div>";
 echo "</form>";
 
@@ -1597,7 +1597,7 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 			echo "<div class='row-eq-height'>";
 		}
 		$line++;
-		echo "<div class='col-xs-4 col-sm-3 col-md-3'>"; 
+		echo "<div class='col-xs-3 col-sm-3 col-md-3'>"; 
 		echo "<center>";  
 		echo "<a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row['bpu_file']."'><img src='images/pdf.png' > <br>".$row['bpu_file']." </a>
 				<p>
@@ -1679,7 +1679,7 @@ echo "<div class='form-group'>";
 echo "<input type='hidden' name='updown' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์(มีเดีย)'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์(มีเดีย)'>";
 echo "</div>";
 echo "</form>";
 
@@ -1711,7 +1711,7 @@ foreach ($ul_query as $index => $row) {
 			echo "</div>";
 		} 
 		else if(strtolower($filetype) =='mp4') {
-			echo "<div class='col-xs-4 col-sm-4 col-md-4' align='center'>";
+			echo "<div class='col-xs-3 col-sm-4 col-md-4' align='center'>";
 			echo "<video width='250'  controls>
 					<source src='../../pic/architec_upload/$refcode/$row[bpu_file]' type='video/mp4'>
 					<object data='../../architec_upload/$refcode/$row[bpu_file]' width='250' >
@@ -1862,14 +1862,19 @@ if($_SESSION['id']) {
      
 	echo "</div>";
 	echo "<div class='box-body'>"; // Start box-body
-	echo "<div>
+	echo "<div class='row'>";
+	echo "<div class='col-xs-4 col-md-6'>
 			<a class='btn btn-primary' href=\"JavaScript:newPopup('uploadarchitec/index.php?dir=$ref&objectid=$objectid&refcode=$refcode');\">
-				<i class='fa fa-upload fa-lg'></i> อัพโหลดรูปสถาปัตยกรรม
+				<i class='fa fa-upload fa-lg'></i> อัปโหลด
 			</a>
-			<a class='btn btn-primary pull-right' href=\"JavaScript:newPopup('model/sortable/sortArchitec.php?ref=$refcode&type=architec&id=$objectid');\">
-				<i class='fa fa-sort-amount-desc fa-lg'></i> จัดเรียงรูปสถาปัตยกรรม
-			</a><br><br>
 		  </div>";
+	echo "<div class='col-xs-4 col-xs-offset-4 col-md-6 col-md-offset-0'>
+			<a class='btn btn-primary pull-right' href=\"JavaScript:newPopup('model/sortable/sortArchitec.php?ref=$refcode&type=architec&id=$objectid');\">
+				<i class='fa fa-sort-amount-desc fa-lg'></i> จัดเรียงรูป
+			</a><br><br>
+		  </div>";		
+			
+	echo  "</div>";
 
 
 	##### Start Tab Pic 1 #######
@@ -1938,7 +1943,7 @@ if($_SESSION['id']) {
 			}
 			$line++;
 
-			echo "<div class='col-xs-4 col-sm-3 col-md-3' align='center'>";
+			echo "<div class='col-xs-3 col-sm-3 col-md-3' align='center'>";
 			echo "<a href=\"../../pic/big_architec/$foldref/$result3[archPic_Name]\" data-gallery>
 				<img src ='../../pic/big_architec/$foldref/$result3[archPic_Name]'></a> <br>";
 
