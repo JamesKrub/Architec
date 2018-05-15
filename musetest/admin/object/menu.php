@@ -36,45 +36,34 @@ if(($permission == 'superadmin') or ($permission == 'admin') or ($permission == 
 				</a>
 			</li>
 			-->
-			<li class='treeview'>
-                            <a href='#'>
-                                <i class='fa fa-archive'></i>
-                                <span>ข้อมูลทั่วไป</span>
-                                <i class='fa fa-angle-left pull-right'></i>
-                            </a>
-                            <ul class='treeview-menu'>
-                            	<!--<li><a href='addbg.php'><i class='fa fa-angle-double-right'></i> ข้อมูลหอจดหมายเหตุ</a></li>-->
-                            	<li><a href='addbg2.php'><i class='fa fa-angle-double-right'></i> ข้อมูลพิพิธภัณฑ์</a></li>
-                            </ul>
-            </li>
-";
-//   echo "         <li class='treeview'>
-//                            <a href='#'>
-//                                <i class='fa fa-th'></i>
-//                                <span>เอกสารจดหมายเหตุ</span>
-//                                <i class='fa fa-angle-left pull-right'></i>
-//                            </a>
-//                            <ul class='treeview-menu'>
-//                            	<li><a href='showobj.php'><i class='fa fa-angle-double-right'></i> เอกสารจดหมายเหตุ</a></li>
-//                            	<li><a href='showobjcat.php'><i class='fa fa-angle-double-right'></i> ประเภทจดหมายเหตุ</a></li>
-//											
-//															<li><a href='showobjhierar.php'><i class='fa fa-angle-double-right'></i> สร้างแฟ้มเอกสารสาร</a></li>
-//                            </ul>
-//            </li>
-//    ";
-   echo "          <li class='treeview'>
-                            <a href='#'>
-                                <i class='fa fa-th'></i>
-                                <span>พิพิธภัณฑ์</span>
-                                <i class='fa fa-angle-left pull-right'></i>
-                            </a>
-                            <ul class='treeview-menu'>
-                            	<li><a href='showmuse.php'><i class='fa fa-angle-double-right'></i> วัตถุจัดแสดง</a></li>
-                            	<li><a href='showmusecat.php'><i class='fa fa-angle-double-right'></i> ประเภทวัตถุจัดแสดง</a></li>
-                            </ul>
-            </li>
 
-			";
+";
+
+//    echo "
+// 		<li class='treeview'>
+// 				<a href='#'>
+// 					<i class='fa fa-archive'></i>
+// 					<span>ข้อมูลทั่วไป</span>
+// 					<i class='fa fa-angle-left pull-right'></i>
+// 				</a>
+// 				<ul class='treeview-menu'>
+// 					<!--<li><a href='addbg.php'><i class='fa fa-angle-double-right'></i> ข้อมูลหอจดหมายเหตุ</a></li>-->
+// 					<li><a href='addbg2.php'><i class='fa fa-angle-double-right'></i> ข้อมูลพิพิธภัณฑ์</a></li>
+// 				</ul>
+// 			</li>
+//    			<li class='treeview'>
+// 				<a href='#'>
+// 					<i class='fa fa-th'></i>
+// 					<span>พิพิธภัณฑ์</span>
+// 					<i class='fa fa-angle-left pull-right'></i>
+// 				</a>
+// 				<ul class='treeview-menu'>
+// 					<li><a href='showmuse.php'><i class='fa fa-angle-double-right'></i> วัตถุจัดแสดง</a></li>
+// 					<li><a href='showmusecat.php'><i class='fa fa-angle-double-right'></i> ประเภทวัตถุจัดแสดง</a></li>
+// 				</ul>
+//             </li>
+
+// 			";
  
 	/* ===== สถาปัตยกรรม ===== (14/2/2018) */		
 	echo "
@@ -85,37 +74,18 @@ if(($permission == 'superadmin') or ($permission == 'admin') or ($permission == 
 				<i class='fa fa-angle-left pull-right'></i>
 			</a>
 			<ul class='treeview-menu'>
-				<li><a href='showarch.php'><i class='fa fa-angle-double-right'></i> รูปสถาปัตยกรรม</a></li>
+				<li><a href='showarch.php'><i class='fa fa-angle-double-right'></i> ข้อมูลสถาปัตยกรรม</a></li>
 				<li><a href='showarchcat.php'><i class='fa fa-angle-double-right'></i> ประเภทสถาปัตยกรรม</a></li>
 			</ul>
 		</li>
 	";
 
-//						echo "
-//							<li class='treeview'>
-//								<a href='#'>
-//									<i class='fa fa-leaf'></i>
-//									<span>พฤกษศาสตร์ชุมชน</span>
-//									<i class='fa fa-angle-left pull-right'></i>
-//								</a>
-//								<ul class='treeview-menu'>
-//									<li><a href='show-plant.php'><i class='fa fa-angle-double-right'></i> พรรณไม้</a></li>
-//									<li><a href='botanic-plant-cat.php'><i class='fa fa-angle-double-right'></i> ประเภทพรรณไม้</a></li>
-//									<li><a href='show-animal.php'><i class='fa fa-angle-double-right'></i> พันธุ์สัตว์</a></li>
-//									<li><a href='botanic-animal-cat.php'><i class='fa fa-angle-double-right'></i> ประเภทพันธุ์สัตว์</a></li>
-//									<li><a href='show-bio.php'><i class='fa fa-angle-double-right'></i> ชีวภาพ</a></li>
-//									<li><a href='botanic-bio-cat.php'><i class='fa fa-angle-double-right'></i> ประเภทชีวภาพ</a></li>
-//									<li><a href='show-idea.php'><i class='fa fa-angle-double-right'></i> ภูมิปัญญา</a></li>
-//									<li><a href='botanic-idea-cat.php'><i class='fa fa-angle-double-right'></i> ประเภทภูมิปัญญา</a></li>
-//								</ul>
-//							</li>
-//						";
-						echo"
-			<li>
+	echo"
+			<!-- <li>
                 <a href='shownews.php'>
                     <i class='fa fa-calendar'></i> <span>ข่าวและกิจกรรม</span>
-                </a>
-            </li>
+                </a> 
+            </li> -->
             <li class='treeview'>
                             <a href='#'>
                                 <i class='fa fa-bar-chart-o'></i>

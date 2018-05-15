@@ -2546,7 +2546,8 @@ Component: timeline
 */
 /* skin-blue navbar */
 .skin-blue .navbar {
-  background-color: #3c8dbc;
+  /* background-color: #3c8dbc; */
+  background-color: #00a65a; 
 }
 .skin-blue .navbar .nav a {
   color: rgba(255, 255, 255, 0.8);
@@ -2571,14 +2572,15 @@ Component: timeline
 }
 /* skin-blue logo */
 .skin-blue .logo {
-  background-color: #367fa9;
+ /*  background-color: #367fa9; */
+  background-color: #00a65a;
   color: #f9f9f9;
 }
 .skin-blue .logo > a {
   color: #f9f9f9;
 }
 .skin-blue .logo:hover {
-  background: #357ca5;
+  background: #00c26b;
 }
 /* skin-blue content header */
 .skin-blue .right-side > .content-header {

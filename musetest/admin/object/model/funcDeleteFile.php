@@ -12,6 +12,11 @@ switch($_GET['type']) {
     $redir = 'editmuse';
     $folder = 'museum_upload';
   break;
+  case 'architec':
+    $table = 'architec_upload';
+    $redir = 'editarchitec';
+    $folder = 'architec_upload';
+  break;
   case 'news':
     $table = 'news_upload';
     $redir = 'editnews';
@@ -55,10 +60,19 @@ switch($_GET['type']) {
 //$sql = "DELETE FROM muse_vr WHERE vr_id = '$vrid' ";
 //$sql = "DELETE FROM museum_upload WHERE bpu_id = '$bpu_id'";
 
-$sql = "DELETE FROM `muse_upload` WHERE `muse_upload`.`bpu_id` = $bpu_id ";
-$query=mysqli_query($link,$sql) or die("Can't Query");
+if($_GET['type'] == "architec"){
+  $sql = "DELETE FROM `architec_upload` WHERE `architec_upload`.`bpu_id` = $bpu_id ";
+  $query=mysqli_query($link,$sql) or die("Can't Query");
+} else {
+  $sql = "DELETE FROM `muse_upload` WHERE `muse_upload`.`bpu_id` = $bpu_id ";
+  $query=mysqli_query($link,$sql) or die("Can't Query");
+}
+
 
 if($_GET['type'] == 'museum') {
+  header("location: ../".$redir.".php?objectid=".$_GET['objectid']."&refcode=".$_GET['refcode']."");
+
+} if($_GET['type'] == 'architec') {
   header("location: ../".$redir.".php?objectid=".$_GET['objectid']."&refcode=".$_GET['refcode']."");
 
 } else {

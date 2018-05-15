@@ -262,6 +262,7 @@ echo "
 			<input class='form-control' type='text' name ='titleeng' value='$titleeng' >
 	</div>
 </div>
+
 <div class='form-group'>
 	<label class='col-sm-2 control-label' >ประเภท*</label>
 	<div class='col-sm-10'>
@@ -654,7 +655,7 @@ echo "
 			});
 		</script>
 
-		<!- --------------------------- 3 Level Category ---------------------------------- ->
+		<!-- -------------------------- 3 Level Category --------------------------------- -->
 
 		<script>
 			var type = "archi";

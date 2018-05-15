@@ -106,7 +106,7 @@ for ($thm_color_i=0; $thm_color_i < $thm_color_num_rows; $thm_color_i++) {
 					for ($i=0; $i<$num_rows; $i++) {
             $result=mysqli_fetch_array($query);
             $fet_id = $result['fet_id'];
-            echo "<a $menu3 href='museshowcatall.php'>$result[fet_name]</a>";
+            echo "<a $menu3 href='architecShowAll.php'>$result[fet_name]</a>";
           }
           $sql1 = "SELECT * FROM architec_category where archCate_Parent = '0' ";
           $query1=mysqli_query($link,$sql1) or die("Can't Query3"); ?>
@@ -133,12 +133,11 @@ for ($thm_color_i=0; $thm_color_i < $thm_color_num_rows; $thm_color_i++) {
                               $query3 =mysqli_query($link,$sql3) or die("Can't Query3");  
 
                                 if($query3->num_rows > 0){
-                                  $ac1_id = $value['archCate_Id'];
 
                                   ?>
                                   <li class="dropdown-submenu contact-details">
                                   <!-- sub 2 ที่มี ลูกต่อ -->
-                                    <?php echo "<a href='museshowcatsub2.php?ac3_id=$ac3_id&ac2_id=$value[archCate2_Id]&ac1_id=$value[archCate_Id]'> $value[archCate2_Name]<span class='caret'></span></a>";   ?>
+                                    <?php echo "<a href='architec_lvl2.php?ac3_id=$ac3_id&ac2_id=$value[archCate2_Id]&ac1_id=$cat1_id'> $value[archCate2_Name]<span class='caret'></span></a>";   ?>
                                     <ul id='nav'>
                                       <!-- LV3 -->
                                       <?php 
@@ -146,7 +145,7 @@ for ($thm_color_i=0; $thm_color_i < $thm_color_num_rows; $thm_color_i++) {
                                       ?>
                                           <li>
                                             <!-- จบ sub 3 -->
-                                            <?php echo "<a href='museshowcat3.php?ac3_id=$value[archCate3_Id]&ac2_id=$value[archCate2_Id]&ac1_id=$ac1_id'>$value[archCate3_Name]</a>"; ?>
+                                            <?php echo "<a href='architec_lvl3.php?ac3_id=$value[archCate3_Id]&ac2_id=$value[archCate2_Id]&ac1_id=$cat1_id'>$value[archCate3_Name]</a>"; ?>
                                           </li>
                                                   
                                     <?php 
@@ -159,7 +158,7 @@ for ($thm_color_i=0; $thm_color_i < $thm_color_num_rows; $thm_color_i++) {
                               ?>
                                   <!-- sub 2 ไม่มีลูกต่อ -->
                                   <li>  
-                                    <?php echo "<a class='test' name='ac2_id' href='museshowcatsub2.php?ac2_id=$value[archCate2_Id]&ac1_id=$value[archCate_Id]'> $value[archCate2_Name]</a>"; ?>
+                                    <?php echo "<a class='test' name='ac2_id' href='architec_lvl2.php?ac2_id=$value[archCate2_Id]&ac1_id=$cat1_id'> $value[archCate2_Name]</a>"; ?>
                                   </li>
                           <?php 
                                 } // else
@@ -169,7 +168,7 @@ for ($thm_color_i=0; $thm_color_i < $thm_color_num_rows; $thm_color_i++) {
                       </li>
           <?php } else { ?>
                   <li>
-                    <?php echo "<a href='museshowcat.php?catid=$value[archCate_Id]''>$value[archCate_Name] </a>"; ?>
+                    <?php echo "<a href='architec_lvl1.php?catid=$value[archCate_Id]''>$value[archCate_Name] </a>"; ?>
                   </li>
           <?php 
                 }   

@@ -16,6 +16,9 @@
   <!-- Css3 Transitions Styles  -->
   <link rel="stylesheet" type="text/css" href="css/animate.css" media="screen">
 
+  <!-- Css3 Transitions Styles  -->
+  <link rel="stylesheet" type="text/css" href="css/architec.css" media="screen">
+
   <!-- Color CSS Styles  -->
    <?php //Edit_M
 								include('connect.php');

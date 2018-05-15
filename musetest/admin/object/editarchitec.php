@@ -89,6 +89,7 @@ if(isset($_GET['logoff']))
 		<link rel="stylesheet" href="css/gallery/blueimp-gallery.min.css">
 		<link rel="stylesheet" href="css/gallery/bootstrap-image-gallery.min.css">
 		<link rel="stylesheet" href="css/gallery/blueimp-gallery-indicator.css">
+		<link rel="stylesheet" href="css/architec.css">
 		<!-------  Piro Box -------->
 		<!--<link href="css/stylepiro.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -240,7 +241,7 @@ if(isset($_GET['logoff']))
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-						<!-----  Menu --------->
+						<!-- ---  Menu ------- -->
 						<?php
 						if($_SESSION['id'])
 						{
@@ -248,7 +249,7 @@ if(isset($_GET['logoff']))
 						include('menu.php');
 						}
 						?>
-						<!---- End of Menu -------->
+						<!-- ----- End of Menu ------ -->
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -259,12 +260,12 @@ if(isset($_GET['logoff']))
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-						แก้ไขวัตถุจัดแสดง
+						แก้ไขสถาปัตยกรรม
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="showmuse.php"><i class="fa fa-dashboard"></i> วัตถุจัดแสดง</a></li>
-                        <li class="active">แก้ไขวัตถุจัดแสดง</li>
+                        <li><a href="showarch.php"><i class="fa fa-dashboard"></i> ข้อมูลสถาปัตยกรรม</a></li>
+                        <li class="active">แก้ไขสถาปัตยกรรม</li>
                     </ol>
                 </section>
 
@@ -274,8 +275,6 @@ if(isset($_GET['logoff']))
                     <!-- Main row -->
                     <div class="row">
 						<div class="col-md-12">
-
-
 <!-- ------------  Process ----- -->
 
 <?php
@@ -297,6 +296,10 @@ $deldownload =$_REQUEST['deldownload'];
 $updatevr=$_REQUEST['updatevr'];
 $delvr=$_REQUEST['delvr'];
 $vrid=$_REQUEST['vrid'];
+
+$update360=$_REQUEST['update360'];
+$del360=$_REQUEST['del360'];
+$id360=$_REQUEST['id360'];
 
 $dirchange =$_REQUEST['dirchange'];
 
@@ -425,85 +428,90 @@ if($update == '1')
     <div id='alert-message' class='alert alert-success alert-dismissable'>
         <i class='fa fa-check'></i>
         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-        แก้ไขข้อมูลวัตถุจัดแสดงเสร็จสิ้น
+        แก้ไขข้อมูลสถาปัตยกรรมเสร็จสิ้น
     </div>";
 } // end if
 
-//fetching data in descending order (lastest entry first)
- $sql = "select * from architec_object  where archObj_Id = '$objectid'";
-         $query = mysqli_query($link,$sql) or die("Can't Query: หน้าต่าแสดงผลข้อมูล (523)");
-         $num_rows = mysqli_num_rows($query);
-	     for ($i=0; $i<$num_rows; $i++) {
-            $result = mysqli_fetch_array($query);
-		    //echo "$result[obj_id] $result[obj_title] <br>";
-			$objid = $result[archObj_Id] ;
-			$refcode = $result[archObj_Refcode];
-            $oldrefcode = $result[archOld_Obj_Refcode];
-			$title = $result[archObj_Title];
-            $titleeng = $result[archObj_Titleeng];
-			$datecreate = $result[archObj_Datecreate] ;
+	//fetching data in descending order (lastest entry first)
+	$sql = "select * from architec_object  where archObj_Id = '$objectid'";
+	$query = mysqli_query($link,$sql) or die("Can't Query: หน้าต่าแสดงผลข้อมูล (523)");
+	$num_rows = mysqli_num_rows($query);
 
-			$newdate = explode("-",$datecreate);
-			$datecreate = $newdate[2]."-".$newdate[1]."-".$newdate[0];
+	for ($i=0; $i<$num_rows; $i++) {
+		$result = mysqli_fetch_array($query);
+		//echo "$result[obj_id] $result[obj_title] <br>";
+		$objid = $result[archObj_Id] ;
+		$refcode = $result[archObj_Refcode];
+		$oldrefcode = $result[archOld_Obj_Refcode];
+		$title = $result[archObj_Title];
+		$titleeng = $result[archObj_Titleeng];
+		$datecreate = $result[archObj_Datecreate] ;
 
-			$level = $result[archObj_Level] ;
-			$extent = $result[archObj_Extent] ;
-			$creator = $result[archObj_Creator] ;
-			$bio = $result[archObj_Bio] ;
-			$dateacc = $result[archObj_Dateacc] ;
-			$history = $result[archObj_History] ;
-			$acquis = $result[archObj_Acquis] ;
-			$scope = $result[archObj_Scope] ;
-			$appraisal = $result[archObj_Appraisal] ;
-			$accruals = $result[archObj_Accruals] ;
-			$arrangement = $result[archObj_Arrangement] ;
-			$legal = $result[archObj_Legal] ;
-			$condition = $result[archObj_Condition] ;
-			$copyright = $result[archObj_Copyright] ;
-			$lang = $result[archObj_Lang] ;
-			$physicals= $result[archObj_Physicals] ;
-            $physicalseng = $result[archObj_Physicalseng];
+		$newdate = explode("-",$datecreate);
+		$datecreate = $newdate[2]."-".$newdate[1]."-".$newdate[0];
 
-			$aids= $result[archObj_Aids] ;
-			$location = $result[archObj_Location] ;
-			$existence = $result[archObj_Existence] ;
-			$related = $result[archObj_Related] ;
-			$associated = $result[archObj_Associated] ;
-			$pubnote = $result[archObj_Pubnote] ;
-			$note= $result[archObj_Note] ;
-			$date = $result[archObj_Date] ;
+		$level = $result[archObj_Level] ;
+		$extent = $result[archObj_Extent] ;
+		$creator = $result[archObj_Creator] ;
+		$bio = $result[archObj_Bio] ;
+		$dateacc = $result[archObj_Dateacc] ;
+		$history = $result[archObj_History] ;
+		$acquis = $result[archObj_Acquis] ;
+		$scope = $result[archObj_Scope] ;
+		$appraisal = $result[archObj_Appraisal] ;
+		$accruals = $result[archObj_Accruals] ;
+		$arrangement = $result[archObj_Arrangement] ;
+		$legal = $result[archObj_Legal] ;
+		$condition = $result[archObj_Condition] ;
+		$copyright = $result[archObj_Copyright] ;
+		$lang = $result[archObj_Lang] ;
+		$physicals= $result[archObj_Physicals] ;
+		$physicalseng = $result[archObj_Physicalseng];
 
+		$aids= $result[archObj_Aids] ;
+		$location = $result[archObj_Location] ;
+		$existence = $result[archObj_Existence] ;
+		$related = $result[archObj_Related] ;
+		$associated = $result[archObj_Associated] ;
+		$pubnote = $result[archObj_Pubnote] ;
+		$note= $result[archObj_Note] ;
+		$date = $result[archObj_Date] ;
 
+		$access= $result[archObj_Access] ;
+		$keyword = $result[archObj_Keyword] ;
+		$display = $result[archObj_Display] ;
+		$locationdisplay = $result[archObj_Location_Display];
+		$existencedisplay = $result[archObj_Existence_Display];
+		$creatordisplay = $result[archObj_Creator_Display];
+		$biodisplay = $result[archObj_Bio_Display];
+		$dateaccdisplay = $result[archObj_Dateacc_Display];
+		$historydisplay = $result[archObj_History_Display];
+		$acquisdisplay = $result[archObj_Acquis_Display];
 
-			$access= $result[archObj_Access] ;
-			$keyword = $result[archObj_Keyword] ;
-			$display = $result[archObj_Display] ;
-			$locationdisplay = $result[archObj_Location_Display];
-			$existencedisplay = $result[archObj_Existence_Display];
-			$creatordisplay = $result[archObj_Creator_Display];
-			$biodisplay = $result[archObj_Bio_Display];
-			$dateaccdisplay = $result[archObj_Dateacc_Display];
-			$historydisplay = $result[archObj_History_Display];
-			$acquisdisplay = $result[archObj_Acquis_Display];
+		$access= $result['archObj_Access'];
+		// $data = $result[obj_date];
+		$date = new DateTime($date);
+		$date = $date->format('Y-m-d');
+		//$newdate1 = explode("-",$date);
+		//$date1 = $newdate1[2]."-".$newdate1[1]."-".$newdate1[0];
+		// echo "date = ".$date;
+		// echo "date1 = ".$date1;
+		// echo "newdate = ".$newdate;
+		$category = $result['archObj_Category'] ;
+		$category2 = $result['archObj_Cate2'];
+		$category3 = $result['archObj_Cate3'] ;
+		$keyword = $result['archObj_Keyword'] ;
+	} // end for
 
+	$sql = "select * from architec_category_lv2 where archCate2_Parent = $category";
+	$query = mysqli_query($link,$sql) or die("Can't Query: Level2 ");
+	$num_of_lvl2 = mysqli_num_rows($query);
 
-			$access= $result['archObj_Access'];
+	$sql = "select * from architec_category_lv3 where archCate3_Parent = $category2";
+	$query = mysqli_query($link,$sql) or die("Can't Query: lvel3");
+	$num_of_lvl3 = mysqli_num_rows($query);
 
-			// $data = $result[obj_date];
-			$date = new DateTime($date);
-			$date = $date->format('Y-m-d');
-            //$newdate1 = explode("-",$date);
-			//$date1 = $newdate1[2]."-".$newdate1[1]."-".$newdate1[0];
-            // echo "date = ".$date;
-            // echo "date1 = ".$date1;
-            // echo "newdate = ".$newdate;
-
-			$category = $result[archObj_Category] ;
-			$category2 = $result[archObj_Cate2];
-
-			$category3 = $result[archObj_Cate3] ;
-			$keyword = $result[archObj_Keyword] ;
-        } // end for
+	
 
 ###########################
 
@@ -512,7 +520,7 @@ if($update == '1')
 
 	######  Start Tab ##########
 echo "
-<form class='form-horizontal' role='form' name='form1' method='post' action='editarchitec.php' enctype='multipart/form-data'>
+<form class='form-horizontal' role='form' name='form1' method='post' action='editarchitec.php?objectid=$objectid&refcode=$refcode' enctype='multipart/form-data'>
 <div class='nav-tabs-custom'>
 
 
@@ -527,11 +535,11 @@ echo "
 
 <ul class='nav nav-tabs'>
 	<li class='active'><a href='#tab_1' data-toggle='tab'>ข้อมูลทั่วไป*</a></li>
-	<li><a href='#tab_2' data-toggle='tab'>ประวัติ</a></li>
+	<!--<li><a href='#tab_2' data-toggle='tab'>ประวัติ</a></li>
 	<li><a href='#tab_3' data-toggle='tab'>ขอบเขต</a></li>
 	<li><a href='#tab_4' data-toggle='tab'>เงื่อนไขการใช้</a></li>
 	<li><a href='#tab_5' data-toggle='tab'>การจัดเก็บ</a></li>
-	<li><a href='#tab_6' data-toggle='tab'>บันทึก</a></li>
+	<li><a href='#tab_6' data-toggle='tab'>บันทึก</a></li>-->
 	<li><a href=\"showarch.php?objectid=$result[archObj_Id]&del=obj\"><img src='images/icon_del.gif'></a></li>
 </ul> ";
 
@@ -555,7 +563,7 @@ echo "
 	</div>
 </div>
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>ชื่อวัตถุจัดแสดง*</label>
+	<label class='col-sm-2 control-label'>ชื่อสถาปัตยกรรม*</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='title' value='$title' required>
 	</div>
@@ -576,24 +584,24 @@ echo "
 
 echo "<select class='form-control' id='cate_1' name='category' required>";
 echo "<option value='0'>-- เลือกประเภท --</option>";
-	$sql = "select * from muse_category  where cat1_parent ='0' ";
+	$sql = "select * from architec_category  where archCate_Parent ='0' ";
 	$query=mysqli_query($link,$sql) or die("Can't Query2");
 	$num_rows=mysqli_num_rows($query);
 
 	for ($i=0; $i<$num_rows; $i++) {
 		$result=mysqli_fetch_array($query);
-			if($category ==  $result[cat1_id])
+			if($category ==  $result['archCate_Id'])
 			{
-				echo "<option value='$result[cat1_id]' selected>$result[cat1_name]</option>";
+				echo "<option value='$result[archCate_Id]' selected>$result[archCate_Name]</option>";
 			}
 			else
 			{
-				echo "<option value='$result[cat1_id]'> $result[cat1_name]</option>";
+				echo "<option value='$result[archCate_Id]'> $result[archCate_Name]</option>";
 			}
 
 		// Sub Category //
-    	$parent = $result[cat1_id];
-		$sql5 = "select * from muse_category  ";
+    	$parent = $result[archCate_Id];
+		$sql5 = "select * from architec_category  ";
     	$query5=mysqli_query($link,$sql5) or die("Can't Query");
     	$num_rows5=mysqli_num_rows($query5);
 
@@ -610,13 +618,27 @@ if($category != 0 && $category2 != 0) {
 			<div class='col-sm-9'>
 				<select name='cate_2' class='form-control' id='cate_2'>";
 					echo "<option value='0'>ไม่ระบุ</option>";
-					$query = mysqli_query($link,"SELECT * FROM muse_category_lv2 WHERE ac1_id = '".$category."'");
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv2 WHERE archCate2_Parent = '".$category."'");
 					while($cate = mysqli_fetch_array($query)) {
-						if($cate['ac2_id'] === $category2) {
-							echo "<option value='".$cate['ac2_id']."' selected>".$cate['ac2_name']."</option>";
+						if($cate['archCate2_Id'] === $category2) {
+							echo "<option value='".$cate['archCate2_Id']."' selected>".$cate['archCate2_Name']."</option>";
 						} else {
-							echo "<option value='".$cate['ac2_id']."'>".$cate['ac2_name']."</option>";
+							echo "<option value='".$cate['archCate2_Id']."'>".$cate['archCate2_Name']."</option>";
 						}
+					}
+				echo "</select>
+			</div>
+
+	";
+} else if ($category2 == 0 && $num_of_lvl2 != 0) {
+	echo "
+			<label for='cate_2' class='col-sm-3 control-label'>ประเภทระดับ 2</label>
+			<div class='col-sm-9'>
+				<select name='cate_2' class='form-control' id='cate_2'>";
+					echo "<option value='0'>ไม่ระบุ</option>";
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv2 WHERE archCate2_Parent = '".$category."'");
+					while($cate = mysqli_fetch_array($query)) {
+						echo "<option value='".$cate['archCate2_Id']."'>".$cate['archCate2_Name']."</option>";
 					}
 				echo "</select>
 			</div>
@@ -632,12 +654,29 @@ if($category != 0 && $category2 != 0 && $category3 != 0) {
 			<div class='col-sm-8'>
 				<select name='cate_3' class='form-control' id='cate_3'>";
 					echo "<option value='0'>ไม่ระบุ</option>";
-					$query = mysqli_query($link,"SELECT * FROM muse_category_lv3 WHERE ac2_id = '".$category2."'");
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv3 WHERE archCate3_Parent = '".$category2."'");
 					while($cate = mysqli_fetch_array($query)) {
-						if($cate['ac3_id'] === $category3) {
-							echo "<option value='".$cate['ac3_id']."' selected>".$cate['ac3_name']."</option>";
+						if($cate['archCate3_Id'] === $category3) {
+							echo "<option value='".$cate['archCate3_Id']."' selected>".$cate['archCate3_Name']."</option>";
 						} else {
-							echo "<option value='".$cate['ac3_id']."'>".$cate['ac3_name']."</option>";
+							echo "<option value='".$cate['archCate3_Id']."'>".$cate['archCate3_Name']."</option>";
+						}
+					}
+				echo "</select>
+			</div>
+	";
+} else if($category3 == 0 && $num_of_lvl3 != 0) {
+	echo "
+			<label for='cate_3' class='col-sm-4 control-label'>ประเภทระดับ 3</label>
+			<div class='col-sm-8'>
+				<select name='cate_3' class='form-control' id='cate_3'>";
+					echo "<option value='0'>ไม่ระบุ</option>";
+					$query = mysqli_query($link,"SELECT * FROM architec_category_lv3 WHERE archCate3_Parent = '".$category2."'");
+					while($cate = mysqli_fetch_array($query)) {
+						if($cate['archCate3_Id'] === $category3) {
+							echo "<option value='".$cate['archCate3_Id']."' selected>".$cate['archCate3_Name']."</option>";
+						} else {
+							echo "<option value='".$cate['archCate3_Id']."'>".$cate['archCate3_Name']."</option>";
 						}
 					}
 				echo "</select>
@@ -654,15 +693,11 @@ echo "</div>";
 $sql = "select * from tz_members where id = '$id'   ";
  $query=mysqli_query($link,$sql) or die("Can't Query3");
  $num_rows=mysqli_num_rows($query);
-
-
-
-	     for ($i=0; $i<$num_rows; $i++) {
-         $result=mysqli_fetch_array($query);
-		//echo "$result[usr]  $result[permission]<br>";
-		$permission =$result[permission];
-
-}
+		for ($i=0; $i<$num_rows; $i++) {
+			$result=mysqli_fetch_array($query);
+			//echo "$result[usr]  $result[permission]<br>";
+			$permission =$result[permission];
+		}
 
 //echo "Per : $permission  $access";
 
@@ -747,7 +782,7 @@ echo "
 
 ###   สถานะการจัดแสดง  ###
 echo "
-<div class='form-group'>
+<div class='form-group' style='display: none';>
 	<label class='col-sm-2 control-label'>สถานะจัดแสดง</label>
 	<div class='col-sm-10'> ";
 
@@ -779,7 +814,7 @@ echo "</div>
 
 ###   การแสดงผล  ###
 echo "
-<div class='form-group'>
+<div class='form-group' style='display: none';>
 	<label class='col-sm-2 control-label'>การแสดงผล</label>
 	<div class='col-sm-10'> ";
 
@@ -864,7 +899,7 @@ echo "
 	echo "
 		<div class='checkbox'>
 			<label>
-				<input type='checkbox' name='historydisplay' value='1' checked> ประวัติวัตถุจัดแสดง
+				<input type='checkbox' name='historydisplay' value='1' checked> ประวัติสถาปัตยกรรม
 			</label>
 		</div> ";
     }
@@ -873,7 +908,7 @@ echo "
 	echo "
 		<div class='checkbox'>
 			<label>
-				<input type='checkbox' name='historydisplay' value='1'> ประวัติวัตถุจัดแสดง
+				<input type='checkbox' name='historydisplay' value='1'> ประวัติสถาปัตยกรรม
 			</label>
 		</div> ";
     }
@@ -1017,7 +1052,7 @@ echo "
 </div>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>ประวัติวัตถุจัดแสดง</label>
+	<label class='col-sm-2 control-label'>ประวัติสถาปัตยกรรม</label>
 	<div class='col-sm-10'>
 		<textarea class='form-control' rows='4' name ='history'>$history</textarea>
 	</div>
@@ -1138,7 +1173,7 @@ echo "
 </div>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>วัตถุจัดแสดงที่เกี่ยวข้อง</label>
+	<label class='col-sm-2 control-label'>สถาปัตยกรรมที่เกี่ยวข้อง</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='related' value='$related'>
 	</div>
@@ -1222,9 +1257,8 @@ echo "
 	}
     ?>
 
-
 <!-- ------   End Of Process---------- -->
-<!-- ------ วัตถุจัดแสดงดาวน์โหลด ----------- -->
+<!-- ------ สถาปัตยกรรมดาวน์โหลด ----------- -->
 
 <?php
 if($updatevr == 1) {
@@ -1359,7 +1393,6 @@ for ($i=0; $i<$num_rows3; $i++) {
 		else if($result3[vr_direction] == 'L') {
 			echo "<a href='editarchitec.php?vrid=$result3[vr_id]&objectid=$objectid&refcode=$refcode&dirchange=R'><img src='images/left_arrow.jpg' width ='30'></a>";
 		}
-///////////  End Check Pic ///////////
         echo "<a href ='editarchitec.php?vrid=$result3[vr_id]&objectid=$objectid&refcode=$refcode&delvr=1'> <img src ='images/icon_del.gif'> </a> <br>";
 } // end for
 
@@ -1375,7 +1408,7 @@ echo "<div class='form-group'>";
 echo "<input type='hidden' name='updatevr' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์s'>";
 echo "</div>";
 echo "</form>";
 echo "</div>";
@@ -1383,10 +1416,104 @@ echo "</div>";
 ?>
 
 <?php
-//////////////////////////////////////////////////////////////////////////////////// UPLOAD FILE
+//////////////////////////////////    360 degree    ////////////////////////////////////
+
+if($update360 == 1) {
+
+	$target_path_360 = "../../pic/architec_360/$refcode";
+	if (!file_exists($target_path_360)) {
+		mkdir($target_path_360, 0700);
+	}
+	
+	$my360 = date("YmdHis").'_'.$_FILES['uploadedfile360']['name'];
+	// echo phpinfo();
+
+	if(move_uploaded_file($_FILES['uploadedfile360']['tmp_name'], "../../pic/architec_360/$refcode/$my360")) {
+		echo "The file ". $_FILES['uploadedfile360']['name'].   " has been uploaded";
+	} else{
+		echo "Can't Upload";
+	}
+
+	###########  ZIP File #############
+
+	$ZipName = "../../pic/architec_360/$my360";
+
+	#############################
+
+	$DesName = "../../pic/architec_360/$refcode/";
+	require_once("dUnzip2.inc.php"); // include Class
+	$zip = new dUnzip2($ZipName); // New Class
+	$zip->unzipAll($DesName); // Unzip All
+
+	######  ADD DB############
+
+	$sql = "INSERT INTO `architec_360`(`arch360_Id`, `arch360_Dir`, `obj_id`, `obj_refcode`) VALUES (NULL, '$my360', $objectid, '$refcode') ";
+
+	if (!mysqli_query($link,$sql)) {
+		echo("fail upload 360" . mysqli_error($link) . "<br>");
+	}
+} // end if
+
+if($del360 == 1) {
+	$sql = "DELETE FROM architec_360 WHERE arch360_Id = '$id360' ";
+	$query=mysqli_query($link,$sql) or die("Can't Query");
+	echo "<br>";
+}
+
+echo "<div class='box box-primary'>"; // Start box-primary
+echo "<div class='box-header'>";
+echo "<h3 class='box-title'>ภาพพาโนรามา</h3>";
+echo "</div>";
+echo "<div class='box-body'>"; // Start box-body
+	echo "<form name ='formupload' method='post' action='editarchitec.php?objectid=$objectid&refcode=$refcode' enctype='multipart/form-data'>";
+		echo "<div class='form-group'>";
+		echo 	"<input type='file' name='uploadedfile360' id='uploadedfile360'>";
+		echo "</div>";
+		echo "<div class='form-group'>";
+		echo 	"<input type='hidden' name='update360' value='1'>";
+		echo 	"<input type='hidden' name='objectid' value='$objectid'>";
+		echo 	"<input type='hidden' name='refcode' value='$refcode'>";
+		echo 	"<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์ Pano'>";
+		echo "</div>";
+	echo "</form>";
+	echo "<div class='row'>";
+// echo "<div>";
+$sql3 = "SELECT * FROM `architec_360` WHERE obj_refcode = '$refcode' ";
+$query3 = mysqli_query($link,$sql3) or die("Can't Query2");
+$num_rows3 = mysqli_num_rows($query3);
+
+$line=0;
+foreach ($query3 as $index => $result3) {
+	if($line == 0){
+		echo "<div class='row-eq-height'>";
+	}
+	$line++;
+	echo "<div class='col-xs-3 col-sm-3 col-md-3'>"; 
+		echo "<center>";
+		echo "<a target='_blank' href='../../site/360/architec_pano.php?refcode=".$refcode."&file=".$result3['arch360_Dir']."'><img src ='../../pic/architec_360/$refcode/$result3[arch360_Dir]' class='img-thumbnail' style='margin:5px 0px 15px;'>".$result3['arch360_Dir']." </a>";
+		echo "<p><a href='editarchitec.php?id360=$result3[arch360_Id]&objectid=$objectid&refcode=$refcode&del360=1'><img src='images/icon_del2.png'></a></p>";
+		echo "</center>";
+	echo "</div><!-- /.row -->";
+	if($line == 4){
+		$line = 0;
+		echo "</div>";
+	} else if( ($line < 4) && ($index == $num_rows3-1)){
+		echo"</div>";
+	}
+} // end for
+
+echo "</div>"; // container
+echo "</div>"; // box-body
+echo "</div>";// End box-primary
+
+?>
+
+<?php
+
+////////////////////////////  ไฟลืดาวน์โหลด  ///////////////////////////////////
+
 if($updown == '1') {
 	echo "UPLOAD Download File";
-	######## UPload FILE###########
 	$target_path = "pic/download/";
 	$target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
 	$myfile = $_FILES['uploadedfile']['name'];
@@ -1408,47 +1535,44 @@ echo "</div>";
 echo "<div class='box-body'>"; // Start box-body
 if($download == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '1' WHERE obj_refcode ='$refcode'";
-	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '1' WHERE archObj_Refcode ='$refcode'";
+	$query0=mysqli_query($link,$sql0) or die("Can't Query-0.1");
 } else {
 	//echo "ไม่อนุญาตให้ดาวน์โหลด";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '0' WHERE obj_refcode ='$refcode'";
-	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
+	$query0=mysqli_query($link,$sql0) or die("Can't Query-0.2");
 }
 
 if($deldownload == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_downloadfile`= '',`obj_download`= '0' WHERE obj_refcode ='$refcode'";
-	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
+	$sql0 = "UPDATE architec_object SET `archObj_downloadfile`= '',`archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
+	$query0=mysqli_query($link,$sql0) or die("Can't Query-0.3");
 }
 
-//upload  ไฟล์download
 
 echo "<form name ='formupload' method='post' action='model/funcMediaUploadMuse.php' enctype='multipart/form-data'>";
 echo "<div class='form-group'>";
 //echo "check exiting download file";
-$sql3 = "SELECT * FROM `muse_object` WHERE obj_refcode = '$refcode'";
+$sql3 = "SELECT * FROM `architec_object` WHERE archObj_Refcode = '$refcode'";
 $query3=mysqli_query($link,$sql3) or die("Can't Query3");
 $num_rows3=mysqli_num_rows($query3);
 for ($i=0; $i<$num_rows3; $i++) {
 	$result3=mysqli_fetch_array($query3);
-	$downloadfile = $result3['obj_downloadfile'];
-	$download = $result3['obj_download'];
+	$downloadfile = $result3['archObj_downloadfile'];
+	$download = $result3['archObj_Download'];
 	//echo "$result3[obj_downloadfile] <br>";
 }
 
-
-
 echo "
-<input type='file' name='uploadedfile' id='uploadedfile'>
-	<input type='hidden' name='type' value='museum'>
+	<input type='file' name='uploadedfile' id='uploadedfile'>
+	<input type='hidden' name='type' value='architec'>
 ";
 echo "</div>";
 echo "<div class='form-group'>";
 echo "<input type='hidden' name='updown' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์'>";
 echo "</div>";
 echo "</form>";
 
@@ -1456,96 +1580,53 @@ $open_check = $_REQUEST['open_check'];
 $objectid = $_REQUEST['objectid']; //objid
 $req_bpu_id = $_REQUEST['bpu_id_req']; //bpuid
 
-
-$ul_query = mysqli_query($link,"SELECT * FROM `muse_upload` WHERE `obj_id` = '$objid'");
+$ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '$objid'");
+$num_rows_fileDwnload = mysqli_num_rows($ul_query);
 echo "<div class='row'>";
+$line=0;
 while($row = mysqli_fetch_assoc($ul_query)) {
 	$ext = pathinfo($row['bpu_file']);
 	$bpu_id = $row['bpu_id'];
-		$filetype = explode(".", $row[bpu_file]);
+	$filetype = explode(".", $row[bpu_file]);
 	$filetype = $filetype[1];
-	$type = "museum";
+	$type = "architec";
 
+	
 	if($filetype =='pdf') {
-		echo "<div class='col-sm-4' align='center'>";   
-		echo "<a target='_blank' href='../../pic/museum_upload/".$refcode."/".$row['bpu_file']."'>
-		<br>    <img src='images/pdf.png' width='100'> <br>".$row['bpu_file']." </a>
-		<p>  <a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'>
-		<img src='images/icon_del2.png'></a>  </p>";
-
-		$num_rows=mysqli_num_rows($query);
-
-		for ($i=0; $i < $num_rows; $i++) {
-			$result=mysqli_fetch_array($query);
-			$email = $result['bg_email'];
+		if($line == 0){
+			echo "<div class='row-eq-height'>";
 		}
-		$secheck = "SELECT * FROM muse_upload WHERE bpu_id = '$bpu_id' ";
-		$query_checking = mysqli_query($link , $secheck) or die("Can't Query");
-		$num_rowssql = mysqli_num_rows($query_checking);
-        for ($ssi=0; $ssi < $num_rowssql; $ssi++) {
-	        $row_resuldata = mysqli_fetch_array($query_checking);
-            $bup = $row_resuldata['bpu_id'];
-        }
-		$secheckdata = "SELECT * FROM muse_upload_check WHERE bpu_id = '$bup'  ";
-		$querydata = mysqli_query($link , $secheckdata) or die("Can't Query");
-		$num_r = mysqli_num_rows($querydata);
-
-		for ($ssiss=0; $ssiss < $num_r; $ssiss++) {
-			$row_re = mysqli_fetch_array($querydata);
-			$bup = $row_re['bpu_id'];
-			$objid = $row_re['obj_id'];
-			$open_check_res = $row_re['open_check'];
-			$open_check_true = $row_re['open_check_true'];
-			$open_check_false = $row_re['open_check_false'];
-		}
-
-		$cover = $_REQUEST['cover'];
-        if ($open_check_res == '1' ) {
-			echo "<a href='editarchitec.php?cover=0&objectid=$objectid&refcode=$refcode&bpu_id_req=$bpu_id'>
-			<img src='images/icon_set2.png'> อนุญาตให้ดาวน์โหลด </a>";
-		} else if ($open_check_res == '0' ) {
-			echo "<a href='editarchitec.php?cover=1&objectid=$objectid&refcode=$refcode&bpu_id_req=$bpu_id'>
-			<img src='images/icon_set3.png'>อนุญาตให้ดาวน์โหลด </a>";
-        }
-		if ($cover == '1') {
-			$update_data = "UPDATE `muse_upload_check`
-			SET
-
-			`bpu_id` = '$req_bpu_id',`obj_id` = '$objectid',`bpu_count_dowload` = '0',`open_check` = '1' WHERE `bpu_id` = '$req_bpu_id'  ";
-
-			mysqli_query($link,$update_data);
-		}
-		if ($cover == '0') {
-			$update_data = "UPDATE `muse_upload_check`
-			SET
-
-			`bpu_id` = '$req_bpu_id',`obj_id` = '$objectid',`bpu_count_dowload` = '0',`open_check` = '0' WHERE `bpu_id` = '$req_bpu_id'  ";
-
-			mysqli_query($link,$update_data);
-		}
-
+		$line++;
+		echo "<div class='col-xs-3 col-sm-3 col-md-3'>"; 
+		echo "<center>";  
+		echo "<a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row['bpu_file']."'><img src='images/pdf.png' > <br>".$row['bpu_file']." </a>
+				<p>
+					<a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'>
+						<img src='images/icon_del2.png'>
+					</a>
+				</p>";
+		echo "</center>";
 		echo "</div>";
 
-	} // if ใหญ่
-    else {
-
-    }
-			//echo "</div><!-- /.col-md-2 -->";
+		if($line == 4){
+			$line = 0;
+			echo "</div>";
+		} else if( ($line < 4) && ($index == $num_rows_fileDwnload-1)){
+			echo"</div>";
+		}
+	}
 } // while loop
 
 echo "</div><!-- /.row -->";
-echo "</div>";
-echo "</div>";
-		/* UPLOAD FILE */
+echo "</div><!--/.box-body -->";
+echo "</div><!--/.box-primary -->";
 ?>
 
-<!- -------- video ----- -->
-
 <?php
-//////////////////////////////////////////////////////////////////////////////////// Video FILE
+
+////////////////////////////  Video FILE  ///////////////////////////////////
 if($updown == '1') 	{
 	echo "UPLOAD Download File";
-	######## UPload FILE###########
 	$target_path = "pic/download/";
 	$target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
 	$myfile = $_FILES['uploadedfile']['name'];
@@ -1562,25 +1643,25 @@ if($updown == '1') 	{
 
 echo "<div class='box box-primary'>"; // Start box-primary
 echo "<div class='box-header'>";
-echo "<h3 class='box-title'>ไฟล์มีเดีย (MP3 , MP4)</h3>";
+echo "	<h3 class='box-title'>ไฟล์มีเดีย (MP3 , MP4)</h3>";
 echo "</div>";
 echo "<div class='box-body'>"; // Start box-body
 if($download == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '1' WHERE obj_refcode ='$refcode'";
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '1' WHERE archObj_Refcode ='$refcode'";
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 } else {
 	//echo "ไม่อนุญาตให้ดาวน์โหลด";
-	$sql0 = "UPDATE muse_object SET `obj_download`= '0' WHERE obj_refcode ='$refcode'";
+	$sql0 = "UPDATE architec_object SET `archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 }
 if($deldownload == '1') {
 	//echo "อนุญาตให้ดาวน์โหลดได้";
-	$sql0 = "UPDATE muse_object SET `obj_downloadfile`= '',`obj_download`= '0' WHERE obj_refcode ='$refcode'";
+	$sql0 = "UPDATE architec_object SET `archObj_downloadfile`= '',`archObj_Download`= '0' WHERE archObj_Refcode ='$refcode'";
 	$query0=mysqli_query($link,$sql0) or die("Can't Query-0");
 }
 
-echo "<form name ='formupload' method='post' action='model/funcMediaUpload.php' enctype='multipart/form-data'>";
+echo "<form name ='formupload' method='post' action='model/funcMediaUploadMuse.php' enctype='multipart/form-data'>";
 echo "<div class='form-group'>";
 $sql3 = "SELECT * FROM `architec_object` WHERE archObj_Refcode = '$refcode'";
 $query3=mysqli_query($link,$sql3) or die("Can't Query3");
@@ -1591,64 +1672,74 @@ for ($i=0; $i<$num_rows3; $i++) {
 	$download = $result3['archObj_Download'];
 }
 
-echo "
-<input type='file' name='uploadedfile' id='uploadedfile'>
-	<input type='hidden' name='type' value='museum'>
-";
+echo "<input type='file' name='uploadedfile' id='uploadedfile'>
+	  <input type='hidden' name='type' value='architec'>";
 echo "</div>";
 echo "<div class='form-group'>";
 echo "<input type='hidden' name='updown' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัพโหลดไฟล์(มีเดีย)'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์(มีเดีย)'>";
 echo "</div>";
 echo "</form>";
-			
-$ul_query = mysqli_query($link,"SELECT * FROM `muse_upload` WHERE `obj_id` = '".$objid."'");
-echo "<div class='row'>";
-while($row = mysqli_fetch_assoc($ul_query)) {
-	$ext = pathinfo($row['bpu_file']);
 
+$ul_query = mysqli_query($link,"SELECT * FROM `architec_upload` WHERE `obj_id` = '".$objid."'");
+$num_rows_mediaFile = mysqli_num_rows($ul_query);
+$line=0;
+echo "<div class='row'>";
+// while($row = mysqli_fetch_array($ul_query)) {
+foreach ($ul_query as $index => $row) {
+	$ext = pathinfo($row['bpu_file']);
 	$filetype = explode(".", $row[bpu_file]);
 	$filetype = $filetype[1];
-	$type = "museum";
-
-	if(($filetype =='mp3') or ($filetype =='MP3')) {
-		echo "<div class='col-sm-4' align='center'>";
-		echo "<audio width='250' controls>
-		<source src='../../pic/museum_upload/$refcode/$row[bpu_file]' type='audio/mpeg'>
-		<embed src='../../pic/museum_upload/$refcode/$row[bpu_file]' width='250'>
-		</audio>";
-		echo "<br>";
-		echo "<p>
+	$type = "architec";
+	if((strtolower($filetype) =='mp3') or (strtolower($filetype) =='mp4')){
+		if($line == 0){
+			echo "<div class='row-eq-height'>";
+		}
+		$line++;
+		if((strtolower($filetype) =='mp3')) {
+			echo "<div class='col-xs-4 col-sm-4 col-md-4' align='center'>";
+			echo "<audio width='250' controls>
+			<source src='../../pic/architec_upload/$refcode/$row[bpu_file]' type='audio/mpeg'>
+			<embed src='../../pic/architec_upload/$refcode/$row[bpu_file]' width='250'>
+			</audio>";
+			echo "<br>";
+			echo "<p>
+					<a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'><img src='images/icon_del2.png'></a>
+				  </p> ";
+			echo "</div>";
+		} 
+		else if(strtolower($filetype) =='mp4') {
+			echo "<div class='col-xs-3 col-sm-4 col-md-4' align='center'>";
+			echo "<video width='250'  controls>
+					<source src='../../pic/architec_upload/$refcode/$row[bpu_file]' type='video/mp4'>
+					<object data='../../architec_upload/$refcode/$row[bpu_file]' width='250' >
+					</object>
+				</video>";
+			echo "<br>";
+			echo "<p>
 				<a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'><img src='images/icon_del2.png'></a>
-			</p> ";
-		echo "</div>";
-	} else if(($filetype =='mp4') or ($filetype =='MP4')) {
-		echo "<div class='col-sm-4' align='center'>";
-		echo "<video width='250'  controls>
-				<source src='../../pic/museum_upload/$refcode/$row[bpu_file]' type='video/mp4'>
-				<object data='../../museum_upload/$refcode/$row[bpu_file]' width='250' >
-				</object>
-			</video>";
-		echo "<br>";
-		echo "<p>
-			<a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'><img src='images/icon_del2.png'></a>
-			</p> ";
-		echo "</div>";
-	} else {
-		echo "";
+				</p> ";
+			echo "</div>";
+		} 
+		if($line == 3){
+			$line = 0;
+			echo "</div>!-- /.row-eq-height -->";
+		}
+	}
+	if( ($line < 3) && ($index == $num_rows_mediaFile-1) ){
+		echo "</div><!-- /.row-eq-height -->";
 	}
 } // end while
-	echo "</div><!-- /.row -->";
-	echo "</div>";
-	echo "</div>";
-	/* UPLOAD File */
 ?>
-
-<!-----  Picture  --------->
+	</div><!-- /.row -->
+	</div><!-- /.box-body -->
+	</div><!-- /.box-primary -->
 
 <?php
+
+////////////////////////////  Picture  ///////////////////////////////////
 if($_SESSION['id']) {
 	if($delpic == 1) {
 		$sql = "DELETE FROM architec_pic WHERE archPic_Id = '$picid' ";
@@ -1672,12 +1763,6 @@ if($_SESSION['id']) {
 				ตั้งเป็นภาพปกเสร็จสิ้น
 			  </div>";
 	}
-    else {
-		// รอปรับแก้จากของเก่า ทำให้ error
-		// echo 'this is: '.$setpic;
-		// $sql = "UPDATE architec_pic SET `archObj_Cover`='0' WHERE `architec_pic`.`architec_pic` ='$picid'";
-		// $query=mysqli_query($link,$sql) or die("Can't Query-2");
-  	}
 
 ##check open pics ## mkallamamlqnmal makmnzj lalma
 
@@ -1771,20 +1856,25 @@ if($_SESSION['id']) {
   
 	echo "<div class='box box-primary'>"; // Start box-primary
 	echo "<div class='box-header'>";
-	echo "<h3 class='box-title'>วัตถุจัดแสดง</h3>";
+	echo "<h3 class='box-title'>รูปสถาปัตยกรรม</h3>";
 
     $ref = ConvertTH_EN($data);
      
 	echo "</div>";
 	echo "<div class='box-body'>"; // Start box-body
-	echo "<div>
+	echo "<div class='row'>";
+	echo "<div class='col-xs-4 col-md-6'>
 			<a class='btn btn-primary' href=\"JavaScript:newPopup('uploadarchitec/index.php?dir=$ref&objectid=$objectid&refcode=$refcode');\">
-				<i class='fa fa-upload fa-lg'></i> อัพโหลดวัตถุจัดแสดง
+				<i class='fa fa-upload fa-lg'></i> อัปโหลด
 			</a>
-			<a class='btn btn-primary pull-right' href=\"JavaScript:newPopup('model/sortable/sortArchitec.php?ref=$refcode&type=architec&id=$objectid');\">
-				<i class='fa fa-sort-amount-desc fa-lg'></i> จัดเรียงวัตถุจัดแสดง
-			</a><br><br>
 		  </div>";
+	echo "<div class='col-xs-4 col-xs-offset-4 col-md-6 col-md-offset-0'>
+			<a class='btn btn-primary pull-right' href=\"JavaScript:newPopup('model/sortable/sortArchitec.php?ref=$refcode&type=architec&id=$objectid');\">
+				<i class='fa fa-sort-amount-desc fa-lg'></i> จัดเรียงรูป
+			</a><br><br>
+		  </div>";		
+			
+	echo  "</div>";
 
 
 	##### Start Tab Pic 1 #######
@@ -1834,13 +1924,11 @@ if($_SESSION['id']) {
 
 	////////////   End Upload File /////////
 
-	echo "<div id='links'>";
-	echo "<table width=100% border=0>";
-	echo "<tr>";
+	echo "<div class='row'>";
 	$sql3 = "SELECT * FROM `architec_pic` WHERE archObj_Refcode = '$refcode' ORDER BY archListorder ASC";
-			$query3=mysqli_query($link,$sql3) or die("Can't Query แสดงรูปภาพในส่วนของภาพที่อัปโหลด: 2152");
-			$num_rows3=mysqli_num_rows($query3);
-
+	$query3 = mysqli_query($link,$sql3) or die("Can't Query แสดงรูปภาพในส่วนของภาพที่อัปโหลด: 2152");
+	$num_rows = mysqli_num_rows($query3);
+	$line = 0;
 	foreach ($query3 as $result3) {
 		$filetype = explode(".", $result3['archPic_Name']);
 		$filetype = $filetype[1];
@@ -1848,324 +1936,146 @@ if($_SESSION['id']) {
 		$objref =$result3['archObj_Refcode'];
 		$foldref =$result3['archFolder_Refcode'];        
 		$refcode = $objref ;    
-		if($line < 3){
-			echo "<td align='center'>";
-			if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($filetype =='PNG') or ($filetype =='JPEG') or ($filetype == 'JPG')) {
-				echo "<a href=\"../../pic/big_architec/$foldref/$result3[archPic_Name]\" data-gallery>
-					<img src ='../../pic/big_architec/$foldref/$result3[archPic_Name]' width='200'></a> <br>";
+
+		if((strtolower($filetype) == 'jpg') or (strtolower($filetype) =='jpeg') or (strtolower($filetype) =='png')) {
+			if($line == 0){
+				echo "<div class='row-eq-height'>";
 			}
-			else if($filetype =='mp4' or $filetype =='MP4') {
-				echo "<video width='200'  controls>
-					<source src='../../pic/big_architec/$refcode/$result3[archPic_Name]' type='video/mp4'>
-					<object data='../../pic/big_architec/$refcode/$result3[archPic_Name]' width='200' >
-					</object>
-					</video>";
-				echo "<br>";
-			} else if($filetype =='mp3' or $filetype =='MP3') {
-				echo "<audio width='200' controls>
-					<source src='../../pic/big_architec/$refcode/$result3[archPic_Name]' type='audio/mpeg'>
-					<embed src='../../pic/big_architec/$refcode/$result3[archPic_Name]' width='200'>
-					</audio>";
-				echo "<br>";
-			} else if($filetype =='pdf') {
-				echo "<a href ='../../pic/big_architec/$refcode/$result3[archPic_Name]' target='_blank'><img src='images/pdf-icon.png' width='150'></a>";
-				echo "<br>";
-			}
+			$line++;
+
+			echo "<div class='col-xs-3 col-sm-3 col-md-3' align='center'>";
+			echo "<a href=\"../../pic/big_architec/$foldref/$result3[archPic_Name]\" data-gallery>
+				<img src ='../../pic/big_architec/$foldref/$result3[archPic_Name]'></a> <br>";
 
 			echo "
 			<a href=\"JavaScript:newPopupdetail('zoom/picArchitecEdit.php?picid=$result3[archPic_Id]&objectid=$objid&refcode=$refcode');\"> <img src='images/edit_icon2.png'></a>
 			<a href ='editarchitec.php?picid=$result3[archPic_Id]&delpic=1&objectid=$objid&refcode=$refcode'> <img src ='images/icon_del2.png'> </a>";
 
-			if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($filetype =='JPG') or ($filetype =='PNG') or ($filetype =='JPEG')) {
-				if($cover == '1') {
-					echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&setpic=0&objectid=$objid&refcode=$refcode'><img src ='images/icon_set2.png'> </a>"; //Checked
-				} else {
-					echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&setpic=1&objectid=$objid&refcode=$refcode'> <img src ='images/icon_set3.png'> </a>"; //Unchecked
-				}
-				if($result3['archPic_Open'] == '0') {
-					echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=0&objectid=$objid&refcode=$refcode'><img src='images/eye-close.png'></a>";
-				}
-				else {
-					echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=1&objectid=$objid&refcode=$refcode'><img src='images/eye-open.png'></a>";
-				}
-			}
-			echo "</td>";
-			$line = $line+1;
-		} else {
-			echo "<td align='center'>";
-			if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($filetype =='JPG') or ($filetype =='PNG') or ($filetype =='JPEG')) {
-				echo "<a href=\"../../pic/big_architec/$foldref/$result3[archPic_Name]\" data-gallery>
-				<img src ='../../pic/big_architec/$foldref/$result3[archPic_Name]' width='200'></a> <br>";
-			} else if($filetype =='mp4' or $filetype =='MP4') {
-				echo "<video width='200'  controls>
-					<source src='../../pic/big_architec/$refcode/$result3[archPic_Name]' type='video/mp4'>
-					<object data='../../pic/big_architec/$refcode/$result3[archPic_Name]' width='200' >
-					</object>
-					</video>";
-				echo "<br>";
-			} else if($filetype =='mp3' or $filetype =='MP4') {
-				echo "<audio width='200' controls>
-						<source src='../../pic/big_architec/$refcode/$result3[archPic_Name]' type='audio/mpeg'>
-						<embed src='../../pic/big_architec/$refcode/$result3[archPic_Name]' width='200'>
-					</audio>";
-				echo "<br>";
-			} else if($filetype =='pdf') {
-				echo "<a href ='../../pic/big_architec/$refcode/$result3[archPic_Name]' target='_blank'><img src='images/pdf-icon.png' width='150'></a>";
-				echo "<br>";
-			}
-			echo " <a href=\"JavaScript:newPopupdetail('zoom/picArchitecEdit.php?picid=$result3[archPic_Id]&objectid=$objid&refcode=$refcode');\"> <img src='images/edit_icon2.png'></a>
-				<a href ='editarchitec.php?picid=$result3[archPic_Id]&delpic=1&objectid=$objid&refcode=$refcode'><img src ='images/icon_del2.png'></a>";
-	
-			if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($filetype =='JPG') or ($filetype =='PNG') or ($filetype =='JPEG')) {
-				if($cover == '1') {
-					echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&setpic=1&objectid=$objid&refcode=$refcode'> <img src ='images/icon_set2.png'> </a>"; //Checked
-				}
-				else {
-					echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&setpic=1&objectid=$objid&refcode=$refcode'> <img src ='images/icon_set3.png'> </a>"; //Unchecked
-				}
-			}
-			
-			if($result3[archPic_Open] == '0') { 
-				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=0&objectid=$objid&refcode=$refcode'><img src='images/eye-open.png'></a>";
+			if($cover == '1') {
+				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&setpic=0&objectid=$objid&refcode=$refcode'><img src ='images/icon_set2.png'> </a>"; //Checked
 			} else {
-				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=1&objectid=$objid&refcode=$refcode'><img src='images/eye-close.png'></a>";
+				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&setpic=1&objectid=$objid&refcode=$refcode'> <img src ='images/icon_set3.png'> </a>"; //Unchecked
 			}
-			echo "</td>";
-			echo "</tr>";
-			$line =0;
-		}
+			if($result3['archPic_Open'] == '0') {
+				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=0&objectid=$objid&refcode=$refcode'><img src='images/eye-close.png'></a>";
+			}
+			else {
+				echo "<a href ='editarchitec.php?picid=$result3[archPic_Id]&openpic=1&objectid=$objid&refcode=$refcode'><img src='images/eye-open.png'></a>";
+			}
+			echo "</div>";
 
+			if($line == 4){
+				$line = 0;
+				echo "</div>";
+			} else if(($line < 4) && ($line == $num_rows-1)){
+				echo "</div>";
+			}
+		}
 	} // end foreach
-	echo "</table>";
 	echo "</div>";
 
-	echo "
-	<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
-	<div id='blueimp-gallery' class='blueimp-gallery'>
-		<!-- The container for the modal slides -->
-		<div class='slides'></div>
-		<!-- Controls for the borderless lightbox -->
-		<h3 class='title'></h3>
-		<a class='prev'>‹</a>
-		<a class='next'>›</a>
-		<a class='close'>×</a>
-		<a class='play-pause'></a>
-		<ol class='indicator'></ol>
-		<!-- The modal dialog, which will be used to wrap the lightbox content -->
-		<div class='modal fade'>
-			<div class='modal-dialog'>
-				<div class='modal-content'>
-					<div class='modal-header'>
-						<button type='button' class='close' aria-hidden='true'>&times;</button>
-						<h4 class='modal-title'></h4>
-					</div>
-					<div class='modal-body next'></div>
-					<div class='modal-footer'>
-						<button type='button' class='btn btn-primary pull-left prev'>
-							<i class='glyphicon glyphicon-chevron-left'></i>
-							Previous
-						</button>
-						<button type='button' class='btn btn-default play-pause'>
-							<i class='glyphicon glyphicon glyphicon-play'></i>
-
-						</button>
-						<button type='button' class='btn btn-default play-pause'>
-							<i class='glyphicon glyphicon glyphicon-pause'></i>
-
-						</button>
-						<button type='button' class='btn btn-primary next'>
-							Next
-							<i class='glyphicon glyphicon-chevron-right'></i>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	";
-	######### End Of Tab  Pic 1 ############
-} // end if
+} // end if session
 ?>
+	</div>
+	</div><!-- /.row (main row) -->
+	<div>
+		</section><!-- /.content -->
+	</aside><!-- /.right-side -->
+</div><!-- ./wrapper -->
 
-
-
-                
-<!- --------------------------------------------------------- -->
-
-
-
-
-						</div>
- 
-	
-                    
-                    </div><!-- /.row (main row) -->
-                    
-<div>
-<div class='box box-primary'>
-<div class='box-header'> <h3 class='box-title'>Exibition</h3> </div>
-	
-<div class='box-body'>
-<div class='row'>
-<div class='col-sm-6'>    
-<form action="http://www.museumspool.com/adt_anurak/index.php/Adapter/update_item" target='_blank' method='post' >
-<!--    <div class="form-group">-->
-<?php 
-	$refcode = $_REQUEST['refcode'];
-    include("connect.php");
-
-	mysqli_query($link2, "SET NAMES utf8");
-	mysqli_commit($link2);   
-        
-	$uri = $_SERVER['REQUEST_URI']; // $uri == example.com/index
-	$exploded_uri = explode('/', $uri); //$exploded_uri ==     array('example.com','index')
-	$domain_name = $exploded_uri[1]; 
-
-	$sql6 = "SELECT muse_bg.bg_id, items.obj_refcode FROM items , muse_bg WHERE muse_bg.bg_id = items.ownermuseum_code and items.obj_refcode = '$refcode' and muse_bg.bg_path = '$domain_name'  ";
-		
-	$query6 = mysqli_query($link2,$sql6) or die("Can't Query6");
-	$result6 = mysqli_fetch_array($query6);
-	$bg_id6 = $result6['bg_id'];
-	$bg_name6 = $result6['bg_name']; 
-?>    
-      <label for="item_code"><?php //echo $domain_name ;?><?php //echo $bg_id6 ;?> <?php //echo $refcode ;?></label>
-        <input type="hidden" name="action" value="Item"/>
-       <input name="museum_code" type="hidden" id="museum_code" value="<?php echo $bg_id6 ;?>">  
-      <input name="item_code" type="hidden" id="item_code" value="<?php echo $refcode ;?>">
-
-
-    <button type="submit" class="btn btn-primary"><i class='fa fa-upload fa-lg'></i> ส่งข้อมูล นิทรรศการ </button>
-  </form> 
-        </div>  
-     <div class='col-sm-6'>     
-  <form action="http://www.museumspool.com/adt_anurak/index.php/Adapter/get_link_item" target='_blank' method='post' >
-<!--    <div class="form-group">-->
-    <?php $refcode = $_REQUEST['refcode'];//echo $refcode 
-	    // echo "$bg_id6" ;
-    ?>    
-      <label for="item_code"><?php //echo $bg_id6 ?><?php //echo $refcode ?></label>
-        <input type="hidden" name="action" value="Item"/>
-       <input name="museum_code" type="hidden" id="museum_code" value="<?php echo $bg_id6 ;?>">    
-      <input name="item_code" type="hidden" id="item_code" value="<?php echo $refcode ;?>">
-
-
-    <button type="submit" class="btn btn-primary pull-right"><i class='fa fa-upload fa-lg'></i> สร้างนิทรรศการ </button>
-  </form>        
-
-         </div> 
-		  </div>   
-        
-        
-        
-</div>
-        </div> 
-</div>  
-                
-<!--    <div>-->
-  
-<!--                        </div>   -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </section><!-- /.content -->
-            </aside><!-- /.right-side -->
-        </div><!-- ./wrapper -->
-
-        <!-- jQuery 2.0.2 -->
-        <script src="js/jquery-2.0.2.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-		<!-- datepicker -->
-        <script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script src="js/plugins/datepicker/locales/bootstrap-datepicker.th.js" type="text/javascript"></script>
-        <!-- AdminLTE App -->
-        <script src="js/AdminLTE/app.js" type="text/javascript"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="js/AdminLTE/demo.js" type="text/javascript"></script>
-		<!-- Bootstrap Image Gallery
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-		<script src="js/gallery/jquery.blueimp-gallery.min.js"></script>
-		<script src="js/gallery/bootstrap-image-gallery.min.js"></script>
-		<script src="js/gallery/blueimp-gallery-indicator.js"></script>
-		<!-- Page script -->
-		<script type="text/javascript">
-			$(function() {
-				$('#datepicker').datepicker({
-					language: 'th'
-				});
-
-				$("#alert-message").alert();
-					window.setTimeout(function() { $("#alert-message").alert('close'); }, 3000);
-                
-                $("#alert-message-cover").alert();
-					window.setTimeout(function() { $("#alert-message-cover").alert('close'); }, 3000);
+	<!-- jQuery 2.0.2 -->
+	<script src="js/jquery-2.0.2.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<!-- datepicker -->
+	<script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+	<script src="js/plugins/datepicker/locales/bootstrap-datepicker.th.js" type="text/javascript"></script>
+	<!-- AdminLTE App -->
+	<script src="js/AdminLTE/app.js" type="text/javascript"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="js/AdminLTE/demo.js" type="text/javascript"></script>
+	<!-- Bootstrap Image Gallery
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+	<script src="js/gallery/jquery.blueimp-gallery.min.js"></script>
+	<script src="js/gallery/bootstrap-image-gallery.min.js"></script>
+	<script src="js/gallery/blueimp-gallery-indicator.js"></script>
+	<!-- Page script -->
+	<script type="text/javascript">
+		$(function() {
+			$('#datepicker').datepicker({
+				language: 'th'
 			});
-		</script>
 
-		<script>
-			var type = "mus";
+			$("#alert-message").alert();
+				window.setTimeout(function() { $("#alert-message").alert('close'); }, 3000);
+			
+			$("#alert-message-cover").alert();
+				window.setTimeout(function() { $("#alert-message-cover").alert('close'); }, 3000);
+		});
+	</script>
 
-			$("#cate_1").on('change', function() {
-				var list_2 = "";
-				var list_3 = "";
-				$("#form_cate_2").html(list_2);
-				$("#form_cate_3").html(list_3);
-				$.ajax({url: "model/getCategory.php?table="+type+"&level=2&id="+ $(this).val(), success: function(result){
-					var fetch = $.parseJSON(result);
+	<script>
+		$( document ).ready(function() {
+			// $('#cate_1').trigger('change');
+		});
 
-					if(fetch.length > 0) {
-						list_2 += "<label for='cate_2' class='col-sm-3 control-label'>ประเภทระดับ 2</label>";
-						list_2 += "<div class='col-sm-9'>";
-						list_2 += "<select name='cate_2' class='form-control' id='cate_2'>";
-						list_2 += "<option value='0'>ไม่ระบุ</option>";
-						$.each(fetch, function(key, value) {
+		var type = "archi";
+		$("#cate_1").on('change', function() {
+			var list_2 = "";
+			var list_3 = "";
+			$("#form_cate_2").html(list_2);
+			$("#form_cate_3").html(list_3);
+			$.ajax({url: "model/getCategory.php?table="+type+"&level=2&archi=true&id="+ $('#cate_1').val(), success: function(result){
+				var fetch = $.parseJSON(result);
+
+				if(fetch.length > 0) {
+					list_2 += "<label for='cate_2' class='col-sm-3 control-label'>ประเภทระดับ 2</label>";
+					list_2 += "<div class='col-sm-9'>";
+					list_2 += "<select name='cate_2' class='form-control' id='cate_2'>";
+					list_2 += "<option value='0'>ไม่ระบุ</option>";
+					$.each(fetch, function(key, value) {
+						// if(value.id == <?php echo $category2; ?>){
+						// 	list_2 += "<option value='"+value.id+"' selected>" + value.name + "</option>";
+						// }else {
 							list_2 += "<option value='"+value.id+"'>" + value.name + "</option>";
-						});
-						list_2 += "</select>";
-						list_2 += "</div>";
-						$("#form_cate_2").html(list_2);
+						// }
+						
+					});
+					list_2 += "</select>";
+					list_2 += "</div>";
+					$("#form_cate_2").html(list_2);
+					$("#form_cate_3").html(list_3);
+
+					$("#cate_2").on('change', function() {
+						var list_3 = "";
 						$("#form_cate_3").html(list_3);
+						$.ajax({url: "model/getCategory.php?table="+type+"&level=3&archi=true&id="+ $('#cate_2').val(), success: function(xx){
+							var ff = $.parseJSON(xx);
 
-						$("#cate_2").on('change', function() {
-							var list_3 = "";
-							$("#form_cate_3").html(list_3);
-							$.ajax({url: "model/getCategory.php?table="+type+"&level=3&id="+ $(this).val(), success: function(xx){
-								var ff = $.parseJSON(xx);
+							if(ff.length > 0) {
+								list_3 += "<label for='cate_3' class='col-sm-4 control-label'>ประเภทระดับ 3</label>";
+								list_3 += "<div class='col-sm-8'>";
+								list_3 += "<select name='cate_3' class='form-control' id='cate_3'>";
+								list_3 += "<option value='0'>ไม่ระบุ</option>";
+								$.each(ff, function(key, value) {
+									list_3 += "<option value='"+value.id+"'>" + value.name + "</option>";
+								});
+								list_3 += "</select>";
+								list_3 += "</div>";
+								$("#form_cate_3").html(list_3);
+							}
 
-								if(ff.length > 0) {
-									list_3 += "<label for='cate_3' class='col-sm-4 control-label'>ประเภทระดับ 3</label>";
-									list_3 += "<div class='col-sm-8'>";
-									list_3 += "<select name='cate_3' class='form-control' id='cate_3'>";
-									list_3 += "<option value='0'>ไม่ระบุ</option>";
-									$.each(ff, function(key, value) {
-										list_3 += "<option value='"+value.id+"'>" + value.name + "</option>";
-									});
-									list_3 += "</select>";
-									list_3 += "</div>";
-									$("#form_cate_3").html(list_3);
-								}
+						}});
+					}); //////////////////////////////// 33333333333333333333333
+				}
 
-							}});
-						}); //////////////////////////////// 33333333333333333333333
-					}
-
-				}});
-			}); /////////////////////////////22222222222222222222222222222
+			}});
+		}); /////////////////////////////22222222222222222222222222222
 
 			$("#cate_2").on('change', function() {
 				var list_3 = "";
 				$("#form_cate_3").html(list_3);
-				$.ajax({url: "model/getCategory.php?table="+type+"&level=3&id="+ $(this).val(), success: function(xx){
+				$.ajax({url: "model/getCategory.php?table="+type+"&level=3&archi=true&id="+ $('#cate_2').val(), success: function(xx){
 					var ff = $.parseJSON(xx);
 
 					if(ff.length > 0) {
@@ -2183,11 +2093,7 @@ if($_SESSION['id']) {
 
 				}});
 			}); //////////////////////////////// 33333333333333333333333
-
-		</script>
-
-		<!----------------------------- 3 Level Category ----------------------------------->
-
-
+	</script>
+	<!-- 3 Level Category -->
     </body>
 </html>

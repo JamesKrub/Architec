@@ -72,15 +72,15 @@ function refreshParent() {
 </div>
 
 <?php
-echo $dir;
-echo "<br>";
-echo $objectid;
-echo "<br>";
-echo $refcode;
+// echo $dir;
+// echo "<br>";
+// echo $objectid;
+// echo "<br>";
+// echo $refcode;
 ?>
 
 <form name='form2'>
-<button id="px-submit" type='submit'onclick=refreshParent();> ปิดการ Upload </button>
+<button class="btn btn-danger"  type='submit'onclick=refreshParent();> ปิดการ Upload </button>
 </form>
 </body>
 </html>

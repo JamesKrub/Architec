@@ -82,8 +82,7 @@ if(isset($_GET['logoff']))
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
 									<?php
-									if($_SESSION['id'])
-									{
+									if($_SESSION['id']) {
 										require('connect.php');
 										$sql = "select * from tz_members where id = '$id'   ";
 										$query=mysqli_query($link,$sql) or die("Can't Query");
@@ -95,8 +94,7 @@ if(isset($_GET['logoff']))
                                         <?php echo $_SESSION['usr'] ? $_SESSION['usr'] : 'Guest';?>
                                         <small>
 											<?php
-											if($_SESSION['id'])
-											{
+											if($_SESSION['id']) {
 												require('connect.php');
 												$sql = "select * from tz_members where id = '$id'   ";
 												$query=mysqli_query($link,$sql) or die("Can't Query");
@@ -245,10 +243,17 @@ if($permission == 'user')
         $query=mysqli_query($link,$sql) or die("Can't Query");
         $num_rows_muse =mysqli_num_rows($query);
 
+        $sql = "select * from architec_object";
+        $query=mysqli_query($link,$sql) or die("Can't Query Architec");
+        $num_rows_architec = mysqli_num_rows($query);
+
+        $sql = "select * from architec_pic";
+        $query=mysqli_query($link,$sql) or die("Can't Query Architec");
+        $num_rows_architec_pic = mysqli_num_rows($query);
+
 echo "
               <!-- Main content -->
                 <section class='content'>
-
                     <div class='row'>
                         <div class='col-md-6'>
                             <!-- Object CHART -->
@@ -257,15 +262,16 @@ echo "
                                     <h3 class='box-title'><a href='statreport_detail.php'>ข้อมูลสรุป</a></h3>
                                 </div>
                                 <div class='box-body chart-responsive'>
-                                    <div class='chart' id='donut-archive' style='height: 300px;'></div>
-                                    <li>เอกสารจดหมายเหตุ $num_rows_archive รายการ/$num_rows_pic ภาพ </li>
+                                    <div class='chart' id='donut-archive' style='height: 300px;'>
+                                    </div>
+                                    <li>เอกสารจดหมายเหตุ $num_rows_archive รายการ/ $num_rows_pic ภาพ </li>
                                     <li>พิพิธภัณฑ์ $num_rows_muse รายการ </li>
-                                     <li>ข่าว $num_rows_news รายการ </li>
+                                    <li>ข่าว $num_rows_news รายการ </li>
+                                    <li>สถาปัตยกรรม $num_rows_architec รายการ/ $num_rows_architec_pic ภาพ</li>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
-                    </div><!-- /.row -->
-
-                    <div class='row'>
+                        </div><!-- /.col-md-6 -->
+  
                         <div class='col-md-6'>
                             <!-- Object CHART -->
                             <div class='box box-primary'>
@@ -273,7 +279,6 @@ echo "
                                     <h3 class='box-title'><a href='statreport_archive.php'>การดาวน์โหลดสูงสุด 10 อันดับ</a></h3>
                                 </div>
                                 <div class='box-body chart-responsive'>";
-
         							$sql = "select * from archive_object where obj_countdownload > '0' order by obj_countdownload DESC LIMIT 0,10";
         							$query=mysqli_query($link,$sql) or die("Can't Query");
         							$num_rows  =mysqli_num_rows($query);
@@ -281,10 +286,10 @@ echo "
          								$result=mysqli_fetch_array($query);
          								echo "<li>$result[obj_title] ($result[obj_countdownload] ครั้ง)</li>";
          							}
-
                                 echo "
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
+                        </div><!-- /.col-md-6 -->
                     </div><!-- /.row -->
 
                     <div class='row'>
@@ -300,9 +305,27 @@ echo "
                                     <div class='chart' id='bar-archive' style='height: 300px;'></div>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
+                        </div><!-- /.col-md-12 -->
                     </div><!-- /.row -->
 
-                            <div class='col-md-12'>
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <!-- Object -->
+                            <div class='box box-primary'>
+                                <div class='box-header'>
+                                    <h3 class='box-title'>&nbsp;สถาปัตยกรรม</h3>
+                                    <a class='btn btn-default pull-right' href='statreport_detail.php'> แยกตามประเภท</a>
+                                    <a class='btn btn-default pull-right' href='statreport_architec.php'> รายละเอียด</a>
+                                </div>
+                                <div class='box-body chart-responsive'>
+                                    <div id='architec_category'></div>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.col-md-12 -->
+                    </div><!-- /.row -->                 
+
+                    <div class='row'>
+                        <div class='col-md-12'>
                             <!-- Object -->
                             <div class='box box-primary'>
                                 <div class='box-header'>
@@ -312,11 +335,9 @@ echo "
                                     <div id='bar-object'></div>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
-
-
+                        </div><!-- /.col-md-12 -->
                     </div><!-- /.row -->
-
-
+                    
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
@@ -378,7 +399,6 @@ echo "
             $(function() {
                 "use strict";
 
-
                 //BAR CHART
                 var bar = new Morris.Bar({
                     element: 'bar-archive',
@@ -402,9 +422,7 @@ echo "
                     hideHover: 'auto'
                 });
 
-
-
-				 //Object Bar Chart with Label
+				//Object Bar Chart with Label
                 Morris.Bar({
   				element: 'bar-object',
   				data: [
@@ -425,6 +443,31 @@ echo "
   				gridTextSize : '10',
   				xLabelAngle: '70',
   				labels: ['จำนวน']
+                });
+                
+                //Object Bar Chart with Label - Architec with category
+                Morris.Bar({
+  				element: 'architec_category',
+  				data: [
+  				  <?php
+                    $sql = "SELECT COUNT( t1.archObj_Refcode ) AS 'num_pic', t3.archCate_Name as cat_name, count(distinct t1.archObj_Id) as 'num_cat' 
+                            FROM architec_object t1, architec_pic t2 , architec_category t3 
+                            WHERE t1.archObj_Refcode = t2.archObj_Refcode and t1.archObj_Category = t3.archCate_Id 
+                            GROUP BY t3.archCate_Id";
+      				$query=mysqli_query($link,$sql) or die("Can't Query Architec");
+        			$num_rows = mysqli_num_rows($query);
+        	     	for ($i=0; $i<$num_rows; $i++) {
+                        $result=mysqli_fetch_array($query);
+                        echo "{y:'$result[cat_name]', a: $result[num_cat], b:$result[num_pic]},";
+         			}
+                  ?>
+  				],
+
+  				xkey: 'y',
+  				ykeys: ['a',],
+  				gridTextSize : '10',
+  				xLabelAngle: '70',
+  				labels: ['จำนวน']
 				});
 
 				//Donut Archive
@@ -433,12 +476,14 @@ echo "
   				data: [
     				{label: "จดหมายเหตุ", value: <?php echo $num_rows_pic; ?>},
     				{label: "พิพิธภัณฑ์", value: <?php echo $num_rows_muse;?>},
-    				{label: "ข่าว", value: <?php echo $num_rows_news; ?>}
+    				{label: "ข่าว", value: <?php echo $num_rows_news; ?>},
+    				{label: "สถาปัตยกรรม", value: <?php echo $num_rows_architec; ?>}
   					],
   				colors: [
 				'#0080FF',
     			'#FF9900',
-    			'#DF013A'
+    			'#DF013A',
+    			'#2eb82e'
   				]
 				});
 

@@ -44,6 +44,17 @@
         /* border: 1px solid #333333 ; */
         margin-bottom: 13px ;
     }
+
+    .tag_emphasize{
+        background-color: #77dd77;
+        color: black;
+    }
+
+    .tag_normal{
+        background-color: #ff6961;
+        color: black;
+    }
+
     </style>
     <script type="text/javascript" src="css/pdfobject.js"></script>
     <script type="text/javascript" src="./architecAsset/jquery-1.4.1.js"></script>
@@ -64,7 +75,7 @@
 			
 			
 			// Hook up the enable create links.
-			$( "a.enable-create" ).click(
+			$( "button.enable-create" ).click(
 				function( event ){
 					// Prevent relocation.
 					event.preventDefault();
@@ -78,7 +89,7 @@
 			);
 			
 			// Hook up the disabled create links.
-			$( "a.disable-create" ).click(
+			$( "button.disable-create" ).click(
 				function( event ){
 					// Prevent relocation.
 					event.preventDefault();
@@ -92,7 +103,7 @@
 			);
 			
 			// Hook up the enable delete links.
-			$( "a.enable-delete" ).click(
+			$( "button.enable-delete" ).click(
 				function( event ){
 					// Prevent relocation.
 					event.preventDefault();
@@ -106,7 +117,7 @@
 			);
 			
 			// Hook up the disabled delete links.
-			$( "a.disable-delete" ).click(
+			$( "button.disable-delete" ).click(
 				function( event ){
 					// Prevent relocation.
 					event.preventDefault();
@@ -276,18 +287,17 @@ if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($file
                         id = '$picid'
                         src ='../../../pic/big_architec/$foldref/$result[archPic_Name]'>";
         echo "</div>";
-?>
-        <a href="#" class="enable-create">Enable Create</a> 
+      ?>
+        <button class="enable-create tag_normal">Enable Create</button> 
 		&nbsp;|&nbsp;
-		<a href="#" class="disable-create">Disable Create</a>
-		
+		<button class="disable-create tag_emphasize">Disable Create</button>
 		<br />
 		<br />
-		
 		<!-- These will toggle the tag deletiong. -->
-		<a href="#" class="enable-delete">Enable Delete</a> 
+		<button class="enable-delete tag_normal">Enable Delete</button> 
 		&nbsp;|&nbsp;
-        <a href="#" class="disable-delete">Disable Delete</a>
+        <button class="disable-delete tag_emphasize">Disable Delete</button>
+        
     </div></center>
 <?php
 } else if($filetype =='mp4' or $filetype =='MP4') {
@@ -368,6 +378,43 @@ echo "
                     //Replace the <textarea id="editor1"> with a CKEditor
                     //instance, using default configuration.
                     CKEDITOR.replace('editor1');
+            });
+
+            $('.enable-create').click(function(){
+                if($('.enable-create').hasClass('tag_normal')){
+                    $('.enable-create').removeClass('tag_normal');
+                    $('.enable-create').addClass('tag_emphasize');
+                    $('.disable-create').removeClass('tag_emphasize');
+                    $('.disable-create').addClass('tag_normal');
+                } 
+               
+            });
+
+            $('.disable-create').click(function(){
+                if($('.disable-create').hasClass('tag_normal')){
+                    $('.enable-create').removeClass('tag_emphasize');
+                    $('.enable-create').addClass('tag_normal');
+                    $('.disable-create').removeClass('tag_normal');
+                    $('.disable-create').addClass('tag_emphasize');
+                } 
+            });
+
+            $('.enable-delete').click(function(){
+                if($('.enable-delete').hasClass('tag_normal')){
+                    $('.enable-delete').removeClass('tag_normal');
+                    $('.enable-delete').addClass('tag_emphasize');
+                    $('.disable-delete').removeClass('tag_emphasize');
+                    $('.disable-delete').addClass('tag_normal');
+                }
+            });
+
+            $('.disable-delete').click(function(){
+                if($('.disable-delete').hasClass('tag_normal')){
+                    $('.enable-delete').removeClass('tag_emphasize');
+                    $('.enable-delete').addClass('tag_normal');
+                    $('.disable-delete').removeClass('tag_normal');
+                    $('.disable-delete').addClass('tag_emphasize');
+                }
             });
         </script>
 

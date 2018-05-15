@@ -182,11 +182,11 @@ if(isset($_GET['logoff']))
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-						ประเภทวัตถุจัดแสดง
+						ประเภทสถาปัตยกรรม
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">ประเภทวัตถุจัดแสดง</li>
+                        <li class="active">ประเภทสถาปัตยกรรม</li>
                     </ol>
                 </section>
 
@@ -363,9 +363,9 @@ echo "<table class='table table-bordered table-hover' id='example2'>";
 
 echo "<thead>";
 echo "<tr>";
-echo "<th class='col-sm-2 text-center'>ลำดับ</th>";
-echo "<th class='col-sm-6 text-center'>ชื่อประเภท</th>";
-echo "<th class='col-sm-2 text-center'>บริหารจัดการ</th>";
+echo "<th class='col-sm-2 col-md-2 text-center'>ลำดับ</th>";
+echo "<th class='col-sm-6 col-md-8 text-center'>ชื่อประเภท</th>";
+echo "<th class='col-sm-2 col-md-2 text-center'>บริหารจัดการ</th>";
 echo "</tr>";
 echo "</thead>";
 
@@ -582,7 +582,7 @@ echo "</div>"; #<!-- /.table-responsive -->
 						level_2_add += "<div class='row'>";
 						level_2_add += "<form method='post' action='model/funcCategory.php'>";
 						level_2_add += "<div class='form-group' style='margin-bottom: 5px !important;'>";
-						level_2_add += "<div class='col-sm-8 col-sm-offset-2'>";
+						level_2_add += "<div class='col-sm-6 col-md-7 col-sm-offset-4 col-md-offset-3'>";
 						level_2_add += "<input type='text' name='category' class='form-control' placeholder='หมวดหมู่ย่อย'>";
 						level_2_add += "</div><!-- /.col-sm-8 col-sm-offset-2 -->";
 						level_2_add += "<div class='col-sm-2'>";
@@ -604,24 +604,22 @@ echo "</div>"; #<!-- /.table-responsive -->
 								if(fetch.length != 0) {
 									level_2_list += "<br>";
 									level_2_list += "<form method='post' action='model/funcCategory.php'>";
-									level_2_list += "<div class='form-group'>";
-									level_2_list += "<div class='row'>";
-									level_2_list += "<div class='col-sm-8 col-sm-offset-2'>";
+									level_2_list += "<div class='form-group row'>";
+									level_2_list += "<div class='col-sm-6 col-md-7 col-sm-offset-4 col-md-offset-3'>";
 									level_2_list += "<select class='form-control' id='sss' name='parents'>";
 									$.each(fetch, function(key, value) {
 									level_2_list += "<option value='"+value.id+"'>" + value.name + "</option>";
 									});
 									level_2_list += "</select>";
 									level_2_list += "</div><!-- /.col-sm-8 col-sm-offset-2 -->";
-									level_2_list += "<div class='col-sm-8 col-sm-offset-2'>";
-									level_2_list += "<br>";
+									level_2_list += "</div><!-- /.form-group -->";
+									level_2_list += "<div class='form-group row'>";
+									level_2_list += "<div class='col-sm-6 col-md-6 col-sm-offset-4 col-md-offset-4'>";
 									level_2_list += "<input type='text' class='form-control' name='category' placeholder='หมวดหมู่ย่อย'>";
 									level_2_list += "</div><!-- /.col-sm-8 col-sm-offset-2 -->";
 									level_2_list += "<div class='col-sm-2'>";
-									level_2_list += "<br>";
 									level_2_list += "<button type='submit' class='btn btn-warning' name='type' value='insert'>เพิ่มหมวดหมู่ย่อย</button>";
 									level_2_list += "</div><!-- /.col-sm-2 -->";
-									level_2_list += "</div><!-- /.row -->";
 									level_2_list += "</div><!-- /.form-group -->";
 									level_2_list += "<input type='hidden' name='table' value='archi'>";
 									level_2_list += "<input type='hidden' name='level' value='3'>";
