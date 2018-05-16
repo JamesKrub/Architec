@@ -329,7 +329,7 @@
 		// (but do not append it to the container object.
 		createTag: function( left, top, width, height ){
 			// Create the new tag.
-			var tag = $( "<a class='" + this.getFullClassName( "tag" ) + "'><br /></a>" );
+			var tag = $( "<a class='" + this.getFullClassName( "tag" ) + " zoomTarget'><br /></a>" );
 			
 			// Set the absolute positon (within the container).
 			// By default, the tag will start out hidden.

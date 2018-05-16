@@ -61,27 +61,21 @@ switch ($menu) {
 
 
   <?php include "head.php" ; ?>
-  <script type="text/javascript" src="./asset/architecAsset/jquery-1.4.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="./asset/architecAsset/coldfusion.json.js"></script>
   <script type="text/javascript" src="./asset/architecAsset/phototagger.jquery.js"></script>
-  <!-- Margo JS  -->
-  <!-- <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="js/jquery.migrate.js"></script>
-  <script type="text/javascript" src="js/modernizrr.js"></script>
-  <script type="text/javascript" src="asset/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/jquery.fitvids.js"></script>
-  <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-  <script type="text/javascript" src="js/nivo-lightbox.min.js"></script>
-  <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
-  <script type="text/javascript" src="js/jquery.appear.js"></script>
-  <script type="text/javascript" src="js/count-to.js"></script>
-  <script type="text/javascript" src="js/jquery.textillate.js"></script>
-  <script type="text/javascript" src="js/jquery.lettering.js"></script>
-  <script type="text/javascript" src="js/jquery.easypiechart.min.js"></script>
-  <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
-  <script type="text/javascript" src="js/jquery.parallax.js"></script>
-  <script type="text/javascript" src="js/mediaelement-and-player.js"></script>
-  <script type="text/javascript" src="js/jquery.slicknav.js"></script> -->
+  <!-- ZOOM -->
+  <script type="text/javascript" src="js/jquery.zoomooz-helpers.js"></script>
+  <script type="text/javascript" src="js/jquery.zoomooz-anim.js"></script>
+  <script type="text/javascript" src="js/jquery.zoomooz-core.js"></script>
+  <script type="text/javascript" src="js/jquery.zoomooz-zoomTarget.js"></script>
+  <script type="text/javascript" src="js/jquery.zoomooz-zoomButton.js"></script>
+  <script type="text/javascript" src="js/jquery.zoomooz-zoomContainer.js"></script>
+  <script type="text/javascript" src="js/purecssmatrix.js"></script>
+  <script type="text/javascript" src="js/sylvester.src.stripped.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+  
     
  <!-- Zoom ================================================== -->
 <style>
@@ -103,107 +97,28 @@ switch ($menu) {
     opacity: 0.15;
       z-index: 888;
   }
-  div.photo-column {
-      /* float: left ;  */
-      margin-right: 10px ;
-  }
-  
-  div.photo-container {
-      /* border: 1px solid #333333 ; */
-      margin-bottom: 13px ;
-  }
+     
 </style>
 
 <!-- <script src="../../pic/zoom_assets/jquery.smoothZoom.min.js"></script> -->
 <script type="text/javascript">
     // When the DOM is ready, initialize the scripts.
     jQuery(function( $ ){
-      
       // Set up the photo tagger.
       $( "div.photo-container" ).photoTagger({
         loadURL: "./asset/architecAsset/taggingBackend.php",
         saveURL: "./asset/architecAsset/taggingBackend.php",
         deleteURL: "./asset/architecAsset/taggingBackend.php"
       });
-      
-      
-      // Hook up the enable create links.
-      $( "a.enable-create" ).click(
-        function( event ){
-          // Prevent relocation.
-          event.preventDefault();
-          
-          // Get the container and enable the tag 
-          // creation on it.
-          $( this ).prevAll( "div.photo-container" )
-            .photoTagger( "enableTagCreation" )
-          ;
-        }
-      );
-      
-      // Hook up the disabled create links.
-      $( "a.disable-create" ).click(
-        function( event ){
-          // Prevent relocation.
-          event.preventDefault();
-          
-          // Get the container and enable the tag 
-          // creation on it.
-          $( this ).prevAll( "div.photo-container" )
-            .photoTagger( "disableTagCreation" )
-          ;
-        }
-      );
-      
-      // Hook up the enable delete links.
-      $( "a.enable-delete" ).click(
-        function( event ){
-          // Prevent relocation.
-          event.preventDefault();
-          
-          // Get the container and enable the tag 
-          // deletion on it.
-          $( this ).prevAll( "div.photo-container" )
-            .photoTagger( "enableTagDeletion" )
-          ;
-        }
-      );
-      
-      // Hook up the disabled delete links.
-      $( "a.disable-delete" ).click(
-        function( event ){
-          // Prevent relocation.
-          event.preventDefault();
-          
-          // Get the container and disabled the tag 
-          // deletion on it.
-          $( this ).prevAll( "div.photo-container" )
-            .photoTagger( "disableTagDeletion" )
-          ;
-        }
-      );
-    
+
+      $( ".zoomTarget" ).on( "click", function() {
+        $('.zoomTarget').zoomTarget();
+      });
+
+      $('.photo-column').trigger('click');
     });
-    
+
   </script>
-<script>
-
-	// jQuery(function($){
-	// 	$('#yourImageID').smoothZoom({
-	// 		width: 812,
-	// 		height: 584,
-
-	// 		/******************************************
-	// 		Enable Responsive settings below if needed.
-	// 		Max width and height values are optional.
-	// 		******************************************/
-	// 		responsive: true,
-	// 		responsive_maintain_ratio: true,
-	// 		max_WIDTH: '',
-	// 		max_HEIGHT: ''
-	// 	});
-	// });
-</script>
 </head>
 
 <body>
@@ -428,7 +343,7 @@ include('connect.php');
         include('connect.php');
         //echo "ref = $refcode";
         echo "<div class='col-sm-12'>";
-          echo "<center><div class='photo-column '>";
+          echo "<center><div class='photo-column'>";
           echo "<div class='photo-container'>";
         $sql = "select * FROM architec_pic where archPic_Id ='$picid' ";
         $query=mysqli_query($link,$sql) or die("Can't Query");
@@ -439,14 +354,15 @@ include('connect.php');
           $picname = $result['archPic_Name'];
           $folderName = $result['archFolder_Refcode'];
           // $nrefcode = preg_replace('/[^a-z0-9\_\- ]/i', '', $refcode);
-
           $pic = "../../pic/big_architec/$folderName/$result[archPic_Name]";
           $picdetail = $result['archPic_Detail'];
           echo"<img  
+                        
                         style = 'border: solid black 1px;'
                         id = '$picid'
-                        src='$pic'/><br> $picdetail";
+                        src='$pic'/><br><br> $picdetail";
         }
+        echo "<div class='zoomTarget' style='display: none;'></div>";
         echo "</div>";
         ?>
         </div></center>
@@ -464,5 +380,7 @@ include('connect.php');
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
   <!-- Style Switcher -->
   <!-- <script type="text/javascript" src="js/script.js"></script> -->
+  <script>
+  </script>
 </body>
 </html>

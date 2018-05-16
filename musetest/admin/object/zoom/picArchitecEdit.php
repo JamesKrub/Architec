@@ -65,7 +65,7 @@
 		
 		// When the DOM is ready, initialize the scripts.
 		jQuery(function( $ ){
-			
+		
 			// Set up the photo tagger.
 			$( "div.photo-container" ).photoTagger({
 				loadURL: "./taggingBackend.php",
@@ -73,63 +73,9 @@
 				deleteURL: "./taggingBackend.php"
 			});
 			
+			$( "div.photo-container" ).photoTagger( "enableTagCreation" );
+            $( "div.photo-container" ).photoTagger( "enableTagDeletion" );
 			
-			// Hook up the enable create links.
-			$( "button.enable-create" ).click(
-				function( event ){
-					// Prevent relocation.
-					event.preventDefault();
-					
-					// Get the container and enable the tag 
-					// creation on it.
-					$( this ).prevAll( "div.photo-container" )
-						.photoTagger( "enableTagCreation" )
-					;
-				}
-			);
-			
-			// Hook up the disabled create links.
-			$( "button.disable-create" ).click(
-				function( event ){
-					// Prevent relocation.
-					event.preventDefault();
-					
-					// Get the container and enable the tag 
-					// creation on it.
-					$( this ).prevAll( "div.photo-container" )
-						.photoTagger( "disableTagCreation" )
-					;
-				}
-			);
-			
-			// Hook up the enable delete links.
-			$( "button.enable-delete" ).click(
-				function( event ){
-					// Prevent relocation.
-					event.preventDefault();
-					
-					// Get the container and enable the tag 
-					// deletion on it.
-					$( this ).prevAll( "div.photo-container" )
-						.photoTagger( "enableTagDeletion" )
-					;
-				}
-			);
-			
-			// Hook up the disabled delete links.
-			$( "button.disable-delete" ).click(
-				function( event ){
-					// Prevent relocation.
-					event.preventDefault();
-					
-					// Get the container and disabled the tag 
-					// deletion on it.
-					$( this ).prevAll( "div.photo-container" )
-						.photoTagger( "disableTagDeletion" )
-					;
-				}
-			);
-		
 		});
 		
 	</script>
@@ -288,16 +234,6 @@ if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($file
                         src ='../../../pic/big_architec/$foldref/$result[archPic_Name]'>";
         echo "</div>";
       ?>
-        <button class="enable-create tag_normal">Enable Create</button> 
-		&nbsp;|&nbsp;
-		<button class="disable-create tag_emphasize">Disable Create</button>
-		<br />
-		<br />
-		<!-- These will toggle the tag deletiong. -->
-		<button class="enable-delete tag_normal">Enable Delete</button> 
-		&nbsp;|&nbsp;
-        <button class="disable-delete tag_emphasize">Disable Delete</button>
-        
     </div></center>
 <?php
 } else if($filetype =='mp4' or $filetype =='MP4') {
