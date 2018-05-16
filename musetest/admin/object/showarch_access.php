@@ -338,7 +338,7 @@ else
 {
 	if(($permission == 'admin') or ($permission == 'superadmin') or ($permission =='editor'))
 	{
-		$sql = "select * from architec_object";
+		$sql = "select * from architec_object where archObj_Access = 0";
 	}
 	else if ($permission =='user')
 	{

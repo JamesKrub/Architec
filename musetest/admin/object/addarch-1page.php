@@ -224,11 +224,11 @@ echo "
 
 <ul class='nav nav-tabs'>
 	<li class='active'><a href='#tab_1' data-toggle='tab'>ข้อมูลทั่วไป*</a></li>
-	<li><a href='#tab_2' data-toggle='tab'>ประวัติ</a></li>
+	<!--<li><a href='#tab_2' data-toggle='tab'>ประวัติ</a></li>
 	<li><a href='#tab_3' data-toggle='tab'>ขอบเขต</a></li>
 	<li><a href='#tab_4' data-toggle='tab'>เงื่อนไขการใช้</a></li>
 	<li><a href='#tab_5' data-toggle='tab'>การจัดเก็บ</a></li>
-	<li><a href='#tab_6' data-toggle='tab'>บันทึก</a></li>
+	<li><a href='#tab_6' data-toggle='tab'>บันทึก</a></li>-->
 </ul> ";
 
 	########################
@@ -239,19 +239,19 @@ echo "
 <div class='box-body'>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>รหัส*</label>
+	<label class='col-sm-2 control-label'>รหัส<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='refcode' value='$refcode' >
 	</div>
 </div>
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>รหัสเดิม*</label>
+	<label class='col-sm-2 control-label'>รหัสเดิม</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='oldrefcode' value='$oldrefcode' >
 	</div>
 </div>
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>ชื่อวัตถุ*</label>
+	<label class='col-sm-2 control-label'>ชื่อสถาปัตยกรรม<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='title' value='$title' >
 	</div>
@@ -264,7 +264,7 @@ echo "
 </div>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label' >ประเภท*</label>
+	<label class='col-sm-2 control-label' >ประเภท<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 	";
 	?>

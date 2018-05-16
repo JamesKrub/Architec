@@ -551,26 +551,26 @@ echo "
 <div class='box-body'>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>รหัส*</label>
+	<label class='col-sm-2 control-label'>รหัส<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='refcode' value='$refcode' disabled>
 	</div>
 </div>
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>รหัสเดิม*</label>
+	<label class='col-sm-2 control-label'>รหัสเดิม</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='oldrefcode' value='$oldrefcode' >
 	</div>
 </div>
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>ชื่อสถาปัตยกรรม*</label>
+	<label class='col-sm-2 control-label'>ชื่อสถาปัตยกรรม<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='title' value='$title' required>
 	</div>
 </div>
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>title*</label>
+	<label class='col-sm-2 control-label'>title</label>
 	<div class='col-sm-10'>
 		<input class='form-control' type='text' name ='titleeng' value='$titleeng' >
 	</div>
@@ -578,7 +578,7 @@ echo "
 
 
 <div class='form-group'>
-	<label class='col-sm-2 control-label' >ประเภท*</label>
+	<label class='col-sm-2 control-label' >ประเภท<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 	";
 
@@ -709,7 +709,7 @@ if($access=='0')
 	{
 echo "
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>การเผยแพร่*</label>
+	<label class='col-sm-2 control-label'>การเผยแพร่<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<div class='radio'>
 			<label>
@@ -734,7 +734,7 @@ else if($access =='1')
 	{
 echo "
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>การเผยแพร่*</label>
+	<label class='col-sm-2 control-label'>การเผยแพร่<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<div class='radio'>
 			<label>
@@ -759,7 +759,7 @@ else if($access == '2')
 	{
 echo "
 <div class='form-group'>
-	<label class='col-sm-2 control-label'>การเผยแพร่*</label>
+	<label class='col-sm-2 control-label'>การเผยแพร่<span style='color: red;'>*</span></label>
 	<div class='col-sm-10'>
 		<div class='radio'>
 			<label>
@@ -1408,7 +1408,7 @@ echo "<div class='form-group'>";
 echo "<input type='hidden' name='updatevr' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
-echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์s'>";
+echo "<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์'>";
 echo "</div>";
 echo "</form>";
 echo "</div>";
@@ -1462,7 +1462,7 @@ if($del360 == 1) {
 
 echo "<div class='box box-primary'>"; // Start box-primary
 echo "<div class='box-header'>";
-echo "<h3 class='box-title'>ภาพพาโนรามา</h3>";
+echo "<h3 class='box-title'>ภาพ 360</h3>";
 echo "</div>";
 echo "<div class='box-body'>"; // Start box-body
 	echo "<form name ='formupload' method='post' action='editarchitec.php?objectid=$objectid&refcode=$refcode' enctype='multipart/form-data'>";
@@ -1473,7 +1473,7 @@ echo "<div class='box-body'>"; // Start box-body
 		echo 	"<input type='hidden' name='update360' value='1'>";
 		echo 	"<input type='hidden' name='objectid' value='$objectid'>";
 		echo 	"<input type='hidden' name='refcode' value='$refcode'>";
-		echo 	"<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์ Pano'>";
+		echo 	"<input type='submit' class='btn btn-primary' value='อัปโหลดไฟล์'>";
 		echo "</div>";
 	echo "</form>";
 	echo "<div class='row'>";
@@ -1490,7 +1490,7 @@ foreach ($query3 as $index => $result3) {
 	$line++;
 	echo "<div class='col-xs-3 col-sm-3 col-md-3'>"; 
 		echo "<center>";
-		echo "<a target='_blank' href='../../site/360/architec_pano.php?refcode=".$refcode."&file=".$result3['arch360_Dir']."'><img src ='../../pic/architec_360/$refcode/$result3[arch360_Dir]' class='img-thumbnail' style='margin:5px 0px 15px;'>".$result3['arch360_Dir']." </a>";
+		echo "<a target='_blank' href='../../site/360/architec_pano.php?refcode=".$refcode."&file=".$result3['arch360_Dir']."'><img src ='../../pic/architec_360/$refcode/$result3[arch360_Dir]' class='img-thumbnail' style='margin:5px 0px 15px;'>".mb_substr($result3['arch360_Dir'],0,20)."....</a>";
 		echo "<p><a href='editarchitec.php?id360=$result3[arch360_Id]&objectid=$objectid&refcode=$refcode&del360=1'><img src='images/icon_del2.png'></a></p>";
 		echo "</center>";
 	echo "</div><!-- /.row -->";
@@ -1569,6 +1569,7 @@ echo "
 ";
 echo "</div>";
 echo "<div class='form-group'>";
+echo "<input type='hidden' name='allowType' value='pdf'>";
 echo "<input type='hidden' name='updown' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
@@ -1599,7 +1600,7 @@ while($row = mysqli_fetch_assoc($ul_query)) {
 		$line++;
 		echo "<div class='col-xs-3 col-sm-3 col-md-3'>"; 
 		echo "<center>";  
-		echo "<a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row['bpu_file']."'><img src='images/pdf.png' > <br>".$row['bpu_file']." </a>
+		echo "<a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row['bpu_file']."'><img src='images/pdf.png' > <br>".mb_substr($row['bpu_file'],0,20)."... </a>
 				<p>
 					<a href='model/funcDeleteFile.php?objectid=".$objectid."&type=".$type."&refcode=".$refcode."&file=".$row['bpu_id']."'>
 						<img src='images/icon_del2.png'>
@@ -1676,6 +1677,7 @@ echo "<input type='file' name='uploadedfile' id='uploadedfile'>
 	  <input type='hidden' name='type' value='architec'>";
 echo "</div>";
 echo "<div class='form-group'>";
+echo "<input type='hidden' name='allowType' value='mediaFile'>";
 echo "<input type='hidden' name='updown' value='1'>";
 echo "<input type='hidden' name='objectid' value='$objectid'>";
 echo "<input type='hidden' name='refcode' value='$refcode'>";
@@ -1727,9 +1729,9 @@ foreach ($ul_query as $index => $row) {
 			$line = 0;
 			echo "</div>!-- /.row-eq-height -->";
 		}
-	}
-	if( ($line < 3) && ($index == $num_rows_mediaFile-1) ){
-		echo "</div><!-- /.row-eq-height -->";
+		if( ($line < 3) && ($index == $num_rows_mediaFile-1) ){
+			echo "</div><!-- /.row-eq-height -->";
+		}
 	}
 } // end while
 ?>

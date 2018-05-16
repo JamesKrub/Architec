@@ -100,7 +100,6 @@ switch ($menu) {
      
 </style>
 
-<!-- <script src="../../pic/zoom_assets/jquery.smoothZoom.min.js"></script> -->
 <script type="text/javascript">
     // When the DOM is ready, initialize the scripts.
     jQuery(function( $ ){
@@ -115,7 +114,6 @@ switch ($menu) {
         $('.zoomTarget').zoomTarget();
       });
 
-      $('.photo-column').trigger('click');
     });
 
   </script>
@@ -343,7 +341,7 @@ include('connect.php');
         include('connect.php');
         //echo "ref = $refcode";
         echo "<div class='col-sm-12'>";
-          echo "<center><div class='photo-column'>";
+          echo "<center><div class='photo-column' style='width: 600px; height: auto;'>";
           echo "<div class='photo-container'>";
         $sql = "select * FROM architec_pic where archPic_Id ='$picid' ";
         $query=mysqli_query($link,$sql) or die("Can't Query");

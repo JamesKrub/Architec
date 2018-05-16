@@ -40,8 +40,12 @@ if($_POST['type'] == 'news') {
   $dirSave =  '../../../pic/'.$folder.'/'.$_POST['refcode'];
   $redirect = "location: ../".$redir.".php?objectid=".$_POST['objectid']."&refcode=".$_POST['refcode']."";
 }
-
-$allowed = array('mp3', 'mp4', 'pdf', 'jpg', 'JPG', 'png', 'PNG');
+if($_POST['allowType'] == 'pdf'){
+  $allowed = array('pdf');
+} 
+else if ($_POST['allowType'] == 'mediaFile'){
+  $allowed = array('mp3', 'mp4');
+}
 $ext = pathinfo($_FILES['uploadedfile']['name'], PATHINFO_EXTENSION);
 if(in_array(strtolower($ext), $allowed) ) {
   $handle = new Upload($_FILES['uploadedfile']);

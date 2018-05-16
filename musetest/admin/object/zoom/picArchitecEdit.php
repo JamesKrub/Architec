@@ -226,7 +226,7 @@ echo "<div class='box box-primary'>  <!-- Start box-primary -->";
 echo "<div class='box-body'>";
 // echo "<table width='100%'><tr><td align='center'>";
 if(($filetype == 'jpg') or ($filetype =='jpeg') or ($filetype =='png') or ($filetype =='JPG') or ($filetype =='PNG') or ($filetype =='JPEG')) {
-    echo "<center><div class='photo-column '>";
+    echo "<center><div class='photo-column ' style='width: 600px; height: auto;'>";
         echo "<div class='photo-container'>";
             echo "<img  
                         style = 'border: solid black 1px;'
@@ -314,43 +314,6 @@ echo "
                     //Replace the <textarea id="editor1"> with a CKEditor
                     //instance, using default configuration.
                     CKEDITOR.replace('editor1');
-            });
-
-            $('.enable-create').click(function(){
-                if($('.enable-create').hasClass('tag_normal')){
-                    $('.enable-create').removeClass('tag_normal');
-                    $('.enable-create').addClass('tag_emphasize');
-                    $('.disable-create').removeClass('tag_emphasize');
-                    $('.disable-create').addClass('tag_normal');
-                } 
-               
-            });
-
-            $('.disable-create').click(function(){
-                if($('.disable-create').hasClass('tag_normal')){
-                    $('.enable-create').removeClass('tag_emphasize');
-                    $('.enable-create').addClass('tag_normal');
-                    $('.disable-create').removeClass('tag_normal');
-                    $('.disable-create').addClass('tag_emphasize');
-                } 
-            });
-
-            $('.enable-delete').click(function(){
-                if($('.enable-delete').hasClass('tag_normal')){
-                    $('.enable-delete').removeClass('tag_normal');
-                    $('.enable-delete').addClass('tag_emphasize');
-                    $('.disable-delete').removeClass('tag_emphasize');
-                    $('.disable-delete').addClass('tag_normal');
-                }
-            });
-
-            $('.disable-delete').click(function(){
-                if($('.disable-delete').hasClass('tag_normal')){
-                    $('.enable-delete').removeClass('tag_emphasize');
-                    $('.enable-delete').addClass('tag_normal');
-                    $('.disable-delete').removeClass('tag_normal');
-                    $('.disable-delete').addClass('tag_emphasize');
-                }
             });
         </script>
 

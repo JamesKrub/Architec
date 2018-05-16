@@ -401,7 +401,7 @@ include('connect.php');
                     <?php
                         echo "<center><a target='_blank' href='../../pic/architec_upload/".$refcode."/".$row."'>
                                 <br><img style='width: 45px;' src='../../admin/object/images/pdf.png' width='100'> <br>
-                                ".$row." </center></a>";
+                                ".mb_substr($row,0,20)."...</center></a>";
                         echo "</div>";
                       }
                     ?>
