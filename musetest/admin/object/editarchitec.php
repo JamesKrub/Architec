@@ -78,6 +78,7 @@ if(isset($_GET['logoff']))
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
         <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <!-- Ionicons -->
         <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
 		<!-- datepicker -->
@@ -134,6 +135,7 @@ if(isset($_GET['logoff']))
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+	
     </head>
 
     <body class="skin-blue">
@@ -1418,8 +1420,11 @@ echo "</div>";
 <?php
 //////////////////////////////////    360 degree    ////////////////////////////////////
 
-if($update360 == 1) {
 
+if($update360 == 1) {
+	$ext = pathinfo($_FILES['uploadedfile360']['name'], PATHINFO_EXTENSION);
+	$allowed = array('jpg','jpeg');
+	if(in_array(strtolower($ext), $allowed) ) {
 	$target_path_360 = "../../pic/architec_360/$refcode";
 	if (!file_exists($target_path_360)) {
 		mkdir($target_path_360, 0700);
@@ -1428,6 +1433,7 @@ if($update360 == 1) {
 	$my360 = date("YmdHis").'_'.$_FILES['uploadedfile360']['name'];
 	// echo phpinfo();
 
+		
 	if(move_uploaded_file($_FILES['uploadedfile360']['tmp_name'], "../../pic/architec_360/$refcode/$my360")) {
 		echo "The file ". $_FILES['uploadedfile360']['name'].   " has been uploaded";
 	} else{
@@ -1452,6 +1458,10 @@ if($update360 == 1) {
 	if (!mysqli_query($link,$sql)) {
 		echo("fail upload 360" . mysqli_error($link) . "<br>");
 	}
+	}
+	else{
+		echo "<p><span style='color: red;'>*ไม่สนับสนุนประเภทของไฟล์</span></p>";
+	}
 } // end if
 
 if($del360 == 1) {
@@ -1470,6 +1480,7 @@ echo "<div class='box-body'>"; // Start box-body
 		echo 	"<input type='file' name='uploadedfile360' id='uploadedfile360'>";
 		echo "</div>";
 		echo "<div class='form-group'>";
+		echo 	"<input type='hidden' name='allowType' value='file360'>";
 		echo 	"<input type='hidden' name='update360' value='1'>";
 		echo 	"<input type='hidden' name='objectid' value='$objectid'>";
 		echo 	"<input type='hidden' name='refcode' value='$refcode'>";
@@ -1480,7 +1491,7 @@ echo "<div class='box-body'>"; // Start box-body
 // echo "<div>";
 $sql3 = "SELECT * FROM `architec_360` WHERE obj_refcode = '$refcode' ";
 $query3 = mysqli_query($link,$sql3) or die("Can't Query2");
-$num_rows3 = mysqli_num_rows($query3);
+$num_rows_360 = mysqli_num_rows($query3);
 
 $line=0;
 foreach ($query3 as $index => $result3) {
@@ -1497,7 +1508,7 @@ foreach ($query3 as $index => $result3) {
 	if($line == 4){
 		$line = 0;
 		echo "</div>";
-	} else if( ($line < 4) && ($index == $num_rows3-1)){
+	} else if( ($line < 4) && ($index == $num_rows_360)){
 		echo"</div>";
 	}
 } // end for
@@ -1929,7 +1940,7 @@ if($_SESSION['id']) {
 	echo "<div class='row'>";
 	$sql3 = "SELECT * FROM `architec_pic` WHERE archObj_Refcode = '$refcode' ORDER BY archListorder ASC";
 	$query3 = mysqli_query($link,$sql3) or die("Can't Query แสดงรูปภาพในส่วนของภาพที่อัปโหลด: 2152");
-	$num_rows = mysqli_num_rows($query3);
+	$num_rows_picArch = mysqli_num_rows($query3);
 	$line = 0;
 	foreach ($query3 as $result3) {
 		$filetype = explode(".", $result3['archPic_Name']);
@@ -1969,7 +1980,7 @@ if($_SESSION['id']) {
 			if($line == 4){
 				$line = 0;
 				echo "</div>";
-			} else if(($line < 4) && ($line == $num_rows-1)){
+			} else if(($line < 4) && ($line == $num_rows_picArch)){
 				echo "</div>";
 			}
 		}
@@ -1981,6 +1992,7 @@ if($_SESSION['id']) {
 	</div>
 	</div><!-- /.row (main row) -->
 	<div>
+	<button class="back-top fas fa-arrow-circle-up" onclick="topFunction()" id="myBtn"  title="Go to top"></button> 
 		</section><!-- /.content -->
 	</aside><!-- /.right-side -->
 </div><!-- ./wrapper -->
@@ -2014,12 +2026,24 @@ if($_SESSION['id']) {
 			$("#alert-message-cover").alert();
 				window.setTimeout(function() { $("#alert-message-cover").alert('close'); }, 3000);
 		});
+
+		function topFunction() {
+			document.body.scrollTop = 0; // For Safari
+			$('html, body').animate({scrollTop: $(".skin-blue").offset().top}, 500);
+		} 
 	</script>
 
 	<script>
-		$( document ).ready(function() {
-			// $('#cate_1').trigger('change');
-		});
+		// When the user scrolls down 20px from the top of the document, show the button
+		window.onscroll = function() {scrollFunction()};
+
+		function scrollFunction() {
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				document.getElementById("myBtn").style.display = "block";
+			} else {
+				document.getElementById("myBtn").style.display = "none";
+			}
+		}
 
 		var type = "archi";
 		$("#cate_1").on('change', function() {

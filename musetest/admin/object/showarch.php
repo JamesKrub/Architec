@@ -235,7 +235,7 @@ $cfdel=$_REQUEST['cfdel'];
 if($del == obj){
     echo "
     <div class='callout callout-danger'>
-        <h4>ต้องการที่จะลบวัตถุวัตถุจัดแสดง</h4>
+        <h4>ต้องการที่จะลบข้อมูลสถาปัตยกรรม</h4>
         <p>
         <a class='btn btn-danger' href='showarch.php?objectid=$objectid&cfdel=1'> ยืนยัน</a>
         <a class='btn btn-default' href='showarch.php'> ยกเลิก</a>
@@ -477,7 +477,6 @@ echo "</div>"; //<!-- /.box-primary -->
 					window.setTimeout(function() { $("#alert-message").alert('close'); }, 3000);
             });
         </script>
-
     </body>
 </html>
 </html>

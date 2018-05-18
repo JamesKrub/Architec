@@ -454,14 +454,16 @@ include('connect.php');
       ?>
       <?php    
         echo " </div>";
-      ?>
+      ?>      
         </div>
+        
       </div>
     </div>
     <!-- End content -->
     <!-- Start Footer -->
   <?php //include "footer.php" ; ?>
     <!-- End Footer -->
+    
   </div>
   <?php include "footer.php" ; ?>
   <!-- End Container -->
@@ -469,5 +471,6 @@ include('connect.php');
   <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
   <script type="text/javascript" src="js/script.js"></script>
+  
 </body>
 </html>
